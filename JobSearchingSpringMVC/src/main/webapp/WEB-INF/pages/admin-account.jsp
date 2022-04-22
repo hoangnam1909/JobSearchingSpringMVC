@@ -25,7 +25,7 @@
                 <a style="margin-right: 10px" href="<c:url value="/admin/account/edit/${u.id}"/>" data-toggle="tooltip" title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <a href="<c:url value="/admin/account/edit/${u.id}"/>" data-toggle="tooltip" title="Xoá">
+                <a href="<c:url value="/admin/account/delete/${u.id}"/>" data-toggle="tooltip" title="Xoá">
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
