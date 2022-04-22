@@ -4,7 +4,7 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/admin/account/add"/>">Thêm</a>
+        <a class="nav-link" href="<c:url value="/admin/job-type/add"/>">Thêm</a>
     </li>
 </ul>
 
@@ -12,40 +12,34 @@
     <thead>
     <tr>
         <th class="text-center">Action</th>
-        <th>Firstname</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>Role</th>
+        <th>Name</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${users}" var="u">
+    <c:forEach items="${jobTypes}" var="jt">
         <tr>
             <td style="text-align: center">
-                <a style="margin-right: 10px" href="<c:url value="/admin/account/edit/${u.id}"/>" data-toggle="tooltip" title="Sửa">
+                <a style="margin-right: 10px" href="<c:url value="/admin/job-type/edit/${jt.id}"/>" data-toggle="tooltip" title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <a href="<c:url value="/admin/account/delete/${u.id}"/>" data-toggle="tooltip" title="Xoá">
+                <a href="<c:url value="/admin/job-type/delete/${jt.id}"/>" data-toggle="tooltip" title="Xoá">
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
-            <td>${u.username}</td>
-            <td>${u.phone}</td>
-            <td>${u.email}</td>
-            <td>${u.userType}</td>
+            <td>${jt.name}</td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 
-<c:if test="${alert.contains('khong') == false}">
+<c:if test="${sucMsg != null}">
     <div class="alert alert-success" role="alert">
-            ${alert}
+            ${sucMsg}
     </div>
 </c:if>
 
-<c:if test="${alert.contains('khong') == true}">
+<c:if test="${errMsg != null}">
     <div class="alert alert-danger" role="alert">
-            ${alert}
+            ${errMsg}
     </div>
 </c:if>

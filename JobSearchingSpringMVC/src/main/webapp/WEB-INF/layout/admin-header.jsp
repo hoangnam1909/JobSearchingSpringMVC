@@ -28,9 +28,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/admin/job-post"/> ">Việc làm</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/admin/company"/> ">Công ty</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/admin/job-type"/> ">Loại việc làm</a>
+            </li>
             <c:if test="${pageContext.request.userPrincipal.name != null}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/" />">
+                    <a class="nav-link text-success" href="<c:url value="/" />">
                             <span>
                                 <i class="fa-solid fa-user"></i>
                             </span>
@@ -38,7 +44,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/logout" />">
+                    <a class="nav-link text-danger" href="<c:url value="/logout" />">
                         Đăng xuất
                     </a>
                 </li>

@@ -4,7 +4,7 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/admin/account/add"/>">Thêm</a>
+        <a class="nav-link" href="<c:url value="/admin/company/add"/>">Thêm</a>
     </li>
 </ul>
 
@@ -12,40 +12,42 @@
     <thead>
     <tr>
         <th class="text-center">Action</th>
-        <th>Firstname</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>Role</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Contact</th>
+        <th>Website</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${users}" var="u">
+    <c:forEach items="${companies}" var="com">
         <tr>
             <td style="text-align: center">
-                <a style="margin-right: 10px" href="<c:url value="/admin/account/edit/${u.id}"/>" data-toggle="tooltip" title="Sửa">
+                <a style="margin-right: 10px" href="<c:url value="/admin/company/edit/${com.id}"/>" data-toggle="tooltip" title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <a href="<c:url value="/admin/account/delete/${u.id}"/>" data-toggle="tooltip" title="Xoá">
+                <a href="<c:url value="/admin/company/delete/${com.id}"/>" data-toggle="tooltip" title="Xoá">
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
-            <td>${u.username}</td>
-            <td>${u.phone}</td>
-            <td>${u.email}</td>
-            <td>${u.userType}</td>
+            <td>${com.name}</td>
+            <td>${com.description}</td>
+            <td>${com.location}</td>
+            <td>${com.contact}</td>
+            <td>${com.website}</td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 
-<c:if test="${alert.contains('khong') == false}">
+<c:if test="${sucMsg != null}">
     <div class="alert alert-success" role="alert">
-            ${alert}
+            ${sucMsg}
     </div>
 </c:if>
 
-<c:if test="${alert.contains('khong') == true}">
+<c:if test="${errMsg != null}">
     <div class="alert alert-danger" role="alert">
-            ${alert}
+            ${errMsg}
     </div>
 </c:if>

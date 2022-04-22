@@ -53,7 +53,7 @@ public class AdminAccount {
         model.addAttribute("userType", user.getUserType());
 
         if (user.getPassword().equals(user.getConfirmPassword())) {
-            this.userService.addUser(user);
+            this.userService.add(user);
             return "redirect:/admin/account";
         } else
             errMsg = "Mat khau KHONG khop!";
@@ -76,7 +76,7 @@ public class AdminAccount {
                                   @ModelAttribute(value = "user") User user) {
         String errMsg = "";
 
-        this.userService.updateUser(user);
+        this.userService.update(user);
         return "redirect:/admin/account";
     }
 
@@ -85,7 +85,7 @@ public class AdminAccount {
                                      @PathVariable(value = "id") int id) {
         User user = new User();
         if (id != 0) {
-            user = this.userService.getUserById(id);
+            user = this.userService.getById(id);
         }
 
         model.addAttribute("user", user);
@@ -106,11 +106,11 @@ public class AdminAccount {
         User user = new User();
         String alert = null;
         if (id != 0) {
-            user = this.userService.getUserById(id);
+            user = this.userService.getById(id);
         }
 
         boolean deleteCheck = false;
-        deleteCheck = userService.deleteUser(user);
+        deleteCheck = userService.delete(user);
 
         if (user != null && deleteCheck) {
             alert = String.format("Xoa thanh cong user %s", user.getUsername());
@@ -122,4 +122,5 @@ public class AdminAccount {
 
         return "redirect:/admin/account";
     }
+
 }

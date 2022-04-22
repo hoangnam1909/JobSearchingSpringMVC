@@ -24,20 +24,20 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public User getUserById(int userId) {
-        return this.userRepository.getUserById(userId);
+    public User getById(int userId) {
+        return this.userRepository.getById(userId);
     }
 
     @Override
     @Transactional
-    public boolean addUser(User user) {
+    public boolean add(User user) {
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-        return this.userRepository.addUser(user);
+        return this.userRepository.add(user);
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return this.userRepository.getUserByUsername(username);
+    public User getByUsername(String username) {
+        return this.userRepository.getByUsername(username);
     }
 
     @Override
@@ -46,14 +46,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUser(User user) {
-        return this.userRepository.deleteUser(user);
+    public boolean delete(User user) {
+        return this.userRepository.delete(user);
     }
 
     @Override
-    public boolean updateUser(User user) {
+    public boolean update(User user) {
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-        return this.userRepository.updateUser(user);
+        return this.userRepository.update(user);
     }
 
     @Override

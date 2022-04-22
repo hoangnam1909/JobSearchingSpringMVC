@@ -51,6 +51,6 @@
         </form:select>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Thêm bài viết</button>
+        <button type="submit" class="btn btn-primary">Thêm</button>
     </div>
 </form:form>

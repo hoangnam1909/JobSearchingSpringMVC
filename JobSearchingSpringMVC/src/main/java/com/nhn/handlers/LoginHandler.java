@@ -32,10 +32,10 @@ public class LoginHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, 
             HttpServletResponse response, Authentication a) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = this.userDetailsService.getUserByUsername(authentication.getName());
+        User user = this.userDetailsService.getByUsername(authentication.getName());
         request.getSession().setAttribute("currentUser", user);
         
-        response.sendRedirect("/SunSaleApp");
+        response.sendRedirect("/JobSearchingSpringMVC");
     }
     
 }

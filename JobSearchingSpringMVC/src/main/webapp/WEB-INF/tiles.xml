@@ -59,4 +59,30 @@ and open the template in the editor.
         <put-attribute name="title" value="Thêm bài viết" />
         <put-attribute name="content" value="/WEB-INF/pages/add-job-post.jsp" />
     </definition>
+
+    <definition name="admin-company" extends="adminLayout">
+        <put-attribute name="title" value="Quản lý danh sách công ty" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin-company.jsp" />
+    </definition>
+    <definition name="add-company" extends="adminLayout">
+        <put-attribute name="title" value="Thêm thông tin công ty" />
+        <put-attribute name="content" value="/WEB-INF/pages/add-company.jsp" />
+    </definition>
+    <definition name="edit-company" extends="adminLayout">
+        <put-attribute name="title" value="Chỉnh sửa thông tin công ty" />
+        <put-attribute name="content" value="/WEB-INF/pages/edit-company.jsp" />
+    </definition>
+
+    <definition name="admin-job-type" extends="adminLayout">
+        <put-attribute name="title" value="Quản lý các loại việc làm" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin-job-type.jsp" />
+    </definition>
+    <definition name="add-job-type" extends="adminLayout">
+        <put-attribute name="title" value="Thêm thông tin loại việc làm" />
+        <put-attribute name="content" value="/WEB-INF/pages/add-job-type.jsp" />
+    </definition>
+    <definition name="edit-job-type" extends="adminLayout">
+        <put-attribute name="title" value="Chỉnh sửa thông tin loại việc làm" />
+        <put-attribute name="content" value="/WEB-INF/pages/edit-job-type.jsp" />
+    </definition>
 </tiles-definitions>

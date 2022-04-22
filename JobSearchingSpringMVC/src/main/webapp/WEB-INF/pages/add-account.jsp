@@ -39,6 +39,6 @@
         <form:input path="userType" class="form-control" />
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Thêm tài khoản</button>
+        <button type="submit" class="btn btn-primary">Thêm</button>
     </div>
 </form:form>

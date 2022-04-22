@@ -45,6 +45,6 @@
         <form:input path="userType" class="form-control" placeholder="${user.userType}" />
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <button type="submit" class="btn btn-primary">Sửa</button>
     </div>
 </form:form>

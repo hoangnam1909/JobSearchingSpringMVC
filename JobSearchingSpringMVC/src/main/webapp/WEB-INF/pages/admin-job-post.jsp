@@ -11,7 +11,7 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th></th>
+        <th class="text-center">Action</th>
         <th>Tiêu đề</th>
         <th>Ngày đăng</th>
         <th>Khả dụng</th>
