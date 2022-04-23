@@ -59,6 +59,10 @@ and open the template in the editor.
         <put-attribute name="title" value="Thêm bài viết" />
         <put-attribute name="content" value="/WEB-INF/pages/add-job-post.jsp" />
     </definition>
+    <definition name="edit-job-post" extends="adminLayout">
+        <put-attribute name="title" value="Sửa thông tin bài đăng" />
+        <put-attribute name="content" value="/WEB-INF/pages/edit-job-post.jsp" />
+    </definition>
 
     <definition name="admin-company" extends="adminLayout">
         <put-attribute name="title" value="Quản lý danh sách công ty" />

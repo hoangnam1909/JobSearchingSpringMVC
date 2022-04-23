@@ -39,7 +39,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (1,'Siêu công ty','công ty pro víp','Hà Nội','không kó','hihi.com'),(5,'Thuỳ Lê iu dấu','em yêu của anh Nam','Bắc Kạn','em bé','em béeee'),(6,'Hoàng Nam Com','Công ty huhu','khóc hmuu hmu','Có đâu','ko có web');
+INSERT INTO `company` VALUES (1,'Siêu công ty','công ty pro víp','Hà Nội','không kó','hihi.com'),(5,'Thuỳ Lê iu dấu','em yêu của anh Nam','Bắc Kạn','em bé','em béeee'),(6,'Hoàng Nam Co','Công ty huhu','khóc hmuu hmu','Có đâu','ko có web');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,7 +57,8 @@ CREATE TABLE `job_post` (
   `beginningSalary` decimal(10,0) NOT NULL,
   `endingSalary` decimal(10,0) NOT NULL,
   `location` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `expiredDate` datetime DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `expired_date` datetime DEFAULT NULL,
   `posted_by_user` int NOT NULL,
   `job_type_id` int NOT NULL,
   `company_id` int DEFAULT NULL,
@@ -68,7 +69,7 @@ CREATE TABLE `job_post` (
   CONSTRAINT `fk_jpost_com` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `fk_jpost_jtype` FOREIGN KEY (`job_type_id`) REFERENCES `job_type` (`id`),
   CONSTRAINT `fk_jpost_user` FOREIGN KEY (`posted_by_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,6 +78,7 @@ CREATE TABLE `job_post` (
 
 LOCK TABLES `job_post` WRITE;
 /*!40000 ALTER TABLE `job_post` DISABLE KEYS */;
+INSERT INTO `job_post` VALUES (1,'Bán hàng online','Bán quần áo',1500000,5000000,'Hà Nội',NULL,NULL,4,1,6);
 /*!40000 ALTER TABLE `job_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,4 +149,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-23  1:26:34
+-- Dump completed on 2022-04-23 17:46:27

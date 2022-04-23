@@ -26,7 +26,7 @@
                 <a class="nav-link" href="<c:url value="/admin/account"/> ">Tài khoản</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/admin/job-post"/> ">Việc làm</a>
+                <a class="nav-link" href="<c:url value="/admin/job-post"/> ">Bài đăng</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/admin/company"/> ">Công ty</a>

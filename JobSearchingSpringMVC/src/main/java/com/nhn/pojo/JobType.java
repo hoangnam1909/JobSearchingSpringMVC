@@ -13,6 +13,13 @@ public class JobType {
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
+    @Override
+    public String toString() {
+        return "JobType{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
     public String getName() {
         return name;
     }

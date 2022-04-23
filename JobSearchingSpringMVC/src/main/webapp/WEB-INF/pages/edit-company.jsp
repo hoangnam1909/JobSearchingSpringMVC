@@ -6,12 +6,6 @@
 
 <c:url value="/admin/company/edit" var="action" />
 
-<c:if test="${errMsg != null}">
-    <div class="alert alert-danger">
-            ${errMsg}
-    </div>
-</c:if>
-
 <form:form action="${action}" method="post" modelAttribute="company">
     <div class="form-group" style="display: none">
         <form:input path="id" class="form-control" />

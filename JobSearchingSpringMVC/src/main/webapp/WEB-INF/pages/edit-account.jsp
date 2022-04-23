@@ -13,12 +13,6 @@
 
 <c:url value="/admin/account/edit" var="action" />
 
-<c:if test="${errMsg != null}">
-    <div class="alert alert-danger">
-            ${errMsg}
-    </div>
-</c:if>
-
 <form:form action="${action}" method="post" modelAttribute="user">
     <div class="form-group">
         <label>id</label>

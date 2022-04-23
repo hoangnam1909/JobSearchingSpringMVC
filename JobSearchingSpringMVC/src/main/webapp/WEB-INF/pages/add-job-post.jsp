@@ -11,12 +11,6 @@
 
 <c:url value="/admin/job-post/add" var="action"/>
 
-<c:if test="${errMsg != null}">
-    <div class="alert alert-danger">
-            ${errMsg}
-    </div>
-</c:if>
-
 <form:form action="${action}" method="post" modelAttribute="jobPost">
     <div class="form-group">
         <label>Tiêu đề</label>
@@ -46,7 +40,7 @@
         <label>Công ty</label>
         <form:select path="companyId" class="custom-select">
             <c:forEach items="${companies}" var="company">
-                <form:option value="${company.id}" label="${company.name}"/>
+                <form:option value="${company.id}"  label="${company.name}"/>
             </c:forEach>
         </form:select>
     </div>

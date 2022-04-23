@@ -59,6 +59,14 @@ public class User {
         userType = USER;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                '}';
+    }
+
     public Date getDob() {
         return dob;
     }
