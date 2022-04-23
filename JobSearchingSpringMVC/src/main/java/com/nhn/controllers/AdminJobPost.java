@@ -15,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -38,6 +41,8 @@ public class AdminJobPost {
         List<JobPost> jobPosts = jobPostService.getPosts(null, 1);
 
         model.addAttribute("jobPosts", jobPosts);
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
+        model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
 
         return "admin-job-post";
     }
@@ -59,28 +64,32 @@ public class AdminJobPost {
     @PostMapping("/admin/job-post/add")
     @Transactional
     public String addJobPostPost(Model model,
-                             @ModelAttribute(value = "jobPost") JobPost jobPost,
-                             final RedirectAttributes redirectAttrs) {
-        String msg = null;
-
-        model.addAttribute("title", jobPost.getTitle());
-        model.addAttribute("description", jobPost.getDescription());
-        model.addAttribute("postByUserId", jobPost.getPostedByUserId());
-        model.addAttribute("jobTypeId", jobPost.getJobTypeId());
-        model.addAttribute("companyId", jobPost.getCompanyId());
+                                 @ModelAttribute(value = "jobPost") JobPost jobPost,
+                                 final RedirectAttributes redirectAttrs) throws ParseException {
+        String errMsg = null;
+        String sucMsg = null;
 
         jobPost.setPostedByUser(userService.getById(jobPost.getPostedByUserId()));
         jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
         jobPost.setCompany(companyService.getById(jobPost.getCompanyId()));
 
+        if (!jobPost.getCreatedDateStr().equals(""))
+            jobPost.setCreatedDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getCreatedDateStr()));
+        else
+            jobPost.setCreatedDate(new Date());
+
+        if (!jobPost.getExpiredDateStr().equals(""))
+            jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));
+
         boolean jobPostAddedCheck = this.jobPostService.add(jobPost);
 
         if (jobPostAddedCheck)
-            msg = String.format("Thêm thành công bài viết #%d", jobPost.getId());
+            sucMsg = String.format("Thêm thành công bài viết #%d", jobPost.getId());
         else
-            msg = "Thêm bài viết thất bại";
+            errMsg = "Thêm bài viết thất bại";
 
-        redirectAttrs.addFlashAttribute("msg", msg);
+        redirectAttrs.addFlashAttribute("errMsg", errMsg);
+        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
         return "redirect:/admin/job-post";
     }
 
@@ -93,17 +102,21 @@ public class AdminJobPost {
     @Transactional
     public String editJobPostPost(Model model,
                                   @ModelAttribute(value = "jobPost") JobPost jobPost,
-                                  final RedirectAttributes redirectAttrs) {
+                                  final RedirectAttributes redirectAttrs) throws ParseException {
         String errMsg = null;
         String sucMsg = null;
-
-        System.out.println(jobPost.getPostedByUserId());
-        System.out.println(jobPost.getJobTypeId());
-        System.out.println(jobPost.getCompanyId());
 
         jobPost.setPostedByUser(userService.getById(jobPost.getPostedByUserId()));
         jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
         jobPost.setCompany(companyService.getById(jobPost.getCompanyId()));
+
+        if (!jobPost.getCreatedDateStr().equals(""))
+            jobPost.setCreatedDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getCreatedDateStr()));
+        else
+            jobPost.setCreatedDate(new Date());
+
+        if (!jobPost.getExpiredDateStr().equals(""))
+            jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));
 
         boolean editJobPostCheck = this.jobPostService.update(jobPost);
 

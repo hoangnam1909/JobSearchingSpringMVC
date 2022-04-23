@@ -1,5 +1,7 @@
 package com.nhn.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -29,9 +31,13 @@ public class JobPost {
     @Column(name = "location", nullable = false, length = 45)
     private String location;
 
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "created_date")
     private Date createdDate;
 
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "expired_date")
     private Date expiredDate;
 
@@ -53,6 +59,26 @@ public class JobPost {
     private int jobTypeId;
     @Transient
     private int companyId;
+    @Transient
+    private String createdDateStr;
+    @Transient
+    private String expiredDateStr;
+
+    public String getCreatedDateStr() {
+        return createdDateStr;
+    }
+
+    public void setCreatedDateStr(String createdDateStr) {
+        this.createdDateStr = createdDateStr;
+    }
+
+    public String getExpiredDateStr() {
+        return expiredDateStr;
+    }
+
+    public void setExpiredDateStr(String expiredDateStr) {
+        this.expiredDateStr = expiredDateStr;
+    }
 
     public int getPostedByUserId() {
         return postedByUserId;

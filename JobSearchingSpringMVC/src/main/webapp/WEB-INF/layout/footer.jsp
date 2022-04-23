@@ -6,6 +6,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="jumbotron">
-  <h1>Job Search</h1>
+  <h1>Job Searching</h1>
   <p>Nguyễn Hoàng Nam &copy; 2022</p>
 </div>

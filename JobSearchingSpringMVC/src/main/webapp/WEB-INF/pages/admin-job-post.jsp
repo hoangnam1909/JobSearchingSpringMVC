@@ -14,7 +14,7 @@
     <tr>
         <th class="text-center">Action</th>
         <th>Tiêu đề</th>
-        <th>Người đăng</th>
+        <th>Mô tả</th>
         <th>Ngày đăng</th>
         <th>Ngày hết hạn</th>
     </tr>
@@ -35,23 +35,31 @@
                     ${jp.title}
             </td>
             <td>
-                    ${jp.postedByUser.id}
+                    ${jp.description}
             </td>
             <td>
                 <c:if test="${jp.createdDate != null}">
-                    <fmt:formatDate type="time" value="${jp.createdDate}"/>
-                    -
-                    <fmt:formatDate pattern="d/M/y" value="${jp.createdDate}"/>
+                    <fmt:formatDate pattern="dd/MM/yyyy" value="${jp.createdDate}"/>
                 </c:if>
             </td>
             <td>
                 <c:if test="${jp.expiredDate != null}">
-                    <fmt:formatDate type="time" value="${jp.expiredDate}"/>
-                    -
-                    <fmt:formatDate pattern="d/M/y" value="${jp.expiredDate}"/>
+                    <fmt:formatDate pattern="dd/MM/yyyy" value="${jp.expiredDate}"/>
                 </c:if>
             </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
+
+<c:if test="${sucMsg != null}">
+    <div class="alert alert-success" role="alert">
+            ${sucMsg}
+    </div>
+</c:if>
+
+<c:if test="${errMsg != null}">
+    <div class="alert alert-danger" role="alert">
+            ${errMsg}
+    </div>
+</c:if>

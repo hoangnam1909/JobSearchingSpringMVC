@@ -12,6 +12,7 @@
     <thead>
     <tr>
         <th class="text-center">Action</th>
+        <th>ID</th>
         <th>Firstname</th>
         <th>Phone</th>
         <th>Email</th>
@@ -29,6 +30,7 @@
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
+            <td>${u.id}</td>
             <td>${u.username}</td>
             <td>${u.phone}</td>
             <td>${u.email}</td>

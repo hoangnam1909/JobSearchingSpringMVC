@@ -47,11 +47,10 @@ public class AdminJobType {
         String sucMsg = null;
 
         boolean jobTypeAddedCheck = this.jobTypeService.add(jobType);
-
         if (jobTypeAddedCheck)
             sucMsg = String.format("Thêm thông tin loại việc làm '%s' thành công", jobType.getName());
         else
-            errMsg = "Thêm thông tin loại việc làm không thành công";
+            errMsg = String.format("Thêm thông tin loại việc làm '%s' không thành công", jobType.getName());
 
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
@@ -72,11 +71,10 @@ public class AdminJobType {
         String sucMsg = null;
 
         boolean editJobTypeCheck = this.jobTypeService.update(jobType);
-
         if (editJobTypeCheck)
             sucMsg = String.format("Chỉnh sửa thông tin loại việc làm '%s' thành công", jobType.getName());
         else
-            errMsg = String.format("Chỉnh sửa thông tin loại việc làm không thành công %d", jobType.getId());
+            errMsg = String.format("Chỉnh sửa thông tin loại việc làm '%s' không thành công", jobType.getName());
 
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
@@ -95,6 +93,36 @@ public class AdminJobType {
         model.addAttribute("jobType", jobType);
 
         return "edit-job-type";
+    }
+
+    @RequestMapping("/admin/job-type/delete")
+    public String deleteJobType() {
+        return "redirect:/admin/job-type";
+    }
+
+    @RequestMapping(path = "/admin/job-type/delete/{id}")
+    public String deleteJobTypeById(Model model,
+                                    @PathVariable(value = "id") int id,
+                                    final RedirectAttributes redirectAttrs) {
+        String errMsg = null;
+        String sucMsg = null;
+
+        JobType jobType = new JobType();
+        if (id != 0) {
+            jobType = this.jobTypeService.getById(id);
+        }
+
+        boolean deleteCheck = jobTypeService.delete(jobType);
+
+        if (jobType != null && deleteCheck)
+            sucMsg = String.format("Xoá loại việc làm '%s' thành công", jobType.getName());
+        else
+            errMsg = String.format("Xoá loại việc làm '%s' không thành công", jobType.getName());
+
+
+        redirectAttrs.addFlashAttribute("errMsg", errMsg);
+        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
+        return "redirect:/admin/job-type";
     }
 
 }

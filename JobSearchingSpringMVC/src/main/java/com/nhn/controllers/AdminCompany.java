@@ -115,11 +115,10 @@ public class AdminCompany {
 
         boolean deleteCheck = companyService.delete(company);
 
-        if (company != null && deleteCheck) {
-            sucMsg = String.format("Xoá thành công công ty '%s' khỏi hệ thống", company.getName());
-        } else {
-            errMsg = String.format("Xoá không thành công công ty '%s' khỏi hệ thống", company.getName());
-        }
+        if (company != null && deleteCheck)
+            sucMsg = String.format("Xoá công ty '%s' thành công", company.getName());
+        else
+            errMsg = String.format("Xoá công ty '%s' không thành công", company.getName());
 
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);

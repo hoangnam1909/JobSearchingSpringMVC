@@ -12,6 +12,7 @@
     <thead>
     <tr>
         <th class="text-center">Action</th>
+        <th>ID</th>
         <th>Name</th>
         <th>Description</th>
         <th>Location</th>
@@ -30,6 +31,7 @@
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
+            <td>${com.id}</td>
             <td>${com.name}</td>
             <td>${com.description}</td>
             <td>${com.location}</td>

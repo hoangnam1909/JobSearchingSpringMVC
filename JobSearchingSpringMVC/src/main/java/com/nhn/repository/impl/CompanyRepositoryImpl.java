@@ -104,7 +104,7 @@ public class CompanyRepositoryImpl implements CompanyRepository {
             q = q.where(predicates.toArray(new Predicate[]{}));
         }
 
-        q = q.orderBy(builder.desc(root.get("id")));
+        q = q.orderBy(builder.asc(root.get("id")));
 
         Query query = session.createQuery(q);
 

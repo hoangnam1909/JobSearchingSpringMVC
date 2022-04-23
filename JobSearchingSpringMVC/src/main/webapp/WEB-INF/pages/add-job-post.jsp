@@ -3,11 +3,6 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <h1 class="text-center text-success">THÊM BÀI VIẾT</h1>
-<h3 class="text-center text-success">${title}</h3>
-<h3 class="text-center text-success">${description}</h3>
-<h3 class="text-center text-success">${postByUserId}</h3>
-<h3 class="text-center text-success">${jobTypeId}</h3>
-<h3 class="text-center text-success">${companyId}</h3>
 
 <c:url value="/admin/job-post/add" var="action"/>
 
@@ -21,26 +16,66 @@
         <form:input path="description" class="form-control"/>
     </div>
     <div class="form-group">
+        <label>Lương tối thiểu</label>
+        <form:input path="beginningSalary" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label>Lương tối đa</label>
+        <form:input path="endingSalary" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label>Địa chỉ</label>
+        <form:input path="location" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label>Ngày đăng</label>
+        <form:input type="date" path="createdDateStr" value="${jobPost.createdDate}" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label>Ngày hết hạn</label>
+        <form:input type="date" path="expiredDateStr" value="${jobPost.expiredDate}" class="form-control"/>
+    </div>
+    <div class="form-group">
         <label>Đăng bởi người dùng</label>
         <form:select path="postedByUserId" class="custom-select">
             <c:forEach items="${users}" var="user">
-                <form:option value="${user.id}" label="${user.username}"/>
+                <c:if test="${user.id == jobPost.postedByUser.id}">
+                    <option value="${user.id}" selected>${user.username}</option>
+                </c:if>
+
+                <c:if test="${user.id != jobPost.postedByUser.id}">
+                    <option value="${user.id}">${user.username}</option>
+                </c:if>
             </c:forEach>
         </form:select>
     </div>
+
     <div class="form-group">
         <label>Loại công việc</label>
         <form:select path="jobTypeId" class="custom-select">
             <c:forEach items="${jobTypes}" var="jobType">
-                <form:option value="${jobType.id}" label="${jobType.name}"/>
+                <c:if test="${jobType.id == jobPost.jobType.id}">
+                    <option value="${jobType.id}" selected>${jobType.name}</option>
+                </c:if>
+
+                <c:if test="${jobType.id != jobPost.jobType.id}">
+                    <option value="${jobType.id}">${jobType.name}</option>
+                </c:if>
             </c:forEach>
         </form:select>
     </div>
+
     <div class="form-group">
         <label>Công ty</label>
         <form:select path="companyId" class="custom-select">
             <c:forEach items="${companies}" var="company">
-                <form:option value="${company.id}"  label="${company.name}"/>
+                <c:if test="${company.id == jobPost.company.id}">
+                    <option value="${company.id}" selected>${company.name}</option>
+                </c:if>
+
+                <c:if test="${company.id != jobPost.company.id}">
+                    <option value="${company.id}">${company.name}</option>
+                </c:if>
             </c:forEach>
         </form:select>
     </div>
