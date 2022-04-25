@@ -14,8 +14,7 @@
 <c:url value="/admin/account/edit" var="action" />
 
 <form:form action="${action}" method="post" modelAttribute="user">
-    <div class="form-group">
-        <label>id</label>
+    <div class="form-group" style="display: none">
         <form:input path="id" class="form-control" placeholder="${user.id}" />
     </div>
     <div class="form-group">
@@ -24,7 +23,7 @@
     </div>
     <div class="form-group">
         <label>Mật khẩu</label>
-        <form:input path="password" class="form-control" type="password" />
+        <form:input path="confirmPassword" class="form-control" type="password" />
     </div>
     <div class="form-group">
         <label>Email</label>

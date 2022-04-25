@@ -39,4 +39,14 @@ public class JobPostServiceImpl implements JobPostService {
     public boolean update(JobPost post) {
         return this.jobPostRepository.update(post);
     }
+
+    @Override
+    public long countAll() {
+        return this.jobPostRepository.countAll();
+    }
+
+    @Override
+    public int getMaxItemsInPage() {
+        return this.jobPostRepository.getMaxItemsInPage();
+    }
 }

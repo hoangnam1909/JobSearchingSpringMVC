@@ -23,6 +23,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
+    private final int maxItemsInPage = 5;
+
     @Override
     public User getById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
@@ -57,7 +59,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> getUsers(String username) {
+    public List<User> getUsers(String username, int page) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
@@ -70,6 +72,13 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         Query q = session.createQuery(query);
+
+        if (page != 0) {
+            int index = (page - 1) * maxItemsInPage;
+            q.setFirstResult(index);
+            q.setMaxResults(maxItemsInPage);
+        }
+
         return q.getResultList();
     }
 
@@ -97,6 +106,14 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         return false;
+    }
+
+    @Override
+    public long countPage() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query query = session.createQuery("Select Count(*) From User ");
+
+        return Long.parseLong(query.getSingleResult().toString()) / maxItemsInPage;
     }
 
 }

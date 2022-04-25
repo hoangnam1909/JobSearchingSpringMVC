@@ -13,11 +13,11 @@
     <tr>
         <th class="text-center">Action</th>
         <th>ID</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Location</th>
-        <th>Contact</th>
-        <th>Website</th>
+        <th>Tên</th>
+        <th>Mô tả</th>
+        <th>Địa điểm</th>
+        <th>Liên hệ</th>
+        <th>Trang web</th>
     </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
                 <a style="margin-right: 10px" href="<c:url value="/admin/company/edit/${com.id}"/>" data-toggle="tooltip" title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <a href="<c:url value="/admin/company/delete/${com.id}"/>" data-toggle="tooltip" title="Xoá">
+                <a style="margin-right: 10px" href="<c:url value="/admin/company/delete/${com.id}"/>" data-toggle="tooltip" title="Xoá">
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>

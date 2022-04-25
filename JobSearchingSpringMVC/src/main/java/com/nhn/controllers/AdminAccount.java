@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -27,11 +30,37 @@ public class AdminAccount {
     UserService userService;
 
     @RequestMapping("/admin/account")
-    public String index(Model model) {
-        List<User> users = userService.getUsers("");
+    public String indexDefault(Model model) {
+        int page = 1;
 
+        List<User> users = userService.getUsers("", page);
         model.addAttribute("users", users);
-        model.addAttribute("alert", model.asMap().get("alert"));
+
+        int totalPage = (int) userService.countPage();
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("currentPage", page);
+
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
+        model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
+
+        return "admin-account";
+    }
+
+    @RequestMapping(value = "/admin/account/{page}")
+    public String indexWithPage(Model model,
+                                @PathVariable(value = "page") int page) {
+
+        List<User> users = userService.getUsers("", page);
+        model.addAttribute("users", users);
+
+        long countPage = userService.countPage();
+        if (page < 1 || page > countPage)
+            return "redirect:/admin/account/1";
+        model.addAttribute("totalPage", countPage);
+        model.addAttribute("currentPage", page);
+
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
+        model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
 
         return "admin-account";
     }
@@ -39,12 +68,17 @@ public class AdminAccount {
     @RequestMapping("/admin/account/add")
     public String addAccount(Model model) {
         model.addAttribute("user", new User());
+
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
         return "add-account";
     }
 
     @PostMapping("/admin/account/add")
-    public String addAccountPost(Model model, @ModelAttribute(value = "user") User user) {
-        String errMsg = "";
+    public String addAccountPost(Model model,
+                                 @ModelAttribute(value = "user") User user,
+                                 final RedirectAttributes redirectAttrs) {
+        String errMsg = null;
+        String sucMsg = null;
 
         model.addAttribute("username", user.getUsername());
         model.addAttribute("password", user.getPassword());
@@ -54,15 +88,16 @@ public class AdminAccount {
 
         if (user.getPassword().equals(user.getConfirmPassword())) {
             this.userService.add(user);
-            return "redirect:/admin/account";
-        } else
-            errMsg = "Mat khau KHONG khop!";
+            sucMsg = String.format("Thêm thông tin user '%s' thành công", user.getUsername());
+        } else {
+            errMsg = String.format("Thêm thông tin user '%s' không thành công", user.getUsername());
+            redirectAttrs.addFlashAttribute("errMsg", errMsg);
+            return "add-account";
+        }
 
         model.addAttribute("username", user.getUsername());
-
-        model.addAttribute("errMsg", errMsg);
-
-        return "add-account";
+        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
+        return "redirect:/admin/account";
     }
 
     @RequestMapping("/admin/account/edit")
@@ -73,10 +108,19 @@ public class AdminAccount {
     @PostMapping("/admin/account/edit")
     @Transactional
     public String editAccountPost(Model model,
-                                  @ModelAttribute(value = "user") User user) {
-        String errMsg = "";
+                                  @ModelAttribute(value = "user") User user,
+                                  final RedirectAttributes redirectAttrs) {
+        String errMsg = null;
+        String sucMsg = null;
+        user.setPassword(user.getConfirmPassword());
+        boolean updateAccountCheck = this.userService.update(user);
+        if (updateAccountCheck)
+            sucMsg = String.format("Chỉnh sửa thông tin user '%s' thành công", user.getUsername());
+        else
+            errMsg = String.format("Chỉnh sửa thông tin user '%s' không thành công", user.getUsername());
 
-        this.userService.update(user);
+        redirectAttrs.addFlashAttribute("errMsg", errMsg);
+        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
         return "redirect:/admin/account";
     }
 
@@ -103,23 +147,25 @@ public class AdminAccount {
     public String deleteAccountById(Model model,
                                        @PathVariable(value = "id") int id,
                                        final RedirectAttributes redirectAttrs) {
+        String errMsg = null;
+        String sucMsg = null;
+
         User user = new User();
-        String alert = null;
         if (id != 0) {
             user = this.userService.getById(id);
         }
 
-        boolean deleteCheck = false;
-        deleteCheck = userService.delete(user);
+        boolean deleteCheck = userService.delete(user);
 
         if (user != null && deleteCheck) {
-            alert = String.format("Xoa thanh cong user %s", user.getUsername());
+            sucMsg = String.format("Xoá thành công user '%s'", user.getUsername());
         } else {
-            alert = "Xoa khong thanh cong";
+            assert user != null;
+            errMsg = String.format("Xoá không thành công user '%s'", user.getUsername());
         }
 
-        redirectAttrs.addFlashAttribute("alert", alert);
-
+        redirectAttrs.addFlashAttribute("errMsg", errMsg);
+        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
         return "redirect:/admin/account";
     }
 

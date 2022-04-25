@@ -30,7 +30,7 @@ CREATE TABLE `company` (
   `contact` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `website` varchar(65) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `job_post` (
   CONSTRAINT `fk_jpost_com` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `fk_jpost_jtype` FOREIGN KEY (`job_type_id`) REFERENCES `job_type` (`id`),
   CONSTRAINT `fk_jpost_user` FOREIGN KEY (`posted_by_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +78,7 @@ CREATE TABLE `job_post` (
 
 LOCK TABLES `job_post` WRITE;
 /*!40000 ALTER TABLE `job_post` DISABLE KEYS */;
-INSERT INTO `job_post` VALUES (1,'Bán hàng online ha','Bán quần áo',1500000,5000000,'Hà Nội','2022-04-06 00:00:00','2022-04-07 00:00:00',4,4,1),(2,'test ngay dang','ngay dang',1342342,123134,'HCM','2022-04-05 00:00:00','2022-04-06 00:00:00',2,1,6),(3,'hahaha','hahaha',3134,432432,'hahaha',NULL,NULL,3,2,5),(4,'hoho','hoho',31231,3123213,'hoho','2022-04-13 00:00:00',NULL,3,1,6),(5,'hehe','hehe',312312,4214,'3123123','2022-04-23 00:00:00',NULL,2,1,6),(6,'lalala','lalala',31241234,43423423,'lalala','2022-04-23 00:00:00',NULL,2,3,5),(7,'test add post','tets hihi',4234234,32423445,'HCM','2022-04-23 00:00:00',NULL,4,3,6),(8,'gggggg','fghjhgjfgj',123123,312312312,'fghjhgjfgj','2022-04-23 00:00:00',NULL,2,1,1),(9,'31231','42342',32423,432423,'345352','2022-04-23 00:00:00',NULL,2,1,6);
+INSERT INTO `job_post` VALUES (1,'Bán hàng online ha','Bán quần áo',1500000,5000000,'Hà Nội','2022-04-06 00:00:00','2022-04-07 00:00:00',4,4,1),(2,'test ngay dang','ngay dang',1342342,123134,'HCM','2022-04-05 00:00:00','2022-04-06 00:00:00',2,1,6),(3,'hahaha','hahaha',3134,432432,'hahaha','2022-04-06 00:00:00',NULL,3,2,5),(5,'hehe','hehe',312312,4214,'3123123','2022-04-09 00:00:00',NULL,2,1,6),(6,'lalala','lalala',31241234,43423423,'lalala','2022-04-23 00:00:00',NULL,2,2,5),(7,'test add post','tets hihi',4234234,32423445,'HCM','2022-04-23 00:00:00',NULL,4,3,6),(8,'gggggg','fghjhgjfgj',123123,312312312,'fghjhgjfgj','2022-04-23 00:00:00',NULL,2,1,1),(10,'test pagination','pagination',1500000,3000000,'HCM','2022-04-25 00:00:00',NULL,5,3,5);
 /*!40000 ALTER TABLE `job_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +93,7 @@ CREATE TABLE `job_type` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +127,7 @@ CREATE TABLE `user` (
   `gender` tinyint DEFAULT NULL,
   `address` varchar(100) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +136,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'Thanh Thuỳ','$2a$10$nvWvGaxa8BRy6IGWAkPmeuDkLZIkp/fivpHRMB9pbkkOK9GAEh42G',NULL,'ROLE_USER',0,NULL,'Thanh Thuỳ','Thanh Thuỳ',NULL,0,NULL),(3,'Hoàng Nam','$2a$10$BFk/pDHLL07taPcNuUqu8uzVsiuV1aokToQo/.labW/XELakrngKq',NULL,'ROLE_USER',0,NULL,'nam@gmail.com','0314534534',NULL,0,NULL),(4,'admin','$2a$10$fhPL0UnuYxlQRe5xudsxEeALyY7YUMRvgO2shA8ArRy5SduR6.9Zy',NULL,'ROLE_USER',0,NULL,'admin@gmail.com','014324325',NULL,0,NULL);
+INSERT INTO `user` VALUES (2,'Thanh Thuỳ','$2a$10$nvWvGaxa8BRy6IGWAkPmeuDkLZIkp/fivpHRMB9pbkkOK9GAEh42G',NULL,'ROLE_USER',0,NULL,'Thanh Thuỳ','Thanh Thuỳ',NULL,0,NULL),(3,'Hoàng Nam','$2a$10$BFk/pDHLL07taPcNuUqu8uzVsiuV1aokToQo/.labW/XELakrngKq',NULL,'ROLE_USER',0,NULL,'nam@gmail.com','0314534534',NULL,0,NULL),(4,'admin','$2a$10$fhPL0UnuYxlQRe5xudsxEeALyY7YUMRvgO2shA8ArRy5SduR6.9Zy',NULL,'ROLE_USER',0,NULL,'admin@gmail.com','014324325',NULL,0,NULL),(5,'qmin1012','$2a$10$KFxH3fIeo0vH43c57G7RT.J9CfdT.oReeHx56vYQahTEQqLE6apSe',NULL,'ROLE_USER',0,NULL,'qmin1012@gmail.com','1012',NULL,0,NULL),(8,'test page','$2a$10$vP93u3ZrPg3weQnvhdWo1.y/HxELhWxQGs4rrF7kLiiwOlEW.zMna',NULL,'ROLE_USER',0,NULL,'123','123',NULL,0,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -149,4 +149,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-24  0:30:55
+-- Dump completed on 2022-04-25 16:42:16

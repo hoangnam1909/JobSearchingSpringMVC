@@ -40,14 +40,41 @@
     </tbody>
 </table>
 
-<c:if test="${alert.contains('khong') == false}">
+<c:if test="${currentPage != null}">
+    <ul class="pagination d-flex justify-content-center mt-4">
+        <li class="page-item"><a class="page-link" href="<c:url value="/admin/account/1"/>">Đầu tiên</a></li>
+        <c:if test="${currentPage > 1}">
+            <li class="page-item">
+                <a class="page-link" href="<c:url value="/admin/account/${currentPage - 1}"/>">Trước</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="<c:url value="/admin/account/${currentPage - 1}"/>">${currentPage - 1}</a>
+            </li>
+        </c:if>
+        <li class="page-item">
+            <a class="page-link" href="<c:url value="/admin/account/${currentPage}"/>">${currentPage}</a>
+        </li>
+        <c:if test="${currentPage < totalPage}">
+            <li class="page-item">
+                <a class="page-link" href="<c:url value="/admin/account/${currentPage + 1}"/>">${currentPage + 1}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="<c:url value="/admin/account/${currentPage + 1}"/>">Sau</a>
+            </li>
+        </c:if>
+        <li class="page-item"><a class="page-link" href="<c:url value="/admin/account/${totalPage}"/>">Cuối cùng</a>
+        </li>
+    </ul>
+</c:if>
+
+<c:if test="${sucMsg != null}">
     <div class="alert alert-success" role="alert">
-            ${alert}
+            ${sucMsg}
     </div>
 </c:if>
 
-<c:if test="${alert.contains('khong') == true}">
+<c:if test="${errMsg != null}">
     <div class="alert alert-danger" role="alert">
-            ${alert}
+            ${errMsg}
     </div>
 </c:if>

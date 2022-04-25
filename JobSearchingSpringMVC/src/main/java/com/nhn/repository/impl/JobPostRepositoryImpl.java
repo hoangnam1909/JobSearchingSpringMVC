@@ -28,6 +28,8 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
+    private final int maxItemsInPage = 10;
+
     @Override
     public JobPost getById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
@@ -92,15 +94,14 @@ public class JobPostRepositoryImpl implements JobPostRepository {
             q = q.where(predicates.toArray(new Predicate[]{}));
         }
 
-        q = q.orderBy(builder.desc(root.get("id")));
+        q = q.orderBy(builder.desc(root.get("createdDate")));
 
         Query query = session.createQuery(q);
 
         if (page != 0) {
-            int max = 10;
-            int index = (page - 1) * max;
+            int index = (page - 1) * maxItemsInPage;
             query.setFirstResult(index);
-            query.setMaxResults(max);
+            query.setMaxResults(maxItemsInPage);
         }
 
         return query.getResultList();
@@ -128,5 +129,18 @@ public class JobPostRepositoryImpl implements JobPostRepository {
             System.err.println(ex.getMessage());
         }
         return false;
+    }
+
+    @Override
+    public long countAll() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query query = session.createQuery("Select Count(*) From JobPost");
+
+        return Long.parseLong(query.getSingleResult().toString());
+    }
+
+    @Override
+    public int getMaxItemsInPage() {
+        return this.maxItemsInPage;
     }
 }

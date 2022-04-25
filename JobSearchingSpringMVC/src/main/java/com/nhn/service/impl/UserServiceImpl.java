@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsers(String username) {
-        return this.userRepository.getUsers(username);
+    public List<User> getUsers(String username, int page) {
+        return this.userRepository.getUsers(username, page);
     }
 
     @Override
@@ -57,8 +57,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public long countPage() {
+        return this.userRepository.countPage();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<User> users = this.getUsers(username);
+        List<User> users = this.getUsers(username, 0);
         if (users.isEmpty())
             throw new UsernameNotFoundException("User does not exist!!!");
 

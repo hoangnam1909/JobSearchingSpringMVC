@@ -42,3 +42,9 @@
         <button type="submit" class="btn btn-primary">Thêm</button>
     </div>
 </form:form>
+
+<c:if test="${errMsg != null}">
+    <div class="alert alert-danger" role="alert">
+            ${errMsg}
+    </div>
+</c:if>
