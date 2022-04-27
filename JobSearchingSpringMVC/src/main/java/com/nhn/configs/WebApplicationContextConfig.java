@@ -1,5 +1,7 @@
 package com.nhn.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.nhn.formatter.UserFormatter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,6 +34,18 @@ public class WebApplicationContextConfig
         configurer.enable();
     }
 
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary c = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "dxorabap0",
+                "api_key", "249227552583173",
+                "api_secret", "T4aMw9N8UUkaSkcpDA-vgORB_Qg",
+                "secure", true
+        ));
+
+        return c;
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**").addResourceLocations("/resources/images/");
@@ -54,14 +68,14 @@ public class WebApplicationContextConfig
         return resolver;
     }
 
-//
-//    @Bean
-//    public CommonsMultipartResolver multipartResolver() {
-//        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-//        resolver.setDefaultEncoding("UTF-8");
-//
-//        return resolver;
-//    }
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8");
+
+        return resolver;
+    }
 
 }
 

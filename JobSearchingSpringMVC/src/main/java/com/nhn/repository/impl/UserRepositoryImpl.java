@@ -25,6 +25,10 @@ public class UserRepositoryImpl implements UserRepository {
 
     private final int maxItemsInPage = 5;
 
+    public int getMaxItemsInPage() {
+        return maxItemsInPage;
+    }
+
     @Override
     public User getById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
@@ -71,13 +75,13 @@ public class UserRepositoryImpl implements UserRepository {
             query = query.where(p);
         }
 
+        query = query.orderBy(builder.desc(root.get("id")));
+
         Query q = session.createQuery(query);
 
-        if (page != 0) {
-            int index = (page - 1) * maxItemsInPage;
-            q.setFirstResult(index);
-            q.setMaxResults(maxItemsInPage);
-        }
+        int max = maxItemsInPage;
+        q.setMaxResults(max);
+        q.setFirstResult((page - 1) * max);
 
         return q.getResultList();
     }
@@ -109,11 +113,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public long countPage() {
+    public long count() {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        Query query = session.createQuery("Select Count(*) From User ");
+        Query q = session.createQuery("Select Count(*) From User");
 
-        return Long.parseLong(query.getSingleResult().toString()) / maxItemsInPage;
+        return Long.parseLong(q.getSingleResult().toString());
     }
 
 }

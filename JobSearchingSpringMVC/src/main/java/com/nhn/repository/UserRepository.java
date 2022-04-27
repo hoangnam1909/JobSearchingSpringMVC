@@ -12,6 +12,7 @@ public interface UserRepository {
     List<User> getUsers(String username, int page);
     boolean delete(User user);
     boolean update(User user);
-    long countPage();
+    long count();
+    int getMaxItemsInPage();
 
 }

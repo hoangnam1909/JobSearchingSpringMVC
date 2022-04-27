@@ -19,23 +19,32 @@
     </div>
     <div class="form-group">
         <label>Tên đăng nhập</label>
-        <form:input path="username" class="form-control" placeholder="${user.username}" />
+        <form:input path="username" class="form-control"/>
     </div>
     <div class="form-group">
         <label>Mật khẩu</label>
-        <form:input path="confirmPassword" class="form-control" type="password" />
+        <form:input path="password" class="form-control" type="password"/>
+    </div>
+    <div class="form-group">
+        <label>Nhập lại mật khẩu</label>
+        <form:input path="confirmPassword" class="form-control" type="password"/>
     </div>
     <div class="form-group">
         <label>Email</label>
-        <form:input path="email" class="form-control" placeholder="${user.email}" />
+        <form:input path="email" class="form-control"/>
     </div>
     <div class="form-group">
         <label>Số điện thoại</label>
-        <form:input path="phone" class="form-control" placeholder="${user.phone}" />
+        <form:input path="phone" class="form-control"/>
     </div>
     <div class="form-group">
+        <label>Ảnh đại diện</label>
+        <form:input type="file" id="avatar" path="file" class="form-control-file"/>
+    </div>
+
+    <div class="form-group">
         <label>UserType</label>
-        <form:input path="userType" class="form-control" placeholder="${user.userType}" />
+        <form:input path="userType" class="form-control"/>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Sửa</button>

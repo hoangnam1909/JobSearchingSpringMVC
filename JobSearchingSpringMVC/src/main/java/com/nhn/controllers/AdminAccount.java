@@ -11,13 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Lightning
@@ -30,35 +28,15 @@ public class AdminAccount {
     UserService userService;
 
     @RequestMapping("/admin/account")
-    public String indexDefault(Model model) {
-        int page = 1;
+    public String indexDefault(Model model,
+                               @RequestParam(required = false) Map<String, String> params) {
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
 
         List<User> users = userService.getUsers("", page);
         model.addAttribute("users", users);
 
-        int totalPage = (int) userService.countPage();
-        model.addAttribute("totalPage", totalPage);
-        model.addAttribute("currentPage", page);
-
-        model.addAttribute("errMsg", model.asMap().get("errMsg"));
-        model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
-
-        return "admin-account";
-    }
-
-    @RequestMapping(value = "/admin/account/{page}")
-    public String indexWithPage(Model model,
-                                @PathVariable(value = "page") int page) {
-
-        List<User> users = userService.getUsers("", page);
-        model.addAttribute("users", users);
-
-        long countPage = userService.countPage();
-        if (page < 1 || page > countPage)
-            return "redirect:/admin/account/1";
-        model.addAttribute("totalPage", countPage);
-        model.addAttribute("currentPage", page);
-
+        model.addAttribute("counter", userService.count());
+        model.addAttribute("userService", userService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
 
