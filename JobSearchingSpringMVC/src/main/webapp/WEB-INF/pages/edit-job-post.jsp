@@ -19,11 +19,11 @@
     </div>
     <div class="form-group">
         <label>Lương tối thiểu</label>
-        <form:input path="beginningSalary" class="form-control" required="required" />
+        <form:input id="currency" path="beginningSalary" class="form-control" required="required" />
     </div>
     <div class="form-group">
         <label>Lương tối đa</label>
-        <form:input path="endingSalary" class="form-control" required="required" />
+        <form:input id="currency" path="endingSalary" class="form-control" required="required" />
     </div>
     <div class="form-group">
         <label>Địa chỉ</label>

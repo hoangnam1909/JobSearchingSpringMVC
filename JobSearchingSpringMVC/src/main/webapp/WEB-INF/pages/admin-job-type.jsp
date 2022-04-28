@@ -11,8 +11,8 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th class="text-center">Action</th>
-        <th>Name</th>
+        <th class="text-center" style="width: 10%">Thực thi</th>
+        <th>Tên công ty</th>
     </tr>
     </thead>
     <tbody>

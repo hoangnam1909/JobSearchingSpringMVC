@@ -9,6 +9,7 @@ import java.util.Date;
 @Table(name = "user")
 public class User {
     public static final String ADMIN = "ROLE_ADMIN";
+    public static final String NTD = "ROLE_NTD";
     public static final String USER = "ROLE_USER";
 
     @Id

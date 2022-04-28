@@ -12,13 +12,13 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th class="text-center">Action</th>
-        <th>ID</th>
-        <th>Tiêu đề</th>
-        <th>Ngày đăng</th>
-        <th>Đăng bởi</th>
-        <th>Loại việc làm</th>
-        <th>Công ty</th>
+        <th class="text-center" style="width: 10%">Thực thi</th>
+        <th style="width: 5%">ID</th>
+        <th style="width: 20%">Tiêu đề</th>
+        <th style="width: 15%">Ngày đăng</th>
+        <th style="width: 15%">Đăng bởi</th>
+        <th style="width: 20%">Loại việc làm</th>
+        <th style="width: 25%">Công ty</th>
     </tr>
     </thead>
     <tbody>
@@ -69,19 +69,10 @@
     </div>
 </c:if>
 
-<c:if test="${currentPage != null}">
-    <ul class="pagination d-flex justify-content-center mt-4">
-        <c:forEach begin="1" end="${Math.ceil(countAll/maxItems)}" var="i">
-            <c:if test="${currentPage == i}">
-                <li class="page-item active">
-                    <a class="page-link" href="<c:url value="/admin/job-post/${i}"/>">${i}</a>
-                </li>
-            </c:if>
-            <c:if test="${currentPage != i}">
-                <li class="page-item">
-                    <a class="page-link" href="<c:url value="/admin/job-post/${i}"/>">${i}</a>
-                </li>
-            </c:if>
-        </c:forEach>
-    </ul>
-</c:if>
+<ul class="pagination d-flex justify-content-center mt-4">
+    <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">
+        <li class="page-item">
+            <a class="page-link" href="<c:url value="/admin/account/" />?page=${page}">${page}</a>
+        </li>
+    </c:forEach>
+</ul>

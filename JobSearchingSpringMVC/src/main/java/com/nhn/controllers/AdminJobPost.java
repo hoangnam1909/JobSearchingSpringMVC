@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @ControllerAdvice
@@ -37,50 +38,20 @@ public class AdminJobPost {
     CompanyService companyService;
 
     @RequestMapping(value = "/admin/job-post")
-    public String indexDefault(Model model) {
-        int page = 1;
+    public String indexDefault(Model model,
+                               @RequestParam(required = false) Map<String, String> params) {
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
 
         List<JobPost> jobPosts = jobPostService.getPosts(null, page);
         model.addAttribute("jobPosts", jobPosts);
 
-        int countAll = (int) jobPostService.countAll();
-        System.out.println("countAll = " + countAll);
+        model.addAttribute("counter", jobPostService.count());
+        model.addAttribute("jobPostService", jobPostService);
 
-        model.addAttribute("maxItems", jobPostService.getMaxItemsInPage());
-        model.addAttribute("countAll", countAll);
-        model.addAttribute("currentPage", page);
-
+        // another
         model.addAttribute("userService", userService);
         model.addAttribute("jobTypeService", jobTypeService);
         model.addAttribute("companyService", companyService);
-
-        model.addAttribute("errMsg", model.asMap().get("errMsg"));
-        model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
-
-        return "admin-job-post";
-    }
-
-    @RequestMapping(value = "/admin/job-post/{page}")
-    public String indexWithPage(Model model,
-                                @PathVariable(value = "page") int page) {
-
-        List<JobPost> jobPosts = jobPostService.getPosts(null, page);
-        model.addAttribute("jobPosts", jobPosts);
-
-        // Pagination
-        int countAll = (int) jobPostService.countAll();
-        System.out.println("countAll = " + countAll);
-
-        model.addAttribute("maxItems", jobPostService.getMaxItemsInPage());
-        model.addAttribute("countAll", countAll);
-        model.addAttribute("currentPage", page);
-
-        // add service to template
-        model.addAttribute("userService", userService);
-        model.addAttribute("jobTypeService", jobTypeService);
-        model.addAttribute("companyService", companyService);
-
-        // send alerts
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
 
@@ -101,8 +72,7 @@ public class AdminJobPost {
         return "add-job-post";
     }
 
-    @PostMapping("/admin/job-post/add")
-    @Transactional
+    @PostMapping(value = "/admin/job-post/add")
     public String addJobPostPost(Model model,
                                  @ModelAttribute(value = "jobPost") JobPost jobPost,
                                  final RedirectAttributes redirectAttrs) throws ParseException {
@@ -128,7 +98,6 @@ public class AdminJobPost {
         else
             errMsg = String.format("Thêm bài viết '%s' thất bại", jobPost.getTitle());
 
-
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
         return "redirect:/admin/job-post";
@@ -140,10 +109,10 @@ public class AdminJobPost {
     }
 
     @PostMapping("/admin/job-post/edit")
-    @Transactional
     public String editJobPostPost(Model model,
                                   @ModelAttribute(value = "jobPost") JobPost jobPost,
                                   final RedirectAttributes redirectAttrs) throws ParseException {
+        model.asMap().clear();
         String errMsg = null;
         String sucMsg = null;
 
@@ -176,7 +145,10 @@ public class AdminJobPost {
         JobPost jobPost = new JobPost();
         if (id != 0) {
             jobPost = this.jobPostService.getById(id);
-            jobPost.setId(id);
+            if (jobPost != null)
+                jobPost.setId(id);
+            else
+                return "redirect:/admin/job-post";
         }
 
         List<User> users = userService.getUsers("", 0);

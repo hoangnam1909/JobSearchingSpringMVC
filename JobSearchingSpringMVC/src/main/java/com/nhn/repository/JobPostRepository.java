@@ -17,7 +17,7 @@ public interface JobPostRepository {
 
     boolean update(JobPost post);
 
-    long countAll();
+    long count();
 
     int getMaxItemsInPage();
 

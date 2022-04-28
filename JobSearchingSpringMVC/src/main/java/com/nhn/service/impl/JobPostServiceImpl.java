@@ -41,8 +41,8 @@ public class JobPostServiceImpl implements JobPostService {
     }
 
     @Override
-    public long countAll() {
-        return this.jobPostRepository.countAll();
+    public long count() {
+        return this.jobPostRepository.count();
     }
 
     @Override

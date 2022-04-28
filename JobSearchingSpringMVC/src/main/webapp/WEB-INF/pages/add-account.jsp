@@ -35,7 +35,8 @@
     </div>
     <div class="form-group">
         <label>Ảnh đại diện</label>
-        <form:input type="file" id="avatar" path="file" class="form-control-file"/>
+        <form:input type="file" onchange="loadFile(event)" path="file" accept="image/*" class="form-control-file"/>
+        <img id="output" style="height: 200px; margin-top: 10px; display: none" class="img-fluid rounded">
     </div>
     <div class="form-group">
         <label>Họ và tên</label>
@@ -71,9 +72,13 @@
     </div>
     <div class="form-group">
         <label>UserType <span style="color: red">*</span></label>
-        <form:input path="userType" class="form-control" required="required"/>
+        <form:select path="userType" class="custom-select">
+            <option value="ROLE_USER" selected>Ứng viên</option>
+            <option value="ROLE_NTD">Nhà tuyển dụng</option>
+            <option value="ROLE_ADMIN">Admin</option>
+        </form:select>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Lưu</button>
+        <button type="submit" class="btn btn-primary">Thêm</button>
     </div>
 </form:form>

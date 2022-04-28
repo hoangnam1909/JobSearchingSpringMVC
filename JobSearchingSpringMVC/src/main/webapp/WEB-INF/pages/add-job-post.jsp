@@ -17,11 +17,11 @@
     </div>
     <div class="form-group">
         <label>Lương tối thiểu</label>
-        <form:input path="beginningSalary" class="form-control"/>
+        <form:input id="currency" path="beginningSalary" class="form-control"/>
     </div>
     <div class="form-group">
         <label>Lương tối đa</label>
-        <form:input path="endingSalary" class="form-control"/>
+        <form:input id="currency" path="endingSalary" class="form-control"/>
     </div>
     <div class="form-group">
         <label>Địa chỉ</label>
@@ -80,6 +80,6 @@
         </form:select>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Thêm</button>
+        <button type="submit" name="submit" value="submit" class="btn btn-primary">Thêm</button>
     </div>
 </form:form>

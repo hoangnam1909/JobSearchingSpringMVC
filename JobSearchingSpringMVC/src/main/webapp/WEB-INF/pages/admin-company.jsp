@@ -11,7 +11,7 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th class="text-center">Action</th>
+        <th class="text-center">Thực thi</th>
         <th>ID</th>
         <th>Tên</th>
         <th>Mô tả</th>

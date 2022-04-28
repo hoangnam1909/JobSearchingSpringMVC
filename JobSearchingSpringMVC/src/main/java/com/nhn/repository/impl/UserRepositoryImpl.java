@@ -23,7 +23,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
-    private final int maxItemsInPage = 5;
+    private final int maxItemsInPage = 10;
 
     public int getMaxItemsInPage() {
         return maxItemsInPage;
@@ -79,10 +79,11 @@ public class UserRepositoryImpl implements UserRepository {
 
         Query q = session.createQuery(query);
 
-        int max = maxItemsInPage;
-        q.setMaxResults(max);
-        q.setFirstResult((page - 1) * max);
-
+        if (page != 0) {
+            int max = maxItemsInPage;
+            q.setMaxResults(max);
+            q.setFirstResult((page - 1) * max);
+        }
         return q.getResultList();
     }
 

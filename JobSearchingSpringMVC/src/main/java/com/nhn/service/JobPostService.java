@@ -12,7 +12,7 @@ public interface JobPostService {
     List<JobPost> getPosts(Map<String, String> params, int page);
     boolean delete(JobPost post);
     boolean update(JobPost post);
-    long countAll();
+    long count();
     int getMaxItemsInPage();
 
 }

@@ -30,6 +30,10 @@ public class JobPostRepositoryImpl implements JobPostRepository {
 
     private final int maxItemsInPage = 10;
 
+    public int getMaxItemsInPage() {
+        return maxItemsInPage;
+    }
+
     @Override
     public JobPost getById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
@@ -132,15 +136,11 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     }
 
     @Override
-    public long countAll() {
+    public long count() {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        Query query = session.createQuery("Select Count(*) From JobPost");
+        Query q = session.createQuery("Select Count(*) From JobPost");
 
-        return Long.parseLong(query.getSingleResult().toString());
+        return Long.parseLong(q.getSingleResult().toString());
     }
 
-    @Override
-    public int getMaxItemsInPage() {
-        return this.maxItemsInPage;
-    }
 }

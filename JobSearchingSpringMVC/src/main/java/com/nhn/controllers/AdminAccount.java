@@ -58,12 +58,6 @@ public class AdminAccount {
         String errMsg = null;
         String sucMsg = null;
 
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("password", user.getPassword());
-        model.addAttribute("email", user.getEmail());
-        model.addAttribute("phone", user.getPhone());
-        model.addAttribute("userType", user.getUserType());
-
         if (user.getPassword().equals(user.getConfirmPassword())) {
             this.userService.add(user);
             sucMsg = String.format("Thêm thông tin user '%s' thành công", user.getUsername());

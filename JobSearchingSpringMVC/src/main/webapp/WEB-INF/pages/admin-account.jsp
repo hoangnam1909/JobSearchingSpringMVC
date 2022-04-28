@@ -11,12 +11,12 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th class="text-center" style="width: 10%">Action</th>
+        <th class="text-center" style="width: 10%">Thực thi</th>
         <th style="width: 5%">ID</th>
-        <th style="width: 25%">Username</th>
-        <th style="width: 15%">Phone</th>
+        <th style="width: 25%">Tên đăng nhập</th>
+        <th style="width: 15%">Số điện thoại</th>
         <th style="width: 30%">Email</th>
-        <th style="width: 15%">Role</th>
+        <th style="width: 15%">Quyền</th>
     </tr>
     </thead>
     <tbody>
