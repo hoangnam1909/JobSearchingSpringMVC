@@ -72,7 +72,7 @@
 <ul class="pagination d-flex justify-content-center mt-4">
     <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">
         <li class="page-item">
-            <a class="page-link" href="<c:url value="/admin/account/" />?page=${page}">${page}</a>
+            <a class="page-link" href="<c:url value="/admin/job-post/" />?page=${page}">${page}</a>
         </li>
     </c:forEach>
 </ul>

@@ -25,6 +25,12 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
+    private final int maxItemsInPage = 10;
+
+    public int getMaxItemsInPage() {
+        return maxItemsInPage;
+    }
+
     @Override
     public Company getById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
@@ -109,25 +115,27 @@ public class CompanyRepositoryImpl implements CompanyRepository {
         Query query = session.createQuery(q);
 
         if (page != 0) {
-            int max = 10;
-            int index = (page - 1) * max;
-            query.setFirstResult(index);
-            query.setMaxResults(3);
+            int max = maxItemsInPage;
+            query.setMaxResults(max);
+            query.setFirstResult((page - 1) * max);
         }
-
         return query.getResultList();
     }
 
     @Override
     public boolean delete(Company company) {
-        Session session = this.sessionFactory.getObject().getCurrentSession();
-        try {
-            session.delete(company);
-            return true;
-        } catch (HibernateException ex) {
-            System.err.println(ex.getMessage());
+        if (company.getJobPosts().size() == 0) {
+            Session session = this.sessionFactory.getObject().getCurrentSession();
+            try {
+                session.delete(company);
+                return true;
+            } catch (HibernateException ex) {
+                System.err.println(ex.getMessage());
+            }
+            return false;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -143,4 +151,13 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
         return false;
     }
+
+    @Override
+    public long count() {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Query q = session.createQuery("Select Count(*) From Company ");
+
+        return Long.parseLong(q.getSingleResult().toString());
+    }
+
 }

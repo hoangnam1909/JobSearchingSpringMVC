@@ -7,13 +7,16 @@ package com.nhn.controllers;
 
 import com.nhn.pojo.User;
 import com.nhn.service.UserService;
+import com.nhn.utils.utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +30,7 @@ public class AdminAccount {
     @Autowired
     UserService userService;
 
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/admin/account")
     public String indexDefault(Model model,
                                @RequestParam(required = false) Map<String, String> params) {
@@ -78,13 +82,12 @@ public class AdminAccount {
     }
 
     @PostMapping("/admin/account/edit")
-    @Transactional
     public String editAccountPost(Model model,
                                   @ModelAttribute(value = "user") User user,
                                   final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
-        user.setPassword(user.getConfirmPassword());
+
         boolean updateAccountCheck = this.userService.update(user);
         if (updateAccountCheck)
             sucMsg = String.format("Chỉnh sửa thông tin user '%s' thành công", user.getUsername());
@@ -105,8 +108,6 @@ public class AdminAccount {
         }
 
         model.addAttribute("user", user);
-        model.addAttribute("id", id);
-
         return "edit-account";
     }
 

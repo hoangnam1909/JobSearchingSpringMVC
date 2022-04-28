@@ -39,24 +39,22 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public boolean add(User user) {
-        if (user.getFile() != null) {
-            try {
-                Map res = this.cloudinary.uploader().upload(user.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
-                user.setAvatar(res.get("secure_url").toString());
-            } catch (IOException ex) {
-                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            String pass = user.getPassword();
+
+            Map r = this.cloudinary.uploader().upload(user.getFile().getBytes(),
+                    ObjectUtils.asMap("resource_type", "auto"));
+            user.setAvatar((String) r.get("secure_url"));
+
+            String sDate = String.format("%02d/%02d/%04d", user.getDay(), user.getMonth(), user.getYear());
+            user.setDob(utils.stringToDate(sDate, "dd/MM/yyyy"));
+
+            return this.userRepository.add(user);
+        } catch (IOException | ParseException ex) {
+            ex.printStackTrace();
         }
 
-        String sDate = String.format("%02d/%02d/%04d", user.getDay(), user.getMonth(), user.getYear());
-        try {
-            user.setDob(utils.stringToDate(sDate, "dd/MM/yyyy"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-        return this.userRepository.add(user);
+        return false;
     }
 
     @Override
@@ -76,24 +74,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean update(User user) {
-        if (user.getFile() != null) {
-            try {
-                Map res = this.cloudinary.uploader().upload(user.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
-                user.setAvatar(res.get("secure_url").toString());
-            } catch (IOException ex) {
-                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            String pass = user.getPassword();
+            user.setPassword(this.passwordEncoder.encode(pass));
+
+            Map r = this.cloudinary.uploader().upload(user.getFile().getBytes(),
+                    ObjectUtils.asMap("resource_type", "auto"));
+            user.setAvatar((String) r.get("secure_url"));
+
+            String sDate = String.format("%02d/%02d/%04d", user.getDay(), user.getMonth(), user.getYear());
+            user.setDob(utils.stringToDate(sDate, "dd/MM/yyyy"));
+
+            return this.userRepository.update(user);
+        } catch (IOException | ParseException ex) {
+            ex.printStackTrace();
         }
 
-        String sDate = String.format("%02d/%02d/%04d", user.getDay(), user.getMonth(), user.getYear());
-        try {
-            user.setDob(utils.stringToDate(sDate, "dd/MM/yyyy"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-        return this.userRepository.update(user);
+        return false;
     }
 
     @Override

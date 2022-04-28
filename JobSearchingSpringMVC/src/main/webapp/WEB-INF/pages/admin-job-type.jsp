@@ -12,7 +12,8 @@
     <thead>
     <tr>
         <th class="text-center" style="width: 10%">Thực thi</th>
-        <th>Tên công ty</th>
+        <th style="width: 10%">ID</th>
+        <th style="width: 80%">Loại việc làm</th>
     </tr>
     </thead>
     <tbody>
@@ -26,6 +27,7 @@
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
+            <td>${jt.id}</td>
             <td>${jt.name}</td>
         </tr>
     </c:forEach>
@@ -43,3 +45,12 @@
             ${errMsg}
     </div>
 </c:if>
+
+<ul class="pagination d-flex justify-content-center mt-4">
+    <c:forEach begin="1" end="${Math.ceil(counter/jobTypeService.maxItemsInPage)}" var="page">
+        <li class="page-item">
+            <a class="page-link" href="<c:url value="/admin/job-type/" />?page=${page}">${page}</a>
+        </li>
+    </c:forEach>
+</ul>
+

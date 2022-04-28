@@ -35,8 +35,8 @@
     </div>
     <div class="form-group">
         <label>Ảnh đại diện</label>
-        <form:input type="file" onchange="loadFile(event)" path="file" accept="image/*" class="form-control-file"/>
-        <img id="output" style="height: 200px; margin-top: 10px; display: none" class="img-fluid rounded">
+        <form:input type="file" path="file" accept="image/*"
+                    class="form-control" required="required"/>
     </div>
     <div class="form-group">
         <label>Họ và tên</label>
@@ -45,11 +45,14 @@
     <div class="input-group input-group-static mb-4 d-flex flex-column">
         <label>Ngày sinh (Ngày/Tháng/Năm)</label>
         <div class="d-flex flex-row align-items-center">
-            <form:input path="day" class="form-control" id="dobDay" placeholder="Ngày" type="number"/>
+            <form:input path="day" class="form-control" id="dobDay"
+                        placeholder="Ngày" type="number" required="required"/>
             <span class="mx-2">/</span>
-            <form:input path="month" class="form-control" id="dobMonth" placeholder="Tháng" type="number"/>
+            <form:input path="month" class="form-control" id="dobMonth"
+                        placeholder="Tháng" type="number" required="required"/>
             <span class="mx-2">/</span>
-            <form:input path="year" class="form-control" id="dobYear" placeholder="Năm" type="number"/>
+            <form:input path="year" class="form-control" id="dobYear"
+                        placeholder="Năm" type="number" required="required"/>
         </div>
     </div>
     <div class="form-group">

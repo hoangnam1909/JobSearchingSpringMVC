@@ -62,7 +62,7 @@ public class AdminJobPost {
     public String addJobPost(Model model) {
         List<User> users = userService.getUsers("", 0);
         model.addAttribute("users", users);
-        List<JobType> jobTypes = jobTypeService.getJobTypes("");
+        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
         model.addAttribute("jobTypes", jobTypes);
         List<Company> companies = companyService.getCompanies(null, 0);
         model.addAttribute("companies", companies);
@@ -153,7 +153,7 @@ public class AdminJobPost {
 
         List<User> users = userService.getUsers("", 0);
         model.addAttribute("users", users);
-        List<JobType> jobTypes = jobTypeService.getJobTypes("");
+        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
         model.addAttribute("jobTypes", jobTypes);
         List<Company> companies = companyService.getCompanies(null, 0);
         model.addAttribute("companies", companies);

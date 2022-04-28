@@ -1,6 +1,8 @@
 package com.nhn.pojo;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "job_type")
@@ -12,6 +14,17 @@ public class JobType {
 
     @Column(name = "name", nullable = false, length = 45)
     private String name;
+
+    @OneToMany(mappedBy = "jobType")
+    private Set<JobPost> jobPosts = new LinkedHashSet<>();
+
+    public Set<JobPost> getJobPosts() {
+        return jobPosts;
+    }
+
+    public void setJobPosts(Set<JobPost> jobPosts) {
+        this.jobPosts = jobPosts;
+    }
 
     @Override
     public String toString() {

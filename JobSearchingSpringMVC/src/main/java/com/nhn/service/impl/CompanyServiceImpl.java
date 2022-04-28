@@ -44,4 +44,14 @@ public class CompanyServiceImpl implements CompanyService {
     public boolean update(Company company) {
         return this.companyRepository.update(company);
     }
+
+    @Override
+    public long count() {
+        return this.companyRepository.count();
+    }
+
+    @Override
+    public int getMaxItemsInPage() {
+        return this.companyRepository.getMaxItemsInPage();
+    }
 }

@@ -1,9 +1,12 @@
 package com.nhn.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -56,11 +59,23 @@ public class User {
     @Column(name = "address", length = 100)
     private String address;
 
+    @JsonIgnore
     @Transient
     private String confirmPassword;
-
+    @JsonIgnore
     @Transient
     private MultipartFile file;
+
+    @OneToMany(mappedBy = "postedByUser")
+    private Set<JobPost> jobPosts = new LinkedHashSet<>();
+
+    public Set<JobPost> getJobPosts() {
+        return jobPosts;
+    }
+
+    public void setJobPosts(Set<JobPost> jobPosts) {
+        this.jobPosts = jobPosts;
+    }
 
     {
         userType = USER;

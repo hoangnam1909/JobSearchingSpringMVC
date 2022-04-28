@@ -32,8 +32,8 @@ public class JobTypeServiceImpl implements JobTypeService {
     }
 
     @Override
-    public List<JobType> getJobTypes(String name) {
-        return this.jobTypeRepository.getJobTypes(name);
+    public List<JobType> getJobTypes(String name, int page) {
+        return this.jobTypeRepository.getJobTypes(name, page);
     }
 
     @Override
@@ -44,5 +44,15 @@ public class JobTypeServiceImpl implements JobTypeService {
     @Override
     public boolean update(JobType jobType) {
         return this.jobTypeRepository.update(jobType);
+    }
+
+    @Override
+    public long count() {
+        return this.jobTypeRepository.count();
+    }
+
+    @Override
+    public int getMaxItemsInPage() {
+        return this.jobTypeRepository.getMaxItemsInPage();
     }
 }

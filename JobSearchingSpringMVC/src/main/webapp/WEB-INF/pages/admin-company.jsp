@@ -11,13 +11,12 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th class="text-center">Thực thi</th>
-        <th>ID</th>
-        <th>Tên</th>
-        <th>Mô tả</th>
-        <th>Địa điểm</th>
-        <th>Liên hệ</th>
-        <th>Trang web</th>
+        <th class="text-center" style="width: 10%">Thực thi</th>
+        <th style="width: 5%">ID</th>
+        <th style="width: 20%">Tên</th>
+        <th style="width: 25%">Địa điểm</th>
+        <th style="width: 20%">Liên hệ</th>
+        <th style="width: 20%">Trang web</th>
     </tr>
     </thead>
     <tbody>
@@ -33,7 +32,6 @@
             </td>
             <td>${com.id}</td>
             <td>${com.name}</td>
-            <td>${com.description}</td>
             <td>${com.location}</td>
             <td>${com.contact}</td>
             <td>${com.website}</td>
@@ -53,3 +51,11 @@
             ${errMsg}
     </div>
 </c:if>
+
+<ul class="pagination d-flex justify-content-center mt-4">
+    <c:forEach begin="1" end="${Math.ceil(counter/companyService.maxItemsInPage)}" var="page">
+        <li class="page-item">
+            <a class="page-link" href="<c:url value="/admin/company/" />?page=${page}">${page}</a>
+        </li>
+    </c:forEach>
+</ul>

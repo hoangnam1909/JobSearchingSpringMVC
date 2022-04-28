@@ -2,18 +2,17 @@ package com.nhn.controllers;
 
 import com.nhn.pojo.Company;
 import com.nhn.pojo.JobType;
+import com.nhn.pojo.User;
 import com.nhn.service.JobTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Transactional
@@ -23,10 +22,15 @@ public class AdminJobType {
     JobTypeService jobTypeService;
 
     @RequestMapping("/admin/job-type")
-    public String index(Model model) {
-        List<JobType> jobTypes = this.jobTypeService.getJobTypes("");
+    public String indexDefault(Model model,
+                               @RequestParam(required = false) Map<String, String> params) {
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
 
+        List<JobType> jobTypes = this.jobTypeService.getJobTypes("", page);
         model.addAttribute("jobTypes", jobTypes);
+
+        model.addAttribute("counter", jobTypeService.count());
+        model.addAttribute("jobTypeService", jobTypeService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
 

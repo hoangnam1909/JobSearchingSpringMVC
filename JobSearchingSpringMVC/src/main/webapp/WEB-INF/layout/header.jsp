@@ -25,22 +25,23 @@
                     <a class="nav-link" href="<c:url value="/login" />">Đăng nhập</a>
                 </li>
             </c:if>
-            <c:if test="${pageContext.request.userPrincipal.name != null}">
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/" />">
-                            ${pageContext.request.userPrincipal.name}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/logout" />">
-                        Đăng xuất
-                    </a>
-                </li>
-            </c:if>
         </ul>
     </div>
-    <form class="form-inline" action="">
-        <input class="form-control mr-sm-2" type="text" placeholder="Nhap tu khoa...">
-        <button class="btn btn-success" type="submit">Tim kiem</button>
-    </form>
+    <c:if test="${pageContext.request.userPrincipal.name != null}">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/" />">
+                            <span>
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                        ${pageContext.request.userPrincipal.name}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/logout" />">
+                    Đăng xuất
+                </a>
+            </li>
+        </ul>
+    </c:if>
 </nav>

@@ -8,10 +8,19 @@ import java.util.Map;
 public interface JobTypeRepository {
 
     JobType getById(int id);
+
     boolean add(JobType jobType);
+
     JobType getByName(String name);
-    List<JobType> getJobTypes(String name);
+
+    List<JobType> getJobTypes(String name, int page);
+
     boolean delete(JobType jobType);
+
     boolean update(JobType jobType);
-    
+
+    long count();
+
+    int getMaxItemsInPage();
+
 }
