@@ -1,7 +1,6 @@
 package com.nhn.controllers;
 
 import com.nhn.pojo.Company;
-import com.nhn.pojo.User;
 import com.nhn.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,7 @@ import java.util.Map;
 
 @Controller
 @Transactional
-public class AdminCompany {
+public class AdminCompanyController {
 
     @Autowired
     CompanyService companyService;

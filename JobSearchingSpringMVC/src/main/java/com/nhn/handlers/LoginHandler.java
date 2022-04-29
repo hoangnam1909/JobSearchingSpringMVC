@@ -34,8 +34,12 @@ public class LoginHandler implements AuthenticationSuccessHandler {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = this.userDetailsService.getByUsername(authentication.getName());
         request.getSession().setAttribute("currentUser", user);
-        
-        response.sendRedirect("/JobSearchingSpringMVC");
+
+        String redirectUrl = request.getContextPath();
+        if (user.getUserType().equals(User.ADMIN))
+            redirectUrl = "admin";
+
+        response.sendRedirect(redirectUrl);
     }
     
 }

@@ -10,14 +10,14 @@
         <th style="width: 25%">Tên đăng nhập</th>
         <th style="width: 15%">Số điện thoại</th>
         <th style="width: 30%">Email</th>
-        <th style="width: 15%">Quyền</th>
+        <th style="width: 15%">Loại tài khoản</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach items="${users}" var="u">
         <tr>
             <td style="text-align: center">
-                <a style="margin-right: 10px" href="<c:url value="/admin/account-permission/accept/${u.id}"/>" data-toggle="tooltip"
+                <a style="margin-right: 10px" href="<c:url value="/admin/account-permission/accept" />?id=${u.id}" data-toggle="tooltip"
                    title="Duyệt">
                     <i class="fa-solid fa-check"></i>
                 </a>

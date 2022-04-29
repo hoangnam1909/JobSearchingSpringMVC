@@ -5,24 +5,18 @@
  */
 package com.nhn.controllers;
 
-import com.nhn.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
  * @author Lightning
  */
 @Controller
-public class Login {
-    @Autowired
-    private UserService userService;
-    
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
+public class HomeController {
+    @RequestMapping("/")
+    public String index(Model model) {
+        return "redirect:/login";
     }
-
 }

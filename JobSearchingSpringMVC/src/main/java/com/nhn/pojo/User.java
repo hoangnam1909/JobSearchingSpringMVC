@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -20,9 +22,11 @@ public class User {
     @Column(name = "id", nullable = false)
     private int id;
 
+    @Size(min = 5, max = 20, message = "{user.username.lenErr}")
     @Column(name = "username", nullable = false, length = 45)
     private String username;
 
+    @NotEmpty(message = "{user.password.emptyErr}")
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 

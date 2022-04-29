@@ -37,15 +37,10 @@ public class AccountPermission {
         return "admin-account-permission";
     }
 
-    @RequestMapping("/admin/account-permission/accept")
-    public String acceptAccount() {
-        return "redirect:/admin/account-permission";
-    }
-
-    @RequestMapping(path = "/admin/account-permission/accept/{id}")
-    public String acceptAccountById(Model model,
-                                    @PathVariable(value = "id") int id,
-                                    final RedirectAttributes redirectAttrs) {
+    @RequestMapping(path = "/admin/account-permission/accept")
+    public String acceptAccount(Model model,
+                                @RequestParam(name = "id", defaultValue = "0") int id,
+                                final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
 

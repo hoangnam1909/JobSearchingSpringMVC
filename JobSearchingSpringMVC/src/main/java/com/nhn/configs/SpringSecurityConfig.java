@@ -4,6 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.nhn.handlers.LoginHandler;
 import com.nhn.handlers.LogoutHandler;
+import com.nhn.handlers.MyAccessDenied;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +36,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     private LoginHandler loginHandler;
     @Autowired
     private LogoutHandler logoutHandler;
+    @Autowired
+    private MyAccessDenied accessDenied;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -53,25 +56,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return c;
     }
 
-    @Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource message = new ResourceBundleMessageSource();
-
-        message.setBasename("messages");
-
-        return message;
-    }
-
-
-    @Bean
-    public LocalValidatorFactoryBean validator() {
-        LocalValidatorFactoryBean v = new LocalValidatorFactoryBean();
-
-        v.setValidationMessageSource(messageSource());
-
-        return v;
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
@@ -86,14 +70,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin().successHandler(this.loginHandler)
                 .failureUrl("/login?error");
-//        http.formLogin().defaultSuccessUrl("/")
-//                .failureUrl("/login?error");
 
-//        http.logout().logoutSuccessHandler("/login");
         http.logout().logoutSuccessHandler(this.logoutHandler);
-        http.exceptionHandling().accessDeniedPage("/login?accessDenied");
-//        http.exceptionHandling().accessDeniedHandler(accessDenied);
-//        http.exceptionHandling().
+//        http.exceptionHandling().accessDeniedPage("/login?accessDenied");
+        http.exceptionHandling().accessDeniedHandler(this.accessDenied);
+
 //        http.authorizeRequests().antMatchers("/").permitAll()
 //                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
 

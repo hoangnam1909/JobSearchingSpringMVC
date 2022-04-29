@@ -36,13 +36,16 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean add(User user) {
+    public boolean addOrUpdate(User user) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            session.save(user);
+            if (user.getId() > 0)
+                session.update(user);
+            else
+                session.save(user);
             return true;
         } catch (HibernateException ex) {
-            System.err.println(ex.getMessage());
+            ex.printStackTrace();
         }
 
         return false;
@@ -126,20 +129,6 @@ public class UserRepositoryImpl implements UserRepository {
         } else {
             return false;
         }
-    }
-
-    @Override
-    public boolean update(User user) {
-        Session session = this.sessionFactory.getObject().getCurrentSession();
-        try {
-            session.update(user);
-
-            return true;
-        } catch (HibernateException ex) {
-            System.err.println(ex.getMessage());
-        }
-
-        return false;
     }
 
     @Override
