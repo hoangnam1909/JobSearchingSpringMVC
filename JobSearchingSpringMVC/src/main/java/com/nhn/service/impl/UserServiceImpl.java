@@ -74,23 +74,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean update(User user) {
-        try {
-            String pass = user.getPassword();
-            user.setPassword(this.passwordEncoder.encode(pass));
+        String pass = user.getPassword();
+        user.setPassword(this.passwordEncoder.encode(pass));
+        String avatar = user.getAvatar();
 
-            Map r = this.cloudinary.uploader().upload(user.getFile().getBytes(),
-                    ObjectUtils.asMap("resource_type", "auto"));
-            user.setAvatar((String) r.get("secure_url"));
+        if (!user.getFile().isEmpty()) {
+            Map r = null;
+            try {
+                r = this.cloudinary.uploader().upload(user.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            String sDate = String.format("%02d/%02d/%04d", user.getDay(), user.getMonth(), user.getYear());
-            user.setDob(utils.stringToDate(sDate, "dd/MM/yyyy"));
-
-            return this.userRepository.update(user);
-        } catch (IOException | ParseException ex) {
-            ex.printStackTrace();
+            if (r != null)
+                user.setAvatar((String) r.get("secure_url"));
+            user.setAvatar(avatar);
         }
 
-        return false;
+        String sDate = String.format("%02d/%02d/%04d", user.getDay(), user.getMonth(), user.getYear());
+        try {
+            user.setDob(utils.stringToDate(sDate, "dd/MM/yyyy"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return this.userRepository.update(user);
     }
 
     @Override
@@ -101,6 +110,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public int getMaxItemsInPage() {
         return this.userRepository.getMaxItemsInPage();
+    }
+
+    @Override
+    public List<User> getUsersByRole(String role, int page, int active) {
+        return this.userRepository.getUsersByRole(role, page, active);
     }
 
     @Override

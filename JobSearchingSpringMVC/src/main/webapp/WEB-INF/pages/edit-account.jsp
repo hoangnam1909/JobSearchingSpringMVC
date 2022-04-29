@@ -11,14 +11,11 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <h1 class="text-center text-success">CHỈNH SỬA THÔNG TIN TÀI KHOẢN</h1>
-<h1 class="text-center text-success">${getDob}</h1>
-<h1 class="text-center text-success">${getAvatar}</h1>
-
 
 <c:url value="/admin/account/edit" var="action"/>
 
 <form:form action="${action}" method="post" enctype="multipart/form-data" modelAttribute="user">
-    <div class="form-group">
+    <div class="form-group" style="display: none">
         <form:input path="id" class="form-control"/>
     </div>
     <div class="form-group">
@@ -37,6 +34,9 @@
         <label for="phone">Số điện thoại</label>
         <form:input path="phone" id="phone" class="form-control"/>
     </div>
+    <div class="form-group" style="display: none">
+        <form:input path="avatar" class="form-control"/>
+    </div>
     <div class="form-group">
         <label for="avatar">Ảnh đại diện</label>
         <form:input type="file" id="avatar" path="file"
@@ -53,13 +53,16 @@
     <div class="input-group input-group-static mb-4 d-flex flex-column">
         <label>Ngày sinh (Ngày/Tháng/Năm)</label>
         <div class="d-flex flex-row align-items-center">
-            <form:input path="day" value="${user.dob.date}" class="form-control" id="dobDay"
+            <fmt:formatDate pattern="dd" value="${user.dob}" var="dobDay"/>
+            <form:input path="day" value="${dobDay}" class="form-control"
                         placeholder="Ngày" type="number" required="required"/>
             <span class="mx-2">/</span>
-            <form:input path="month" value="${user.dob.month + 1}" class="form-control" id="dobMonth"
+            <fmt:formatDate pattern="MM" value="${user.dob}" var="dobMonth"/>
+            <form:input path="month" value="${dobMonth}" class="form-control"
                         placeholder="Tháng" type="number" required="required"/>
             <span class="mx-2">/</span>
-            <form:input path="year" value="${user.dob.year}" class="form-control" id="dobYear"
+            <fmt:formatDate pattern="yyyy" value="${user.dob}" var="dobYear"/>
+            <form:input path="year" value="${dobYear}" class="form-control"
                         placeholder="Năm" type="number" required="required"/>
         </div>
     </div>
@@ -77,16 +80,34 @@
     <div class="form-group">
         <label>Kích hoạt <span style="color: red">*</span></label>
         <form:select path="active" class="custom-select">
-            <option value="0" selected>Disable</option>
-            <option value="1">Enable</option>
+            <c:if test="${user.active == 0}">
+                <option value="0" selected>Disable</option>
+                <option value="1">Enable</option>
+            </c:if>
+            <c:if test="${user.active == 1}">
+                <option value="0">Disable</option>
+                <option value="1" selected>Enable</option>
+            </c:if>
         </form:select>
     </div>
     <div class="form-group">
         <label>UserType <span style="color: red">*</span></label>
         <form:select path="userType" class="custom-select">
-            <option value="ROLE_USER" selected>Ứng viên</option>
-            <option value="ROLE_NTD">Nhà tuyển dụng</option>
-            <option value="ROLE_ADMIN">Admin</option>
+            <c:if test="${user.userType.equals('ROLE_USER')}">
+                <option value="ROLE_USER" selected>Ứng viên</option>
+                <option value="ROLE_NTD">Nhà tuyển dụng</option>
+                <option value="ROLE_ADMIN">Admin</option>
+            </c:if>
+            <c:if test="${user.userType.equals('ROLE_NTD')}">
+                <option value="ROLE_USER">Ứng viên</option>
+                <option value="ROLE_NTD" selected>Nhà tuyển dụng</option>
+                <option value="ROLE_ADMIN">Admin</option>
+            </c:if>
+            <c:if test="${user.userType.equals('ROLE_ADMIN')}">
+                <option value="ROLE_USER">Ứng viên</option>
+                <option value="ROLE_NTD">Nhà tuyển dụng</option>
+                <option value="ROLE_ADMIN" selected>Admin</option>
+            </c:if>
         </form:select>
     </div>
     <div class="form-group">

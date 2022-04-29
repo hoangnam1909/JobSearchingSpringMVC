@@ -30,10 +30,9 @@ public class AdminAccount {
     @Autowired
     UserService userService;
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/admin/account")
-    public String indexDefault(Model model,
-                               @RequestParam(required = false) Map<String, String> params) {
+    public String index(Model model,
+                        @RequestParam(required = false) Map<String, String> params) {
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
 
         List<User> users = userService.getUsers("", page);
@@ -118,8 +117,8 @@ public class AdminAccount {
 
     @RequestMapping(path = "/admin/account/delete/{id}")
     public String deleteAccountById(Model model,
-                                       @PathVariable(value = "id") int id,
-                                       final RedirectAttributes redirectAttrs) {
+                                    @PathVariable(value = "id") int id,
+                                    final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
 

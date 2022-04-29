@@ -22,4 +22,7 @@ public interface UserService extends UserDetailsService {
     long count();
 
     int getMaxItemsInPage();
+
+    List<User> getUsersByRole(String role, int page, int active);
+
 }

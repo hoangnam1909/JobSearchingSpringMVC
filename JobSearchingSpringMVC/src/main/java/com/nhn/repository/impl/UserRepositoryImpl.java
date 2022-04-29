@@ -88,6 +88,31 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public List<User> getUsersByRole(String role, int page, int active) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root root = query.from(User.class);
+        query = query.select(root);
+
+        Predicate p1 = builder.equal(root.get("userType").as(String.class), role.trim());
+        Predicate p2 = builder.equal(root.get("active").as(Integer.class), active);
+
+        query = query.where(p1, p2);
+
+        query = query.orderBy(builder.desc(root.get("id")));
+
+        Query q = session.createQuery(query);
+
+        if (page != 0) {
+            int max = maxItemsInPage;
+            q.setMaxResults(max);
+            q.setFirstResult((page - 1) * max);
+        }
+        return q.getResultList();
+    }
+
+    @Override
     public boolean delete(User user) {
         if (user.getJobPosts().size() == 0) {
             Session session = this.sessionFactory.getObject().getCurrentSession();

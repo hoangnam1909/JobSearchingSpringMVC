@@ -26,6 +26,9 @@
                 <a class="nav-link" href="<c:url value="/admin/account"/> ">Tài khoản</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/admin/account-permission"/> ">Duyệt NTD</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/admin/job-post"/> ">Bài viết</a>
             </li>
             <li class="nav-item">

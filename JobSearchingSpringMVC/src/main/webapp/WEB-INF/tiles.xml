@@ -64,6 +64,11 @@ and open the template in the editor.
         <put-attribute name="content" value="/WEB-INF/pages/edit-job-post.jsp" />
     </definition>
 
+    <definition name="admin-account-permission" extends="adminLayout">
+        <put-attribute name="title" value="Duyệt NTD" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin-account-permission.jsp" />
+    </definition>
+
     <definition name="admin-company" extends="adminLayout">
         <put-attribute name="title" value="Quản lý danh sách công ty" />
         <put-attribute name="content" value="/WEB-INF/pages/admin-company.jsp" />
