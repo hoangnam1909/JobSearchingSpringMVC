@@ -10,6 +10,7 @@
     <div class="form-group">
         <label>Tên</label>
         <form:input path="name" class="form-control" />
+        <form:errors path="name" cssClass="error"/>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Thêm</button>

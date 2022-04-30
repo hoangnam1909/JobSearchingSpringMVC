@@ -27,7 +27,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
         "com.nhn.service",
         "com.nhn.repository",
         "com.nhn.controllers",
-        "com.nhn.handlers"
+        "com.nhn.handlers",
+        "com.nhn.validator"
 })
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired

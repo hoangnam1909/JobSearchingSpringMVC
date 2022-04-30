@@ -2,13 +2,17 @@ package com.nhn.controllers;
 
 import com.nhn.pojo.JobType;
 import com.nhn.service.JobTypeService;
+import com.nhn.validator.JobTypeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +21,15 @@ import java.util.Map;
 public class AdminJobTypeController {
 
     @Autowired
-    JobTypeService jobTypeService;
+    private JobTypeService jobTypeService;
+
+    @Autowired
+    private JobTypeValidator jobTypeValidator;
+
+//    @InitBinder("JobTypeValidator")
+//    public void initBinder(WebDataBinder binder){
+//        binder.addValidators(jobTypeValidator);
+//    }
 
     @RequestMapping("/admin/job-type")
     public String indexDefault(Model model,
@@ -43,10 +55,15 @@ public class AdminJobTypeController {
 
     @PostMapping("/admin/job-type/add")
     public String addJobTypePost(Model model,
-                                 @ModelAttribute(value = "jobType") JobType jobType,
+                                 @ModelAttribute(value = "jobType") @Valid JobType jobType,
+                                 BindingResult result,
                                  final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
+
+        jobTypeValidator.validate(jobType, result);
+        if (result.hasErrors())
+            return "add-job-type";
 
         boolean jobTypeAddedCheck = this.jobTypeService.add(jobType);
         if (jobTypeAddedCheck)
@@ -67,10 +84,14 @@ public class AdminJobTypeController {
     @PostMapping("/admin/job-type/edit")
     @Transactional
     public String editJobTypePost(Model model,
-                                  @ModelAttribute(value = "jobType") JobType jobType,
+                                  @ModelAttribute(value = "jobType") @Valid JobType jobType,
+                                  BindingResult result,
                                   final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
+
+        if (result.hasErrors())
+            return "edit-job-type";
 
         boolean editJobTypeCheck = this.jobTypeService.update(jobType);
         if (editJobTypeCheck)

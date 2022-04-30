@@ -1,7 +1,5 @@
 package com.nhn.configs;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.nhn.formatter.UserFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -25,7 +25,8 @@ import org.springframework.web.servlet.view.JstlView;
         "com.nhn.controllers",
         "com.nhn.repository",
         "com.nhn.service",
-        "com.nhn.handlers"
+        "com.nhn.handlers",
+        "com.nhn.validator"
 })
 public class WebApplicationContextConfig implements WebMvcConfigurer {
 
@@ -41,12 +42,15 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
     }
 
-    @Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
-        resource.addBasenames("messages");
+    @Override
+    public Validator getValidator() {
+        return validator();
+    }
 
-        return resource;
+    @Bean
+    public LocalValidatorFactoryBean validator(){
+        LocalValidatorFactoryBean v = new LocalValidatorFactoryBean();
+        return v;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.nhn.pojo;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ public class Company {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Basic
+    @Size(min = 5, max = 100, message = "ten ngan qua bro")
     @Column(name = "name", nullable = false, length = 100)
     private String name;
     @Basic

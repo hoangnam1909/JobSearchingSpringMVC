@@ -8,7 +8,6 @@ package com.nhn.controllers;
 import com.nhn.pojo.User;
 import com.nhn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -23,7 +22,6 @@ import java.util.Map;
  */
 @Controller
 @Transactional
-@PropertySource("classpath:messages.properties")
 public class AdminAccountController {
 
     @Autowired

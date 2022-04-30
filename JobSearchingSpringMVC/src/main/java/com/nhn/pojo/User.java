@@ -22,11 +22,11 @@ public class User {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Size(min = 5, max = 20, message = "{user.username.lenErr}")
+    @Size(min = 5, max = 20, message = "dài quá")
     @Column(name = "username", nullable = false, length = 45)
     private String username;
 
-    @NotEmpty(message = "{user.password.emptyErr}")
+    @NotEmpty(message = "Không đc để trống")
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
