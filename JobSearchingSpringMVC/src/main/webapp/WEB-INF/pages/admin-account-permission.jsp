@@ -2,6 +2,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 
+<h1 class="text-center text-success">XÁC NHẬN NHÀ TUYỂN DỤNG</h1>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="<c:url value="/admin/account-permission/accept-all"/>">Xác nhận tất cả</a>
+    </li>
+</ul>
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -17,7 +25,8 @@
     <c:forEach items="${users}" var="u">
         <tr>
             <td style="text-align: center">
-                <a style="margin-right: 10px" href="<c:url value="/admin/account-permission/accept" />?id=${u.id}" data-toggle="tooltip"
+                <a style="margin-right: 10px" href="<c:url value="/admin/account-permission/accept" />?id=${u.id}"
+                   data-toggle="tooltip"
                    title="Duyệt">
                     <i class="fa-solid fa-check"></i>
                 </a>

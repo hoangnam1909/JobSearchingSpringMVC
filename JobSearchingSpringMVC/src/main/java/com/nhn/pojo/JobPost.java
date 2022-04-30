@@ -45,8 +45,8 @@ public class JobPost {
     @JoinColumn(name = "posted_by_user", nullable = false)
     private User postedByUser;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "job_type_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_type_id")
     private JobType jobType;
 
     @ManyToOne(fetch = FetchType.LAZY)

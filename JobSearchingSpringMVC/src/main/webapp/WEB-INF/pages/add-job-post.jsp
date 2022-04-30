@@ -2,11 +2,19 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<h1 class="text-center text-success">THÊM BÀI VIẾT</h1>
+<c:if test="${jobPost.id == 0}">
+    <h1 class="text-center text-success">THÊM TÀI BÀI VIẾT</h1>
+</c:if>
+<c:if test="${jobPost.id > 0}">
+    <h1 class="text-center text-success">CHỈNH SỬA THÔNG TIN BÀI VIẾT #${jobPost.id}</h1>
+</c:if>
 
-<c:url value="/admin/job-post/add" var="action"/>
+<c:url value="/admin/job-post/add-or-edit" var="action"/>
 
 <form:form action="${action}" method="post" modelAttribute="jobPost">
+    <div class="form-group" style="display: none">
+        <form:input path="id" class="form-control"/>
+    </div>
     <div class="form-group">
         <label>Tiêu đề</label>
         <form:input path="title" class="form-control"/>

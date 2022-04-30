@@ -19,12 +19,13 @@
     </div>
 </c:if>
 
+
 <form:form action="${action}" method="post" enctype="multipart/form-data" modelAttribute="user">
     <div class="form-group" style="display: none">
         <form:input path="id" class="form-control"/>
     </div>
     <div class="form-group">
-        <label>Tên đăng nhập /> <span style="color: red">*</span></label>
+        <label>Tên đăng nhập <span style="color: red">*</span></label>
         <form:input path="username" class="form-control" required="required"/>
     </div>
     <div class="form-group">
@@ -55,10 +56,6 @@
         <div class="col text-center">
             <img src="<c:url value="${user.avatar}"/>" style="height: 200px; margin-top: 10px;"
                  class="img-fluid rounded" id="blah" alt="avatar">
-<%--            <c:if test="${user.avatar != null}">--%>
-<%--                <img src="<c:url value="${user.avatar}"/>" style="height: 200px; margin-top: 10px;"--%>
-<%--                     class="img-fluid rounded" id="blah" alt="avatar">--%>
-<%--            </c:if>--%>
         </div>
     </div>
     <div class="form-group">

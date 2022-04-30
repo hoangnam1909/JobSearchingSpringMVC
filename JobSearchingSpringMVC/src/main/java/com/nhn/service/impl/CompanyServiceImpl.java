@@ -21,8 +21,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public boolean add(Company company) {
-        return this.companyRepository.add(company);
+    public boolean addOrUpdate(Company company) {
+        return this.companyRepository.addOrUpdate(company);
     }
 
     @Override
@@ -38,11 +38,6 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public boolean delete(Company company) {
         return this.companyRepository.delete(company);
-    }
-
-    @Override
-    public boolean update(Company company) {
-        return this.companyRepository.update(company);
     }
 
     @Override

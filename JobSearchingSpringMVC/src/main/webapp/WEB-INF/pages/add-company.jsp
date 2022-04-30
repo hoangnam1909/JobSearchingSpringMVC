@@ -4,9 +4,12 @@
 
 <h1 class="text-center text-success">THÊM CÔNG TY</h1>
 
-<c:url value="/admin/company/add" var="action" />
+<c:url value="/admin/company/add-or-edit" var="action" />
 
 <form:form action="${action}" method="post" modelAttribute="company">
+    <div class="form-group" style="display: none">
+        <form:input path="id" class="form-control"/>
+    </div>
     <div class="form-group">
         <label>Tên</label>
         <form:input path="name" class="form-control" />

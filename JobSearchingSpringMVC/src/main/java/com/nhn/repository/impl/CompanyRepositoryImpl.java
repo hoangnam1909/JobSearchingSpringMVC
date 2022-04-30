@@ -1,7 +1,9 @@
 package com.nhn.repository.impl;
 
 import com.nhn.pojo.Company;
+import com.nhn.pojo.JobPost;
 import com.nhn.repository.CompanyRepository;
+import com.nhn.service.JobPostService;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -24,6 +27,9 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
+
+    @Autowired
+    private JobPostService jobPostService;
 
     private final int maxItemsInPage = 10;
 
@@ -38,13 +44,16 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     @Override
-    public boolean add(Company company) {
+    public boolean addOrUpdate(Company company) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            session.save(company);
+            if (company.getId() > 0)
+                session.update(company);
+            else
+                session.save(company);
             return true;
         } catch (HibernateException ex) {
-            System.err.println(ex.getMessage());
+            ex.printStackTrace();
         }
 
         return false;
@@ -124,31 +133,13 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
     @Override
     public boolean delete(Company company) {
-        if (company.getJobPosts().size() == 0) {
-            Session session = this.sessionFactory.getObject().getCurrentSession();
-            try {
-                session.delete(company);
-                return true;
-            } catch (HibernateException ex) {
-                System.err.println(ex.getMessage());
-            }
-            return false;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Company company) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            session.update(company);
-
+            session.delete(company);
             return true;
         } catch (HibernateException ex) {
             System.err.println(ex.getMessage());
         }
-
         return false;
     }
 

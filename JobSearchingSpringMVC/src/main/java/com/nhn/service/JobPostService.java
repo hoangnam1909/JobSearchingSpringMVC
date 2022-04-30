@@ -9,13 +9,11 @@ public interface JobPostService {
 
     JobPost getById(int id);
 
-    Boolean add(JobPost post);
+    Boolean addOrUpdate(JobPost post);
 
     List<JobPost> getPosts(Map<String, String> params, int page);
 
     boolean delete(JobPost post);
-
-    boolean update(JobPost post);
 
     long count();
 

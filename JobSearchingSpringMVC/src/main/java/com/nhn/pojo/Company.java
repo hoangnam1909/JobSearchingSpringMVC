@@ -29,6 +29,13 @@ public class Company {
     @Column(name = "website", length = 100)
     private String website;
 
+    @Override
+    public String toString() {
+        return "Company{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
     @OneToMany(mappedBy = "company")
     private Set<JobPost> jobPosts = new LinkedHashSet<>();
 

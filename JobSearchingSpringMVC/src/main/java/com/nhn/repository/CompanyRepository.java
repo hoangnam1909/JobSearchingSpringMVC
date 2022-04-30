@@ -9,15 +9,13 @@ public interface CompanyRepository {
 
     Company getById(int id);
 
-    boolean add(Company company);
+    boolean addOrUpdate(Company company);
 
     Company getByName(String name);
 
     List<Company> getCompanies(Map<String, String> params, int page);
 
     boolean delete(Company company);
-
-    boolean update(Company company);
 
     long count();
 

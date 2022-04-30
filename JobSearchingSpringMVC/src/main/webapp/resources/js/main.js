@@ -12,19 +12,13 @@ $(document).ready(function () {
     $("#confirmPassword").val("");
 });
 
+$('.confirmation').on('click', function () {
+    return confirm('Bạn có chắc chắn muốn xoá?');
+});
+
 imgInp.onchange = evt => {
     const [file] = imgInp.files
     if (file) {
         blah.src = URL.createObjectURL(file)
     }
 }
-
-let elems = document.getElementsByClassName('confirmation');
-let confirmIt = function (e) {
-    if (!confirm('Are you sure?')) e.preventDefault();
-};
-let i = 0, l = elems.length;
-for (; i < l; i++) {
-    elems[i].addEventListener('click', confirmIt, false);
-}
-

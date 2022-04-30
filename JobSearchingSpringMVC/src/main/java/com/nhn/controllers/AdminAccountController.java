@@ -45,6 +45,20 @@ public class AdminAccountController {
         return "admin-account";
     }
 
+    // XEM CHI TIET TAI KHOAN
+    @GetMapping("/admin/account/view")
+    public String viewAccount(Model model,
+                              @RequestParam(name = "id", defaultValue = "0") int id) {
+        if (id > 0)
+            model.addAttribute("user", this.userService.getById(id));
+        else
+            return "redirect:/admin/account";
+
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
+        return "view-account";
+    }
+
+    // THEM HOAC CAP NHAT TAI KHOAN
     @GetMapping("/admin/account/add-or-edit")
     public String addOrUpdateAccountView(Model model,
                                          @RequestParam(name = "id", defaultValue = "0") int id) {

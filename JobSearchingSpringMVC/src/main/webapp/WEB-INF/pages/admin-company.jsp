@@ -1,32 +1,38 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="context" value="${pageContext.request.contextPath}" />
+<c:set var="context" value="${pageContext.request.contextPath}"/>
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/admin/company/add"/>">Thêm</a>
+        <a class="nav-link" href="<c:url value="/admin/company/add-or-edit"/>">Thêm</a>
     </li>
 </ul>
 
 <table class="table table-striped">
     <thead>
     <tr>
-        <th class="text-center" style="width: 10%">Thực thi</th>
+        <th class="text-center" style="width: 15%">Thực thi</th>
         <th style="width: 5%">ID</th>
-        <th style="width: 20%">Tên</th>
+        <th style="width: 15%">Tên</th>
         <th style="width: 25%">Địa điểm</th>
         <th style="width: 20%">Liên hệ</th>
-        <th style="width: 20%">Trang web</th>
+        <th style="width: 25%">Trang web</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach items="${companies}" var="com">
         <tr>
             <td style="text-align: center">
-                <a style="margin-right: 10px" href="<c:url value="/admin/company/edit/${com.id}"/>" data-toggle="tooltip" title="Sửa">
+                <a style="margin-right: 10px" href="<c:url value="/admin/company/view" />?id=${com.id}"
+                   title="Xem chi tiết">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+                <a style="margin-right: 10px" href="<c:url value="/admin/company/add-or-edit"/>?id=${com.id}"
+                   data-toggle="tooltip" title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <a style="margin-right: 10px" href="<c:url value="/admin/company/delete/${com.id}"/>" data-toggle="tooltip" title="Xoá">
+                <a style="margin-right: 10px" href="<c:url value="/admin/company/delete"/>?id=${com.id}"
+                   class="confirmation" data-toggle="tooltip" title="Xoá">
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>

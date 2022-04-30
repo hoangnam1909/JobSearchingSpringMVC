@@ -47,6 +47,10 @@ and open the template in the editor.
         <put-attribute name="title" value="Thêm tài khoản" />
         <put-attribute name="content" value="/WEB-INF/pages/add-account.jsp" />
     </definition>
+    <definition name="view-account" extends="adminLayout">
+        <put-attribute name="title" value="Xem thông tin tài khoản" />
+        <put-attribute name="content" value="/WEB-INF/pages/view-account.jsp" />
+    </definition>
 
     <definition name="admin-job-post" extends="adminLayout">
         <put-attribute name="title" value="Quản lý bài viết" />
@@ -56,9 +60,9 @@ and open the template in the editor.
         <put-attribute name="title" value="Thêm bài viết" />
         <put-attribute name="content" value="/WEB-INF/pages/add-job-post.jsp" />
     </definition>
-    <definition name="edit-job-post" extends="adminLayout">
-        <put-attribute name="title" value="Sửa thông tin bài đăng" />
-        <put-attribute name="content" value="/WEB-INF/pages/edit-job-post.jsp" />
+    <definition name="view-job-post" extends="adminLayout">
+        <put-attribute name="title" value="Xem thông tin bài đăng" />
+        <put-attribute name="content" value="/WEB-INF/pages/view-job-post.jsp" />
     </definition>
 
     <definition name="admin-account-permission" extends="adminLayout">
@@ -74,9 +78,9 @@ and open the template in the editor.
         <put-attribute name="title" value="Thêm thông tin công ty" />
         <put-attribute name="content" value="/WEB-INF/pages/add-company.jsp" />
     </definition>
-    <definition name="edit-company" extends="adminLayout">
-        <put-attribute name="title" value="Chỉnh sửa thông tin công ty" />
-        <put-attribute name="content" value="/WEB-INF/pages/edit-company.jsp" />
+    <definition name="view-company" extends="adminLayout">
+        <put-attribute name="title" value="Thông tin công ty" />
+        <put-attribute name="content" value="/WEB-INF/pages/view-company.jsp" />
     </definition>
 
     <definition name="admin-job-type" extends="adminLayout">

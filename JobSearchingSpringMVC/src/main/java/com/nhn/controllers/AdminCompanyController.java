@@ -1,6 +1,7 @@
 package com.nhn.controllers;
 
 import com.nhn.pojo.Company;
+import com.nhn.pojo.User;
 import com.nhn.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,21 +36,41 @@ public class AdminCompanyController {
         return "admin-company";
     }
 
-    @RequestMapping("/admin/company/add")
-    public String addCompany(Model model) {
-        model.addAttribute("company", new Company());
+    @GetMapping("/admin/company/view")
+    public String viewCompany(Model model,
+                              @RequestParam(name = "id", defaultValue = "0") int id) {
+        if (id > 0)
+            model.addAttribute("company", this.companyService.getById(id));
+        else
+            return "redirect:/admin/company";
+
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
+        return "view-company";
+    }
+
+    @GetMapping("/admin/company/add-or-edit")
+    public String addOrUpdateCompanyView(Model model,
+                                         @RequestParam(name = "id", defaultValue = "0") int id) {
+        if (id > 0) {
+            model.addAttribute("company", this.companyService.getById(id));
+        } else {
+            Company company = new Company();
+            company.setId(0);
+            model.addAttribute("company", company);
+        }
+
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
         return "add-company";
     }
 
-    @PostMapping("/admin/company/add")
-    public String addCompanyPost(Model model,
-                                 @ModelAttribute(value = "company") Company company,
-                                 final RedirectAttributes redirectAttrs) {
+    @PostMapping("/admin/company/add-or-edit")
+    public String addOrUpdateCompany(Model model,
+                                     @ModelAttribute(value = "company") Company company,
+                                     final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
 
-        boolean companyAddedCheck = this.companyService.add(company);
-
+        boolean companyAddedCheck = this.companyService.addOrUpdate(company);
         if (companyAddedCheck)
             sucMsg = String.format("Thêm thông tin công ty '%s' thành công", company.getName());
         else
@@ -60,68 +81,22 @@ public class AdminCompanyController {
         return "redirect:/admin/company";
     }
 
-    @RequestMapping("/admin/company/edit")
-    public String editCompany() {
-        return "redirect:/admin/company";
-    }
-
-    @PostMapping("/admin/company/edit")
-    @Transactional
-    public String editCompanyPost(Model model,
-                                  @ModelAttribute(value = "company") Company company,
-                                  final RedirectAttributes redirectAttrs) {
-        String errMsg = null;
-        String sucMsg = null;
-
-        boolean editCompanyCheck = this.companyService.update(company);
-
-        if (editCompanyCheck)
-            sucMsg = String.format("Chỉnh sửa thông tin công ty '%s' thành công", company.getName());
-        else
-            errMsg = String.format("Chỉnh sửa thông tin công ty không thành công %d", company.getId());
-
-        redirectAttrs.addFlashAttribute("errMsg", errMsg);
-        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
-        return "redirect:/admin/company";
-    }
-
-    @RequestMapping("/admin/company/edit/{id}")
-    public String editCompanyGetById(Model model,
-                                     @PathVariable(value = "id") int id) {
-        Company company = new Company();
-        if (id != 0) {
-            company = this.companyService.getById(id);
-            company.setId(id);
-        }
-
-        model.addAttribute("company", company);
-
-        return "edit-company";
-    }
-
-    @RequestMapping("/admin/company/delete")
-    public String deleteCompany() {
-        return "redirect:/admin/company";
-    }
-
-    @RequestMapping(path = "/admin/company/delete/{id}")
+    @RequestMapping(path = "/admin/company/delete")
     public String deleteCompanyById(Model model,
-                                    @PathVariable(value = "id") int id,
+                                    @RequestParam(name = "id", defaultValue = "0") int id,
                                     final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
 
-        Company company = new Company();
-        if (id != 0) {
-            company = this.companyService.getById(id);
+        Company company = this.companyService.getById(id);
+        if (company != null) {
+            if (companyService.delete(company))
+                sucMsg = String.format("Xoá công ty '%s' thành công", company.getName());
+            else
+                errMsg = String.format("Xoá công ty '%s' không thành công", company.getName());
+        } else {
+            errMsg = "Công ty không tồn tại";
         }
-
-        boolean deleteCheck = companyService.delete(company);
-
-        if (company != null && deleteCheck)
-            sucMsg = String.format("Xoá công ty '%s' thành công", company.getName());
-        else
-            errMsg = String.format("Xoá công ty '%s' không thành công", company.getName());
 
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);

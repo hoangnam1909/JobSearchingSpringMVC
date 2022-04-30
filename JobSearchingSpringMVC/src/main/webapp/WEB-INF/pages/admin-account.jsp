@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 
+<h1 class="text-center text-success">QUẢN LÝ NGƯỜI DÙNG</h1>
+
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link" href="<c:url value="/admin/account/add-or-edit"/>">Thêm</a>
@@ -13,10 +15,10 @@
     <tr>
         <th class="text-center" style="width: 15%">Thực thi</th>
         <th style="width: 5%">ID</th>
-        <th style="width: 25%">Tên đăng nhập</th>
-        <th style="width: 15%">Số điện thoại</th>
-        <th style="width: 25%">Email</th>
-        <th style="width: 15%">Loại tài khoản</th>
+        <th>Tên đăng nhập</th>
+        <th>Số điện thoại</th>
+        <th>Email</th>
+        <th>Loại tài khoản</th>
     </tr>
     </thead>
     <tbody>
@@ -24,7 +26,7 @@
         <tr>
             <td style="text-align: center">
                 <a style="margin-right: 10px" href="<c:url value="/admin/account/view" />?id=${u.id}"
-                   data-toggle="tooltip" title="Xem chi tiết">
+                   title="Xem chi tiết">
                     <i class="fa-solid fa-eye"></i>
                 </a>
                 <a style="margin-right: 10px" href="<c:url value="/admin/account/add-or-edit" />?id=${u.id}"

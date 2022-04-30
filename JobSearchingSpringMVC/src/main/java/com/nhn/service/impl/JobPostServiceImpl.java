@@ -21,8 +21,8 @@ public class JobPostServiceImpl implements JobPostService {
     }
 
     @Override
-    public Boolean add(JobPost post) {
-        return this.jobPostRepository.add(post);
+    public Boolean addOrUpdate(JobPost post) {
+        return this.jobPostRepository.addOrUpdate(post);
     }
 
     @Override
@@ -33,11 +33,6 @@ public class JobPostServiceImpl implements JobPostService {
     @Override
     public boolean delete(JobPost post) {
         return this.jobPostRepository.delete(post);
-    }
-
-    @Override
-    public boolean update(JobPost post) {
-        return this.jobPostRepository.update(post);
     }
 
     @Override

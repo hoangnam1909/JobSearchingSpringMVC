@@ -1,38 +1,51 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="now" value="<% = new java.util.Date()%>"/>
+
+<h1 class="text-center text-success">QUẢN LÝ BÀI VIẾT</h1>
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/admin/job-post/add"/>">Thêm</a>
+        <a class="nav-link" href="<c:url value="/admin/job-post/add-or-edit"/>">Thêm</a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+           aria-expanded="false">Sắp xếp</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="<c:url value="/admin/job-post" />?sort=desc">Ngày đăng mới nhất</a>
+            <a class="dropdown-item" href="<c:url value="/admin/job-post" />?sort=asc">Ngày đăng lâu nhất</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+        </div>
     </li>
 </ul>
 
 <table class="table table-striped">
     <thead>
     <tr>
-        <th class="text-center" style="width: 10%">Thực thi</th>
+        <th class="text-center" style="width: 15%">Thực thi</th>
         <th style="width: 5%">ID</th>
-        <th style="width: 20%">Tiêu đề</th>
-        <th style="width: 15%">Ngày đăng</th>
-        <th style="width: 15%">Đăng bởi</th>
-        <th style="width: 20%">Loại việc làm</th>
-        <th style="width: 25%">Công ty</th>
+        <th>Tiêu đề</th>
+        <th>Ngày đăng</th>
+        <th>Đăng bởi</th>
+        <th>Loại việc làm</th>
+        <th>Công ty</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach items="${jobPosts}" var="jp">
         <tr>
             <td style="text-align: center">
-                <a style="margin-right: 10px" href="<c:url value="/admin/job-post/edit/${jp.id}"/>"
-                   data-toggle="tooltip"
+                <a style="margin-right: 10px" href="<c:url value="/admin/job-post/view" />?id=${jp.id}"
+                   title="Xem chi tiết">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+                <a style="margin-right: 10px" href="<c:url value="/admin/job-post/add-or-edit" />?id=${jp.id}"
                    title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <a style="margin-right: 10px" href="<c:url value="/admin/job-post/delete/${jp.id}"/>"
-                   data-toggle="tooltip"
-                   title="Xoá">
+                <a style="margin-right: 10px" href="<c:url value="/admin/job-post/delete" />?id=${jp.id}"
+                   class="confirmation" title="Xoá">
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
@@ -72,7 +85,7 @@
 <ul class="pagination d-flex justify-content-center mt-4">
     <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">
         <li class="page-item">
-            <a class="page-link" href="<c:url value="/admin/job-post/" />?page=${page}">${page}</a>
+            <a class="page-link" href="${url}?page=${page}">${page}</a>
         </li>
     </c:forEach>
 </ul>

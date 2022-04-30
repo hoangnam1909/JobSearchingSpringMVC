@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,7 +15,7 @@ import java.util.Map;
 
 @Controller
 @Transactional
-public class AccountPermission {
+public class AccountPermissionController {
 
     @Autowired
     UserService userService;
@@ -54,6 +53,28 @@ public class AccountPermission {
             sucMsg = String.format("Xác nhận nhà tuyển dụng '%s' thành công", user.getUsername());
         } else {
             errMsg = String.format("Xác nhận nhà tuyển dụng '%s' không thành công", user.getUsername());
+        }
+
+        redirectAttrs.addFlashAttribute("errMsg", errMsg);
+        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
+        return "redirect:/admin/account-permission";
+    }
+
+    @RequestMapping(path = "/admin/account-permission/accept-all")
+    public String acceptAllAccount(Model model,
+                                   final RedirectAttributes redirectAttrs) {
+        String errMsg = null;
+        String sucMsg = null;
+
+        List<User> users = userService.getUsersByRole(User.NTD, 0, 0);
+        users.forEach(user -> user.setActive(1));
+
+        int numberCheck = userService.getUsersByRole(User.NTD, 0, 0).size();
+
+        if (numberCheck == 0) {
+            sucMsg = "Đã xác nhận tất cả nhà tuyển dụng thành công";
+        } else {
+            errMsg = "Có lỗi khi xác nhận tất cả nhà tuyển dụng";
         }
 
         redirectAttrs.addFlashAttribute("errMsg", errMsg);

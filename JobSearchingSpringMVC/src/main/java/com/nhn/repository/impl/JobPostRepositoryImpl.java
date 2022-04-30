@@ -28,7 +28,7 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
-    private final int maxItemsInPage = 10;
+    private final int maxItemsInPage = 20;
 
     public int getMaxItemsInPage() {
         return maxItemsInPage;
@@ -41,13 +41,16 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     }
 
     @Override
-    public Boolean add(JobPost post) {
+    public Boolean addOrUpdate(JobPost post) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            session.save(post);
+            if (post.getId() > 0)
+                session.update(post);
+            else
+                session.save(post);
             return true;
         } catch (HibernateException ex) {
-            System.err.println(ex.getMessage());
+            ex.printStackTrace();
         }
 
         return false;
@@ -60,6 +63,7 @@ public class JobPostRepositoryImpl implements JobPostRepository {
         CriteriaQuery<JobPost> q = builder.createQuery(JobPost.class);
         Root root = q.from(JobPost.class);
         q.select(root);
+        q = q.orderBy(builder.desc(root.get("createdDate")));
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
@@ -96,9 +100,15 @@ public class JobPostRepositoryImpl implements JobPostRepository {
             }
 
             q = q.where(predicates.toArray(new Predicate[]{}));
-        }
 
-        q = q.orderBy(builder.desc(root.get("createdDate")));
+            if(params.containsKey("sort")){
+                if (params.get("sort").equals("asc")) {
+                    q = q.orderBy(builder.asc(root.get("createdDate")));
+                } else {
+                    q = q.orderBy(builder.desc(root.get("createdDate")));
+                }
+            }
+        }
 
         Query query = session.createQuery(q);
 
@@ -116,18 +126,6 @@ public class JobPostRepositoryImpl implements JobPostRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
             session.delete(post);
-            return true;
-        } catch (HibernateException ex) {
-            System.err.println(ex.getMessage());
-        }
-        return false;
-    }
-
-    @Override
-    public boolean update(JobPost post) {
-        Session session = this.sessionFactory.getObject().getCurrentSession();
-        try {
-            session.update(post);
             return true;
         } catch (HibernateException ex) {
             System.err.println(ex.getMessage());
