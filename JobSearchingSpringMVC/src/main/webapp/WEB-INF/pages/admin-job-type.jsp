@@ -24,11 +24,11 @@
                    data-toggle="tooltip" title="Xem chi tiết">
                     <i class="fa-solid fa-eye"></i>
                 </a>
-                <a style="margin-right: 10px" href="<c:url value="/admin/job-type/add-or-update" />${jt.id}"
+                <a style="margin-right: 10px" href="<c:url value="/admin/job-type/add-or-update" />?id=${jt.id}"
                    data-toggle="tooltip" title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <a href="<c:url value="/admin/job-type/delete" />id=?${jt.id}"
+                <a href="<c:url value="/admin/job-type/delete" />?id=${jt.id}"
                    data-toggle="tooltip" title="Xoá">
                     <i class="fa-solid fa-trash"></i>
                 </a>

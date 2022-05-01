@@ -39,14 +39,15 @@
             </li>
         </ul>
     </div>
-    <c:if test="${pageContext.request.userPrincipal.name != null}">
+    <c:if test="${currentUser != null}">
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/" />">
                             <span>
                                 <i class="fa-solid fa-user"></i>
                             </span>
-                        ${pageContext.request.userPrincipal.name}
+                        ${currentUser.username}
+                    <span class="badge badge-secondary">${currentUser.userType}</span>
                 </a>
             </li>
             <li class="nav-item">
