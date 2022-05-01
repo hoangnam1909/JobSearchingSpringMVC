@@ -8,12 +8,16 @@ import com.nhn.service.CompanyService;
 import com.nhn.service.JobPostService;
 import com.nhn.service.JobTypeService;
 import com.nhn.service.UserService;
+import com.nhn.utils.utils;
+import com.nhn.validator.JobPostValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,7 +27,7 @@ import java.util.Map;
 
 @Controller
 @ControllerAdvice
-public class AdminJobPostController {
+public class JobPostController {
 
     @Autowired
     UserService userService;
@@ -36,6 +40,18 @@ public class AdminJobPostController {
 
     @Autowired
     CompanyService companyService;
+
+    @Autowired
+    JobPostValidator jobPostValidator;
+
+    private void loadAllList(Model model){
+        List<User> users = userService.getUsers("", 0);
+        model.addAttribute("users", users);
+        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
+        model.addAttribute("jobTypes", jobTypes);
+        List<Company> companies = companyService.getCompanies(null, 0);
+        model.addAttribute("companies", companies);
+    }
 
     @RequestMapping(value = "/admin/job-post")
     public String index(Model model,
@@ -76,7 +92,7 @@ public class AdminJobPostController {
         return "view-job-post";
     }
 
-    @GetMapping("/admin/job-post/add-or-edit")
+    @GetMapping("/admin/job-post/add-or-update")
     public String addOrUpdateJobPostView(Model model,
                                          @RequestParam(name = "id", defaultValue = "0") int id) {
 
@@ -88,22 +104,24 @@ public class AdminJobPostController {
             model.addAttribute("jobPost", jobPost);
         }
 
-        List<User> users = userService.getUsers("", 0);
-        model.addAttribute("users", users);
-        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
-        model.addAttribute("jobTypes", jobTypes);
-        List<Company> companies = companyService.getCompanies(null, 0);
-        model.addAttribute("companies", companies);
+        loadAllList(model);
 
         return "add-job-post";
     }
 
-    @PostMapping(value = "/admin/job-post/add-or-edit")
+    @PostMapping(value = "/admin/job-post/add-or-update")
     public String addOrUpdateJobPost(Model model,
-                                     @ModelAttribute(value = "jobPost") JobPost jobPost,
+                                     @ModelAttribute(value = "jobPost") @Valid JobPost jobPost,
+                                     BindingResult result,
                                      final RedirectAttributes redirectAttrs) throws ParseException {
         String errMsg = null;
         String sucMsg = null;
+
+        loadAllList(model);
+
+        jobPostValidator.validate(jobPost, result);
+        if (result.hasErrors())
+            return "add-job-post";
 
         jobPost.setPostedByUser(userService.getById(jobPost.getPostedByUserId()));
         jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
@@ -111,8 +129,10 @@ public class AdminJobPostController {
 
         if (!jobPost.getCreatedDateStr().equals(""))
             jobPost.setCreatedDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getCreatedDateStr()));
-        else
+        else {
+            jobPost.setCreatedDateStr(utils.dateToString(new Date()));
             jobPost.setCreatedDate(new Date());
+        }
 
         if (!jobPost.getExpiredDateStr().equals(""))
             jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));

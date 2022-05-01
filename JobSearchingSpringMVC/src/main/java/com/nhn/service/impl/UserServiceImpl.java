@@ -38,6 +38,10 @@ public class UserServiceImpl implements UserService {
     public boolean addOrUpdate(User user) {
         String pass = user.getPassword();
         user.setPassword(this.passwordEncoder.encode(pass));
+
+        String fullname = user.getFullName();
+        user.setFullName(utils.stringNormalization(fullname));
+
         String avatar = user.getAvatar();
 
         if (!user.getFile().isEmpty()) {
@@ -51,7 +55,8 @@ public class UserServiceImpl implements UserService {
 
             if (r != null)
                 user.setAvatar((String) r.get("secure_url"));
-            user.setAvatar(avatar);
+            else
+                user.setAvatar(avatar);
         }
 
         String sDate = String.format("%02d/%02d/%04d", user.getDay(), user.getMonth(), user.getYear());

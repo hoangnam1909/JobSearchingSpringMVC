@@ -6,7 +6,7 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/admin/job-post/add-or-edit"/>">Thêm</a>
+        <a class="nav-link" href="<c:url value="/admin/job-post/add-or-update"/>">Thêm</a>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
@@ -40,7 +40,7 @@
                    title="Xem chi tiết">
                     <i class="fa-solid fa-eye"></i>
                 </a>
-                <a style="margin-right: 10px" href="<c:url value="/admin/job-post/add-or-edit" />?id=${jp.id}"
+                <a style="margin-right: 10px" href="<c:url value="/admin/job-post/add-or-update" />?id=${jp.id}"
                    title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>

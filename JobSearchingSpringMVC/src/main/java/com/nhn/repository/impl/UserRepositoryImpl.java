@@ -47,7 +47,6 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (HibernateException ex) {
             ex.printStackTrace();
         }
-
         return false;
     }
 

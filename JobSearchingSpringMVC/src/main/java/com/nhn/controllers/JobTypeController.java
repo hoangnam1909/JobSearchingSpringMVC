@@ -1,6 +1,7 @@
 package com.nhn.controllers;
 
 import com.nhn.pojo.JobType;
+import com.nhn.pojo.User;
 import com.nhn.service.JobTypeService;
 import com.nhn.validator.JobTypeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,18 +18,13 @@ import java.util.Map;
 
 @Controller
 @Transactional
-public class AdminJobTypeController {
+public class JobTypeController {
 
     @Autowired
     private JobTypeService jobTypeService;
 
     @Autowired
     private JobTypeValidator jobTypeValidator;
-
-//    @InitBinder("JobTypeValidator")
-//    public void initBinder(WebDataBinder binder){
-//        binder.addValidators(jobTypeValidator);
-//    }
 
     @RequestMapping("/admin/job-type")
     public String indexDefault(Model model,
@@ -47,17 +42,40 @@ public class AdminJobTypeController {
         return "admin-job-type";
     }
 
-    @RequestMapping("/admin/job-type/add")
-    public String addJobType(Model model) {
-        model.addAttribute("jobType", new JobType());
+    @GetMapping("/admin/job-type/view")
+    public String viewJobType(Model model,
+                              @RequestParam(name = "id", defaultValue = "0") int id) {
+        if (id > 0)
+            model.addAttribute("jobType", this.jobTypeService.getById(id));
+        else
+            return "redirect:/admin/job-type";
+
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
+        return "view-job-type";
+    }
+
+    @GetMapping("/admin/job-type/add-or-update")
+    public String addOrUpdateJobTypeView(Model model,
+                                         @RequestParam(name = "id", defaultValue = "0") int id) {
+
+
+        if (id > 0) {
+            model.addAttribute("jobType", this.jobTypeService.getById(id));
+        } else {
+            JobType jobType = new JobType();
+            jobType.setId(0);
+            model.addAttribute("jobType", jobType);
+        }
+
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
         return "add-job-type";
     }
 
-    @PostMapping("/admin/job-type/add")
-    public String addJobTypePost(Model model,
-                                 @ModelAttribute(value = "jobType") @Valid JobType jobType,
-                                 BindingResult result,
-                                 final RedirectAttributes redirectAttrs) {
+    @PostMapping("/admin/job-type/add-or-update")
+    public String addOrUpdateJobType(Model model,
+                                     @ModelAttribute(value = "jobType") @Valid JobType jobType,
+                                     BindingResult result,
+                                     final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
 
@@ -65,7 +83,7 @@ public class AdminJobTypeController {
         if (result.hasErrors())
             return "add-job-type";
 
-        boolean jobTypeAddedCheck = this.jobTypeService.add(jobType);
+        boolean jobTypeAddedCheck = this.jobTypeService.addOrUpdate(jobType);
         if (jobTypeAddedCheck)
             sucMsg = String.format("Thêm thông tin loại việc làm '%s' thành công", jobType.getName());
         else
@@ -74,48 +92,6 @@ public class AdminJobTypeController {
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
         return "redirect:/admin/job-type";
-    }
-
-    @RequestMapping("/admin/job-type/edit")
-    public String editJobType() {
-        return "redirect:/admin/job-type";
-    }
-
-    @PostMapping("/admin/job-type/edit")
-    @Transactional
-    public String editJobTypePost(Model model,
-                                  @ModelAttribute(value = "jobType") @Valid JobType jobType,
-                                  BindingResult result,
-                                  final RedirectAttributes redirectAttrs) {
-        String errMsg = null;
-        String sucMsg = null;
-
-        if (result.hasErrors())
-            return "edit-job-type";
-
-        boolean editJobTypeCheck = this.jobTypeService.update(jobType);
-        if (editJobTypeCheck)
-            sucMsg = String.format("Chỉnh sửa thông tin loại việc làm '%s' thành công", jobType.getName());
-        else
-            errMsg = String.format("Chỉnh sửa thông tin loại việc làm '%s' không thành công", jobType.getName());
-
-        redirectAttrs.addFlashAttribute("errMsg", errMsg);
-        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
-        return "redirect:/admin/job-type";
-    }
-
-    @RequestMapping("/admin/job-type/edit/{id}")
-    public String editJobTypeGetById(Model model,
-                                     @PathVariable(value = "id") int id) {
-        JobType jobType = new JobType();
-        if (id != 0) {
-            jobType = this.jobTypeService.getById(id);
-            jobType.setId(id);
-        }
-
-        model.addAttribute("jobType", jobType);
-
-        return "edit-job-type";
     }
 
     @RequestMapping("/admin/job-type/delete")

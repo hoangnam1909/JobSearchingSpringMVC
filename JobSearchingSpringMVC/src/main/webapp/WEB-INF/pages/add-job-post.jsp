@@ -9,19 +9,18 @@
     <h1 class="text-center text-success">CHỈNH SỬA THÔNG TIN BÀI VIẾT #${jobPost.id}</h1>
 </c:if>
 
-<c:url value="/admin/job-post/add-or-edit" var="action"/>
+<c:url value="/admin/job-post/add-or-update" var="action"/>
 
 <form:form action="${action}" method="post" modelAttribute="jobPost">
-    <div class="form-group" style="display: none">
-        <form:input path="id" class="form-control"/>
-    </div>
+    <form:errors path="*" element="div" cssClass="alert alert-danger mt-3"/>
+    <form:hidden path="id"/>
     <div class="form-group">
         <label>Tiêu đề</label>
         <form:input path="title" class="form-control"/>
     </div>
     <div class="form-group">
         <label>Mô tả</label>
-        <form:input path="description" class="form-control"/>
+        <form:textarea path="description" class="form-control" cssStyle="min-height: 120px"/>
     </div>
     <div class="form-group">
         <label>Lương tối thiểu</label>
@@ -72,7 +71,6 @@
             </c:forEach>
         </form:select>
     </div>
-
     <div class="form-group">
         <label>Công ty</label>
         <form:select path="companyId" class="custom-select">
@@ -87,7 +85,13 @@
             </c:forEach>
         </form:select>
     </div>
+
     <div class="form-group">
-        <button type="submit" name="submit" value="submit" class="btn btn-primary">Thêm</button>
+        <c:if test="${jobPost.id == 0}">
+            <button type="submit" name="submit" value="submit" class="btn btn-primary">Thêm</button>
+        </c:if>
+        <c:if test="${jobPost.id > 0}">
+            <button type="submit" name="submit" value="submit" class="btn btn-primary">Cập nhật</button>
+        </c:if>
     </div>
 </form:form>

@@ -2,6 +2,7 @@ package com.nhn.controllers;
 
 import com.nhn.pojo.User;
 import com.nhn.service.UserService;
+import com.nhn.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ import java.util.Map;
 public class AccountPermissionController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping("/admin/account-permission")
     public String index(Model model,

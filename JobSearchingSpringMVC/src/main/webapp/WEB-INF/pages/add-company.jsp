@@ -4,7 +4,7 @@
 
 <h1 class="text-center text-success">THÊM CÔNG TY</h1>
 
-<c:url value="/admin/company/add-or-edit" var="action"/>
+<c:url value="/admin/company/add-or-update" var="action"/>
 
 <form:form action="${action}" method="post" modelAttribute="company">
     <div class="form-group" style="display: none">
@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
         <label>Mô tả</label>
-        <form:input path="description" class="form-control"/>
+        <form:textarea path="description" class="form-control" cssStyle="min-height: 120px"/>
     </div>
     <div class="form-group">
         <label>Địa chỉ</label>

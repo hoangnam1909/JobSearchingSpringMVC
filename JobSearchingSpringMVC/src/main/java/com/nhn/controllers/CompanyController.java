@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Controller
 @Transactional
-public class AdminCompanyController {
+public class CompanyController {
 
     @Autowired
     private CompanyService companyService;
@@ -48,7 +48,7 @@ public class AdminCompanyController {
         return "view-company";
     }
 
-    @GetMapping("/admin/company/add-or-edit")
+    @GetMapping("/admin/company/add-or-update")
     public String addOrUpdateCompanyView(Model model,
                                          @RequestParam(name = "id", defaultValue = "0") int id) {
         if (id > 0) {
@@ -63,7 +63,7 @@ public class AdminCompanyController {
         return "add-company";
     }
 
-    @PostMapping("/admin/company/add-or-edit")
+    @PostMapping("/admin/company/add-or-update")
     public String addOrUpdateCompany(Model model,
                                      @ModelAttribute(value = "company") Company company,
                                      BindingResult result,

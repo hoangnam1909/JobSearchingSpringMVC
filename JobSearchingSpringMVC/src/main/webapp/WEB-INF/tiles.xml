@@ -91,8 +91,8 @@ and open the template in the editor.
         <put-attribute name="title" value="Thêm thông tin loại việc làm" />
         <put-attribute name="content" value="/WEB-INF/pages/add-job-type.jsp" />
     </definition>
-    <definition name="edit-job-type" extends="adminLayout">
-        <put-attribute name="title" value="Chỉnh sửa thông tin loại việc làm" />
-        <put-attribute name="content" value="/WEB-INF/pages/edit-job-type.jsp" />
+    <definition name="view-job-type" extends="adminLayout">
+        <put-attribute name="title" value="Xem thông tin loại việc làm" />
+        <put-attribute name="content" value="/WEB-INF/pages/view-job-type.jsp" />
     </definition>
 </tiles-definitions>

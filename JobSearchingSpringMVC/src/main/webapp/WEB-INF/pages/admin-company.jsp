@@ -4,7 +4,7 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/admin/company/add-or-edit"/>">Thêm</a>
+        <a class="nav-link" href="<c:url value="/admin/company/add-or-update"/>">Thêm</a>
     </li>
 </ul>
 
@@ -27,7 +27,7 @@
                    title="Xem chi tiết">
                     <i class="fa-solid fa-eye"></i>
                 </a>
-                <a style="margin-right: 10px" href="<c:url value="/admin/company/add-or-edit"/>?id=${com.id}"
+                <a style="margin-right: 10px" href="<c:url value="/admin/company/add-or-update"/>?id=${com.id}"
                    data-toggle="tooltip" title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>

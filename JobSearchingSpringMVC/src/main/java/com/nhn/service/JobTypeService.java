@@ -8,15 +8,13 @@ public interface JobTypeService {
 
     JobType getById(int id);
 
-    boolean add(JobType jobType);
+    boolean addOrUpdate(JobType jobType);
 
     JobType getByName(String name);
 
     List<JobType> getJobTypes(String name, int page);
 
     boolean delete(JobType jobType);
-
-    boolean update(JobType jobType);
 
     long count();
 

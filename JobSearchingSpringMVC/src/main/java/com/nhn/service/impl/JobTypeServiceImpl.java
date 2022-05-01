@@ -1,7 +1,6 @@
 package com.nhn.service.impl;
 
 import com.nhn.pojo.JobType;
-import com.nhn.pojo.User;
 import com.nhn.repository.JobTypeRepository;
 import com.nhn.service.JobTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,8 @@ public class JobTypeServiceImpl implements JobTypeService {
     }
 
     @Override
-    public boolean add(JobType jobType) {
-        return this.jobTypeRepository.add(jobType);
+    public boolean addOrUpdate(JobType jobType) {
+        return this.jobTypeRepository.addOrUpdate(jobType);
     }
 
     @Override
@@ -39,11 +38,6 @@ public class JobTypeServiceImpl implements JobTypeService {
     @Override
     public boolean delete(JobType jobType) {
         return this.jobTypeRepository.delete(jobType);
-    }
-
-    @Override
-    public boolean update(JobType jobType) {
-        return this.jobTypeRepository.update(jobType);
     }
 
     @Override

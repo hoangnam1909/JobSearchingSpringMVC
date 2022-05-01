@@ -1,29 +1,35 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="context" value="${pageContext.request.contextPath}" />
+<c:set var="context" value="${pageContext.request.contextPath}"/>
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/admin/job-type/add"/>">Thêm</a>
+        <a class="nav-link" href="<c:url value="/admin/job-type/add-or-update"/>">Thêm</a>
     </li>
 </ul>
 
 <table class="table table-striped">
     <thead>
     <tr>
-        <th class="text-center" style="width: 10%">Thực thi</th>
+        <th class="text-center" style="width: 15%">Thực thi</th>
         <th style="width: 10%">ID</th>
-        <th style="width: 80%">Loại việc làm</th>
+        <th>Tên loại việc làm</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach items="${jobTypes}" var="jt">
         <tr>
             <td style="text-align: center">
-                <a style="margin-right: 10px" href="<c:url value="/admin/job-type/edit/${jt.id}"/>" data-toggle="tooltip" title="Sửa">
+                <a style="margin-right: 10px" href="<c:url value="/admin/job-type/view" />?id=${jt.id}"
+                   data-toggle="tooltip" title="Xem chi tiết">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+                <a style="margin-right: 10px" href="<c:url value="/admin/job-type/add-or-update" />${jt.id}"
+                   data-toggle="tooltip" title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <a href="<c:url value="/admin/job-type/delete/${jt.id}"/>" data-toggle="tooltip" title="Xoá">
+                <a href="<c:url value="/admin/job-type/delete" />id=?${jt.id}"
+                   data-toggle="tooltip" title="Xoá">
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>

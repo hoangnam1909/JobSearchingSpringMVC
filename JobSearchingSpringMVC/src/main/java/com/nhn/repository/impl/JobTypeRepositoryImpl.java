@@ -37,15 +37,17 @@ public class JobTypeRepositoryImpl implements JobTypeRepository {
     }
 
     @Override
-    public boolean add(JobType jobType) {
+    public boolean addOrUpdate(JobType jobType) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            session.save(jobType);
+            if (jobType.getId() > 0)
+                session.update(jobType);
+            else
+                session.save(jobType);
             return true;
         } catch (HibernateException ex) {
-            System.err.println(ex.getMessage());
+            ex.printStackTrace();
         }
-
         return false;
     }
 
@@ -91,31 +93,13 @@ public class JobTypeRepositoryImpl implements JobTypeRepository {
 
     @Override
     public boolean delete(JobType jobType) {
-        if (jobType.getJobPosts().size() == 0) {
-            Session session = this.sessionFactory.getObject().getCurrentSession();
-            try {
-                session.delete(jobType);
-                return true;
-            } catch (HibernateException ex) {
-                System.err.println(ex.getMessage());
-            }
-            return false;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(JobType jobType) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            session.update(jobType);
-
+            session.delete(jobType);
             return true;
         } catch (HibernateException ex) {
             System.err.println(ex.getMessage());
         }
-
         return false;
     }
 

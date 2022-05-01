@@ -11,7 +11,7 @@
     <h1 class="text-center text-success">CHỈNH SỬA THÔNG TIN TÀI KHOẢN</h1>
 </c:if>
 
-<c:url value="/admin/account/add-or-edit" var="action"/>
+<c:url value="/admin/account/add-or-update" var="action"/>
 
 <c:if test="${errMsg != null}">
     <div class="alert alert-danger">
@@ -19,11 +19,10 @@
     </div>
 </c:if>
 
-
 <form:form action="${action}" method="post" enctype="multipart/form-data" modelAttribute="user">
-    <div class="form-group" style="display: none">
-        <form:input path="id" class="form-control"/>
-    </div>
+    <form:errors path="*" element="div" cssClass="alert alert-danger mt-3"/>
+    <form:hidden path="id"/>
+    <form:hidden path="avatar"/>
     <div class="form-group">
         <label>Tên đăng nhập <span style="color: red">*</span></label>
         <form:input path="username" class="form-control" required="required"/>
@@ -34,7 +33,8 @@
     </div>
     <div class="form-group">
         <label>Nhập lại mật khẩu <span style="color: red">*</span></label>
-        <form:input path="confirmPassword" class="form-control" id="confirmPassword" type="password" required="required"/>
+        <form:input path="confirmPassword" class="form-control" id="confirmPassword" type="password"
+                    required="required"/>
     </div>
     <div class="form-group">
         <label>Email</label>
@@ -43,9 +43,6 @@
     <div class="form-group">
         <label>Số điện thoại</label>
         <form:input path="phone" class="form-control"/>
-    </div>
-    <div class="form-group" style="display: none">
-        <form:input path="avatar" class="form-control"/>
     </div>
     <div class="form-group row">
         <div class="col">
@@ -92,13 +89,6 @@
         </form:select>
     </div>
     <div class="form-group">
-        <label>Kích hoạt <span style="color: red">*</span></label>
-        <form:select path="active" class="custom-select">
-            <form:option value="0" label="Chưa kích hoạt" selected="${user.active == 0 ? true : ''}"/>
-            <form:option value="1" label="Đã kích hoạt" selected="${user.active == 1 ? true : ''}"/>
-        </form:select>
-    </div>
-    <div class="form-group">
         <label>Loại tài khoản <span style="color: red">*</span></label>
         <form:select path="userType" class="custom-select">
             <form:option value="ROLE_USER" label="Ứng viên"
@@ -109,8 +99,23 @@
                          selected="${user.userType.equals('ROLE_ADMIN') ? true : ''}"/>
         </form:select>
     </div>
-
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Thêm</button>
+        <label>Kích hoạt <span style="color: red">*</span></label>
+        <form:select path="active" class="custom-select">
+            <form:option value="0" label="Chưa kích hoạt" selected="${user.active == 0 ? true : ''}"/>
+            <form:option value="1" label="Đã kích hoạt" selected="${user.active == 1 ? true : ''}"/>
+        </form:select>
     </div>
+
+    <c:if test="${user.id == 0}">
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Thêm</button>
+        </div>
+    </c:if>
+    <c:if test="${user.id > 0}">
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </div>
+    </c:if>
+
 </form:form>

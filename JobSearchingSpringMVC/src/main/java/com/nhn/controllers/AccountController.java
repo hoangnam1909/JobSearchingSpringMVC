@@ -7,13 +7,16 @@ package com.nhn.controllers;
 
 import com.nhn.pojo.User;
 import com.nhn.service.UserService;
+import com.nhn.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +25,13 @@ import java.util.Map;
  */
 @Controller
 @Transactional
-public class AdminAccountController {
+public class AccountController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserValidator userValidator;
 
     @RequestMapping("/admin/account")
     public String index(Model model,
@@ -57,7 +63,7 @@ public class AdminAccountController {
     }
 
     // THEM HOAC CAP NHAT TAI KHOAN
-    @GetMapping("/admin/account/add-or-edit")
+    @GetMapping("/admin/account/add-or-update")
     public String addOrUpdateAccountView(Model model,
                                          @RequestParam(name = "id", defaultValue = "0") int id) {
         if (id > 0)
@@ -69,23 +75,22 @@ public class AdminAccountController {
         return "add-account";
     }
 
-    @PostMapping("/admin/account/add-or-edit")
+    @PostMapping("/admin/account/add-or-update")
     public String addOrUpdateAccount(Model model,
-                                     @ModelAttribute(value = "user") User user,
+                                     @ModelAttribute(value = "user") @Valid User user,
+                                     BindingResult result,
                                      final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
 
-        if (user.getPassword().equals(user.getConfirmPassword())) {
-            if (this.userService.addOrUpdate(user)) {
-                sucMsg = String.format("Thêm thông tin user '%s' thành công", user.getUsername());
-            } else {
-                errMsg = String.format("Thêm thông tin user '%s' không thành công", user.getUsername());
-                redirectAttrs.addFlashAttribute("errMsg", errMsg);
-                return "add-account";
-            }
+        userValidator.validate(user, result);
+        if (result.hasErrors())
+            return "add-account";
+
+        if (this.userService.addOrUpdate(user)) {
+            sucMsg = String.format("Thêm thông tin user '%s' thành công", user.getUsername());
         } else {
-            errMsg = "Mật khẩu chưa trùng khớp";
+            errMsg = String.format("Thêm thông tin user '%s' không thành công", user.getUsername());
             redirectAttrs.addFlashAttribute("errMsg", errMsg);
             return "add-account";
         }
