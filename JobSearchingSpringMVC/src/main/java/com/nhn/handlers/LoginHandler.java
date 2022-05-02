@@ -20,7 +20,6 @@ import java.io.IOException;
 
 
 /**
- *
  * @author duonghuuthanh
  */
 @Component
@@ -29,17 +28,26 @@ public class LoginHandler implements AuthenticationSuccessHandler {
     private UserService userDetailsService;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, 
-            HttpServletResponse response, Authentication a) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response, Authentication a) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = this.userDetailsService.getByUsername(authentication.getName());
         request.getSession().setAttribute("currentUser", user);
 
         String redirectUrl = request.getContextPath();
-        if (user.getUserType().equals(User.ADMIN))
-            redirectUrl = "admin";
+        switch (user.getUserType()) {
+            case User.ADMIN:
+                redirectUrl = "admin";
+                break;
+            case User.NTD:
+                redirectUrl = "employer";
+                break;
+            case User.USER:
+                redirectUrl = "user";
+                break;
+        }
 
         response.sendRedirect(redirectUrl);
     }
-    
+
 }

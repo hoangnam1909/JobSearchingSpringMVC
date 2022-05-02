@@ -45,7 +45,7 @@ public class JobPostController {
     JobPostValidator jobPostValidator;
 
     private void loadAllList(Model model){
-        List<User> users = userService.getUsers("", 0);
+        List<User> users = userService.getByRole(User.NTD, 0, 1);
         model.addAttribute("users", users);
         List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
         model.addAttribute("jobTypes", jobTypes);
@@ -61,9 +61,10 @@ public class JobPostController {
 
         Map<String, String> pre = new HashMap<>();
         pre.put("sort", sort);
-        List<JobPost> jobPosts = jobPostService.getPosts(pre, page);
+        List<JobPost> jobPosts = jobPostService.getPosts(pre, page, 0);
         model.addAttribute("jobPosts", jobPosts);
 
+        model.addAttribute("currentPage", page);
         model.addAttribute("counter", jobPostService.count());
         model.addAttribute("jobPostService", jobPostService);
 

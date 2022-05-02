@@ -28,7 +28,7 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
-    private final int maxItemsInPage = 20;
+    private final int maxItemsInPage = 10;
 
     public int getMaxItemsInPage() {
         return maxItemsInPage;
@@ -57,7 +57,7 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     }
 
     @Override
-    public List<JobPost> getPosts(Map<String, String> params, int page) {
+    public List<JobPost> getPosts(Map<String, String> params, int page, int maxItems) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<JobPost> q = builder.createQuery(JobPost.class);
@@ -99,9 +99,14 @@ public class JobPostRepositoryImpl implements JobPostRepository {
                 }
             }
 
+            if (params.containsKey("postedByUserId")) {
+                Predicate p5 = builder.equal(root.join("postedByUser").get("id").as(String.class), params.get("postedByUserId"));
+                predicates.add(p5);
+            }
+
             q = q.where(predicates.toArray(new Predicate[]{}));
 
-            if(params.containsKey("sort")){
+            if (params.containsKey("sort")) {
                 if (params.get("sort").equals("asc")) {
                     q = q.orderBy(builder.asc(root.get("createdDate")));
                 } else {
@@ -113,9 +118,16 @@ public class JobPostRepositoryImpl implements JobPostRepository {
         Query query = session.createQuery(q);
 
         if (page != 0) {
-            int index = (page - 1) * maxItemsInPage;
-            query.setFirstResult(index);
-            query.setMaxResults(maxItemsInPage);
+            int index;
+            if (maxItems == 0) {
+                index = (page - 1) * maxItemsInPage;
+                query.setFirstResult(index);
+                query.setMaxResults(maxItemsInPage);
+            } else {
+                index = (page - 1) * maxItems;
+                query.setFirstResult(index);
+                query.setMaxResults(maxItems);
+            }
         }
 
         return query.getResultList();

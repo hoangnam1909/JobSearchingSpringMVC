@@ -12,14 +12,18 @@ public interface UserRepository {
 
     User getByUsername(String username);
 
+    List<User> getByRole(String role, int page, int active);
+
     List<User> getUsers(String username, int page);
+
+    List<User> getByEmail(String email);
+
+    List<User> getByPhone(String phone);
 
     boolean delete(User user);
 
     long count();
 
     int getMaxItemsInPage();
-
-    List<User> getUsersByRole(String role, int page, int active);
 
 }

@@ -14,7 +14,6 @@ public class JobTypeServiceImpl implements JobTypeService {
     @Autowired
     JobTypeRepository jobTypeRepository;
 
-
     @Override
     public JobType getById(int id) {
         return this.jobTypeRepository.getById(id);
@@ -49,4 +48,5 @@ public class JobTypeServiceImpl implements JobTypeService {
     public int getMaxItemsInPage() {
         return this.jobTypeRepository.getMaxItemsInPage();
     }
+
 }

@@ -16,13 +16,18 @@
                 <a class="nav-link" href="<c:url value="/" />">Trang chủ</a>
             </li>
 
+            <c:if test="${currentUser.userType == 'ROLE_NTD'}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/employer/dang-du-an" />">Đăng tin tuyển dụng</a>
+                </li>
+            </c:if>
+
+            <c:if test="${currentUser.userType == 'ROLE_ADMIN'}">
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/admin" />">Admin</a>
             </li>
-
-            <c:if test="${pageContext.request.userPrincipal.name == null}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/login" />">Đăng nhập</a>
+                    <a class="nav-link" href="<c:url value="/employer" />">Nhà tuyển dụng</a>
                 </li>
             </c:if>
         </ul>
@@ -42,6 +47,16 @@
                 <a class="nav-link" href="<c:url value="/logout" />">
                     Đăng xuất
                 </a>
+            </li>
+        </ul>
+    </c:if>
+    <c:if test="${currentUser == null}">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/login" />">Đăng nhập</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/register" />">Đăng ký</a>
             </li>
         </ul>
     </c:if>

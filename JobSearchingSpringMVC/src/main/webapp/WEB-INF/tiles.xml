@@ -18,16 +18,32 @@ and open the template in the editor.
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
     </definition>
+
     <definition name="login" extends="baseLayout">
         <put-attribute name="title" value="Đăng nhập" />
         <put-attribute name="content" value="/WEB-INF/pages/login.jsp" />
+    </definition>
+    <definition name="register" extends="baseLayout">
+        <put-attribute name="title" value="Đăng ký" />
+        <put-attribute name="content" value="/WEB-INF/pages/register.jsp" />
     </definition>
 
     <definition name="access-denied" extends="baseLayout">
         <put-attribute name="title" value="Truy cập bị từ chối" />
         <put-attribute name="content" value="/WEB-INF/pages/access-denied.jsp" />
     </definition>
-    
+
+<!--    NHA TUYEN DUNG-->
+    <definition name="employer" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ nhà tuyển dụng" />
+        <put-attribute name="content" value="/WEB-INF/pages/employer.jsp" />
+    </definition>
+    <definition name="employer-view-job-post" extends="baseLayout">
+        <put-attribute name="title" value="Xem thông tin bài đăng" />
+        <put-attribute name="content" value="/WEB-INF/pages/employer-view-job-post.jsp" />
+    </definition>
+
+<!--    ADMIN-->
     <definition name="adminLayout" template="/WEB-INF/layout/base.jsp">
         <put-attribute name="title" value="" />
         <put-attribute name="header" value="/WEB-INF/layout/admin-header.jsp" />

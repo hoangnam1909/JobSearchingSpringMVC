@@ -14,15 +14,16 @@
     <thead>
     <tr>
         <th class="text-center" style="width: 10%">Thực thi</th>
-        <th style="width: 5%">ID</th>
-        <th style="width: 25%">Tên đăng nhập</th>
-        <th style="width: 15%">Số điện thoại</th>
-        <th style="width: 30%">Email</th>
-        <th style="width: 15%">Loại tài khoản</th>
+        <th class="text-center" style="width: 5%">STT</th>
+        <th class="text-center" style="width: 10%">ID</th>
+        <th>Tên đăng nhập</th>
+        <th>Số điện thoại</th>
+        <th>Email</th>
+        <th>Loại tài khoản</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${users}" var="u">
+    <c:forEach items="${users}" var="u" varStatus="loop">
         <tr>
             <td style="text-align: center">
                 <a style="margin-right: 10px" href="<c:url value="/admin/account-permission/accept" />?id=${u.id}"
@@ -31,7 +32,8 @@
                     <i class="fa-solid fa-check"></i>
                 </a>
             </td>
-            <td>${u.id}</td>
+            <td class="text-center">${(currentPage - 1) * jobTypeService.maxItemsInPage + loop.index + 1}</td>
+            <td class="text-center">#${u.id}</td>
             <td>${u.username}</td>
             <td>${u.phone}</td>
             <td>${u.email}</td>

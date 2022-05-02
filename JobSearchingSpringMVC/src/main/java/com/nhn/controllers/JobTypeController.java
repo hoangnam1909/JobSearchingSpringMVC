@@ -34,6 +34,7 @@ public class JobTypeController {
         List<JobType> jobTypes = this.jobTypeService.getJobTypes("", page);
         model.addAttribute("jobTypes", jobTypes);
 
+        model.addAttribute("currentPage", page);
         model.addAttribute("counter", jobTypeService.count());
         model.addAttribute("jobTypeService", jobTypeService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));

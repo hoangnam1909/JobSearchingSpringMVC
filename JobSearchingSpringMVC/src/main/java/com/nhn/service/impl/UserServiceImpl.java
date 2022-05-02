@@ -21,10 +21,13 @@ import java.util.*;
 
 @Service("userDetailsService")
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
     private Cloudinary cloudinary;
 
@@ -80,6 +83,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getByEmail(String email) {
+        return this.userRepository.getByEmail(email);
+    }
+
+    @Override
+    public List<User> getByPhone(String phone) {
+        return this.userRepository.getByPhone(phone);
+    }
+
+    @Override
     public boolean delete(User user) {
         return this.userRepository.delete(user);
     }
@@ -95,8 +108,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersByRole(String role, int page, int active) {
-        return this.userRepository.getUsersByRole(role, page, active);
+    public List<User> getByRole(String role, int page, int active) {
+        return this.userRepository.getByRole(role, page, active);
     }
 
     @Override

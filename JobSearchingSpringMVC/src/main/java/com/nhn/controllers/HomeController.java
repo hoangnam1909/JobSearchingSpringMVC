@@ -32,6 +32,7 @@ public class HomeController {
 
     @RequestMapping("/")
     public String index(Model model) {
-        return "redirect:/login";
+        model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
+        return "index";
     }
 }

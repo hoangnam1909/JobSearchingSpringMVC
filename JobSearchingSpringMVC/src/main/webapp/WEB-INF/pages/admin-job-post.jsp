@@ -24,7 +24,8 @@
     <thead>
     <tr>
         <th class="text-center" style="width: 15%">Thực thi</th>
-        <th style="width: 5%">ID</th>
+        <th class="text-center" style="width: 5%">STT</th>
+        <th class="text-center" style="width: 10%">ID</th>
         <th>Tiêu đề</th>
         <th>Ngày đăng</th>
         <th>Đăng bởi</th>
@@ -33,7 +34,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${jobPosts}" var="jp">
+    <c:forEach items="${jobPosts}" var="jp" varStatus="loop">
         <tr>
             <td style="text-align: center">
                 <a style="margin-right: 10px" href="<c:url value="/admin/job-post/view" />?id=${jp.id}"
@@ -49,22 +50,17 @@
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
-            <td> ${jp.id} </td>
+            <td class="text-center">${(currentPage - 1) * jobTypeService.maxItemsInPage + loop.index + 1}</td>
+            <td class="text-center"> #${jp.id} </td>
             <td> ${jp.title} </td>
             <td>
                 <c:if test="${jp.createdDate != null}">
                     <fmt:formatDate pattern="dd/MM/yyyy" value="${jp.createdDate}"/>
                 </c:if>
             </td>
-            <td>
-                    ${userService.getById(jp.postedByUser.id).username}
-            </td>
-            <td>
-                    ${jobTypeService.getById(jp.jobType.id).name}
-            </td>
-            <td>
-                    ${companyService.getById(jp.company.id).name}
-            </td>
+            <td> ${userService.getById(jp.postedByUser.id).username} </td>
+            <td> ${jobTypeService.getById(jp.jobType.id).name} </td>
+            <td> ${companyService.getById(jp.company.id).name} </td>
         </tr>
     </c:forEach>
     </tbody>

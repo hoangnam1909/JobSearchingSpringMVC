@@ -28,6 +28,7 @@ public class CompanyController {
         List<Company> companies = this.companyService.getCompanies(null, page);
         model.addAttribute("companies", companies);
 
+        model.addAttribute("currentPage", page);
         model.addAttribute("counter", companyService.count());
         model.addAttribute("companyService", companyService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));

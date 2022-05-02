@@ -13,7 +13,8 @@
     <thead>
     <tr>
         <th class="text-center" style="width: 15%">Thực thi</th>
-        <th style="width: 5%">ID</th>
+        <th class="text-center" style="width: 5%">STT</th>
+        <th class="text-center" style="width: 10%">ID</th>
         <th style="width: 15%">Tên</th>
         <th style="width: 25%">Địa điểm</th>
         <th style="width: 20%">Liên hệ</th>
@@ -21,7 +22,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${companies}" var="com">
+    <c:forEach items="${companies}" var="com" varStatus="loop">
         <tr>
             <td style="text-align: center">
                 <a style="margin-right: 10px" href="<c:url value="/admin/company/view" />?id=${com.id}"
@@ -37,7 +38,8 @@
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
-            <td>${com.id}</td>
+            <td class="text-center">${(currentPage - 1) * jobTypeService.maxItemsInPage + loop.index + 1}</td>
+            <td class="text-center">#${com.id}</td>
             <td>${com.name}</td>
             <td>${com.location}</td>
             <td>${com.contact}</td>

@@ -4,14 +4,9 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<c:if test="${user.id == 0}">
-    <h1 class="text-center text-success">THÊM TÀI KHOẢN</h1>
-</c:if>
-<c:if test="${user.id > 0}">
-    <h1 class="text-center text-success">CHỈNH SỬA THÔNG TIN TÀI KHOẢN</h1>
-</c:if>
+<h1 class="text-center text-success">ĐĂNG KÝ TÀI KHOẢN</h1>
 
-<c:url value="/admin/account/add-or-update" var="action"/>
+<c:url value="/register" var="action"/>
 
 <c:if test="${errMsg != null}">
     <div class="alert alert-danger">
@@ -95,27 +90,10 @@
                          selected="${user.userType.equals('ROLE_USER') ? true : ''}"/>
             <form:option value="ROLE_NTD" label="Nhà tuyển dụng"
                          selected="${user.userType.equals('ROLE_NTD') ? true : ''}"/>
-            <form:option value="ROLE_ADMIN" label="Admin"
-                         selected="${user.userType.equals('ROLE_ADMIN') ? true : ''}"/>
         </form:select>
     </div>
+
     <div class="form-group">
-        <label>Kích hoạt <span style="color: red">*</span></label>
-        <form:select path="active" class="custom-select">
-            <form:option value="0" label="Chưa kích hoạt" selected="${user.active == 0 ? true : ''}"/>
-            <form:option value="1" label="Đã kích hoạt" selected="${user.active == 1 ? true : ''}"/>
-        </form:select>
+        <button type="submit" class="btn btn-primary">Đăng ký</button>
     </div>
-
-    <c:if test="${user.id == 0}">
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Thêm</button>
-        </div>
-    </c:if>
-    <c:if test="${user.id > 0}">
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Cập nhật</button>
-        </div>
-    </c:if>
-
 </form:form>

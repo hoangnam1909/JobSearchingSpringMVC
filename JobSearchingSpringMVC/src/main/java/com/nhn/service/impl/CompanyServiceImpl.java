@@ -49,4 +49,5 @@ public class CompanyServiceImpl implements CompanyService {
     public int getMaxItemsInPage() {
         return this.companyRepository.getMaxItemsInPage();
     }
+
 }

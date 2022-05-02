@@ -65,6 +65,31 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public List<User> getByRole(String role, int page, int active) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root root = query.from(User.class);
+        query = query.select(root);
+
+        Predicate p1 = builder.equal(root.get("userType").as(String.class), role.trim());
+        Predicate p2 = builder.equal(root.get("active").as(Integer.class), active);
+
+        query = query.where(p1, p2);
+
+        query = query.orderBy(builder.desc(root.get("id")));
+
+        Query q = session.createQuery(query);
+
+        if (page != 0) {
+            int max = maxItemsInPage;
+            q.setMaxResults(max);
+            q.setFirstResult((page - 1) * max);
+        }
+        return q.getResultList();
+    }
+
+    @Override
     public List<User> getUsers(String username, int page) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -90,27 +115,42 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> getUsersByRole(String role, int page, int active) {
+    public List<User> getByEmail(String email) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root root = query.from(User.class);
         query = query.select(root);
 
-        Predicate p1 = builder.equal(root.get("userType").as(String.class), role.trim());
-        Predicate p2 = builder.equal(root.get("active").as(Integer.class), active);
-
-        query = query.where(p1, p2);
+        if (!email.isEmpty()) {
+            Predicate p = builder.equal(root.get("email").as(String.class), email.trim());
+            query = query.where(p);
+        }
 
         query = query.orderBy(builder.desc(root.get("id")));
 
         Query q = session.createQuery(query);
 
-        if (page != 0) {
-            int max = maxItemsInPage;
-            q.setMaxResults(max);
-            q.setFirstResult((page - 1) * max);
+        return q.getResultList();
+    }
+
+    @Override
+    public List<User> getByPhone(String phone) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root root = query.from(User.class);
+        query = query.select(root);
+
+        if (!phone.isEmpty()) {
+            Predicate p = builder.equal(root.get("phone").as(String.class), phone.trim());
+            query = query.where(p);
         }
+
+        query = query.orderBy(builder.desc(root.get("id")));
+
+        Query q = session.createQuery(query);
+
         return q.getResultList();
     }
 

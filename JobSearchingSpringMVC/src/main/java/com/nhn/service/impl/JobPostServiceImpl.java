@@ -26,8 +26,8 @@ public class JobPostServiceImpl implements JobPostService {
     }
 
     @Override
-    public List<JobPost> getPosts(Map<String, String> params, int page) {
-        return this.jobPostRepository.getPosts(params, page);
+    public List<JobPost> getPosts(Map<String, String> params, int page, int maxItems) {
+        return this.jobPostRepository.getPosts(params, page, maxItems);
     }
 
     @Override
@@ -44,4 +44,5 @@ public class JobPostServiceImpl implements JobPostService {
     public int getMaxItemsInPage() {
         return this.jobPostRepository.getMaxItemsInPage();
     }
+
 }

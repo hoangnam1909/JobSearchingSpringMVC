@@ -41,6 +41,7 @@ public class AccountController {
         List<User> users = userService.getUsers("", page);
         model.addAttribute("users", users);
 
+        model.addAttribute("currentPage", page);
         model.addAttribute("counter", userService.count());
         model.addAttribute("userService", userService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));

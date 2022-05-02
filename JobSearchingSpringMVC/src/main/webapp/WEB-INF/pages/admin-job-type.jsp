@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 
+<h1 class="text-center text-success">QUẢN LÝ LOẠI VIỆC LÀM</h1>
+
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link" href="<c:url value="/admin/job-type/add-or-update"/>">Thêm</a>
@@ -12,12 +14,13 @@
     <thead>
     <tr>
         <th class="text-center" style="width: 15%">Thực thi</th>
-        <th style="width: 10%">ID</th>
+        <th class="text-center" style="width: 5%">STT</th>
+        <th class="text-center" style="width: 10%">ID</th>
         <th>Tên loại việc làm</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${jobTypes}" var="jt">
+    <c:forEach items="${jobTypes}" var="jt" varStatus="loop">
         <tr>
             <td style="text-align: center">
                 <a style="margin-right: 10px" href="<c:url value="/admin/job-type/view" />?id=${jt.id}"
@@ -33,7 +36,8 @@
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
-            <td>${jt.id}</td>
+            <td class="text-center">${(currentPage - 1) * jobTypeService.maxItemsInPage + loop.index + 1}</td>
+            <td class="text-center">#${jt.id}</td>
             <td>${jt.name}</td>
         </tr>
     </c:forEach>

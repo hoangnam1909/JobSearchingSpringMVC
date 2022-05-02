@@ -26,9 +26,10 @@ public class AccountPermissionController {
                         @RequestParam(required = false) Map<String, String> params) {
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
 
-        List<User> users = userService.getUsersByRole(User.NTD, page, 0);
+        List<User> users = userService.getByRole(User.NTD, page, 0);
         model.addAttribute("users", users);
 
+        model.addAttribute("currentPage", page);
         model.addAttribute("counter", users.size());
         model.addAttribute("userService", userService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
@@ -67,10 +68,10 @@ public class AccountPermissionController {
         String errMsg = null;
         String sucMsg = null;
 
-        List<User> users = userService.getUsersByRole(User.NTD, 0, 0);
+        List<User> users = userService.getByRole(User.NTD, 0, 0);
         users.forEach(user -> user.setActive(1));
 
-        int numberCheck = userService.getUsersByRole(User.NTD, 0, 0).size();
+        int numberCheck = userService.getByRole(User.NTD, 0, 0).size();
 
         if (numberCheck == 0) {
             sucMsg = "Đã xác nhận tất cả nhà tuyển dụng thành công";

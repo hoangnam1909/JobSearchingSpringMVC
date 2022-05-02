@@ -11,7 +11,7 @@ public interface JobPostService {
 
     Boolean addOrUpdate(JobPost post);
 
-    List<JobPost> getPosts(Map<String, String> params, int page);
+    List<JobPost> getPosts(Map<String, String> params, int page, int maxItems);
 
     boolean delete(JobPost post);
 
