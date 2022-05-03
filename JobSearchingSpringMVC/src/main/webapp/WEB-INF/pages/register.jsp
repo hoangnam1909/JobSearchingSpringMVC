@@ -4,7 +4,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<h1 class="text-center text-success">ĐĂNG KÝ TÀI KHOẢN</h1>
+<h1 class="text-center dark-color">ĐĂNG KÝ TÀI KHOẢN</h1>
 
 <c:url value="/register" var="action"/>
 

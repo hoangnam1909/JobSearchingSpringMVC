@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 
-<h1 class="text-center text-success">XÁC NHẬN NHÀ TUYỂN DỤNG</h1>
+<h1 class="text-center dark-color">XÁC NHẬN NHÀ TUYỂN DỤNG</h1>
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -32,7 +32,7 @@
                     <i class="fa-solid fa-check"></i>
                 </a>
             </td>
-            <td class="text-center">${(currentPage - 1) * jobTypeService.maxItemsInPage + loop.index + 1}</td>
+            <td class="text-center">${(currentPage - 1) * userService.maxItemsInPage + loop.index + 1}</td>
             <td class="text-center">#${u.id}</td>
             <td>${u.username}</td>
             <td>${u.phone}</td>

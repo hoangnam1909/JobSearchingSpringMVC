@@ -38,9 +38,25 @@ and open the template in the editor.
         <put-attribute name="title" value="Trang chủ nhà tuyển dụng" />
         <put-attribute name="content" value="/WEB-INF/pages/employer.jsp" />
     </definition>
-    <definition name="employer-view-job-post" extends="baseLayout">
-        <put-attribute name="title" value="Xem thông tin bài đăng" />
-        <put-attribute name="content" value="/WEB-INF/pages/employer-view-job-post.jsp" />
+    <definition name="employer-management" extends="baseLayout">
+        <put-attribute name="title" value="Trang quản lý của nhà tuyển dụng" />
+        <put-attribute name="content" value="/WEB-INF/pages/employer-management.jsp" />
+    </definition>
+    <definition name="employer-view-post" extends="baseLayout">
+        <put-attribute name="title" value="Xem thông tin tin tuyển dụng" />
+        <put-attribute name="content" value="/WEB-INF/pages/employer-view-post.jsp" />
+    </definition>
+    <definition name="employer-add-post" extends="baseLayout">
+        <put-attribute name="title" value="Đăng bài tuyển dụng" />
+        <put-attribute name="content" value="/WEB-INF/pages/employer-add-post.jsp" />
+    </definition>
+    <definition name="employer-find" extends="baseLayout">
+        <put-attribute name="title" value="Tìm kiếm ứng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/employer-find.jsp" />
+    </definition>
+    <definition name="employer-view-user" extends="baseLayout">
+        <put-attribute name="title" value="Xem thông tin ứng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/employer-view-user.jsp" />
     </definition>
 
 <!--    ADMIN-->
@@ -77,7 +93,7 @@ and open the template in the editor.
         <put-attribute name="content" value="/WEB-INF/pages/add-job-post.jsp" />
     </definition>
     <definition name="view-job-post" extends="adminLayout">
-        <put-attribute name="title" value="Xem thông tin bài đăng" />
+        <put-attribute name="title" value="Xem thông tin tin tuyển dụng" />
         <put-attribute name="content" value="/WEB-INF/pages/view-job-post.jsp" />
     </definition>
 

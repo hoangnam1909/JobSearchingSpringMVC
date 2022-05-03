@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<h1 class="text-center text-success">THÊM CÔNG TY</h1>
+<h1 class="text-center dark-color">THÊM CÔNG TY</h1>
 
 <c:url value="/admin/company/add-or-update" var="action"/>
 

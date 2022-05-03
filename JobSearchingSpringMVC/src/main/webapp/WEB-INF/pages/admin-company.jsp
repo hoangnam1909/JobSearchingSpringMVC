@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h1 class="text-center text-success">QUẢN LÝ DANH SÁCH CÔNG TY</h1>
+<h1 class="text-center dark-color">QUẢN LÝ DANH SÁCH CÔNG TY</h1>
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -38,7 +38,7 @@
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
-            <td class="text-center">${(currentPage - 1) * jobTypeService.maxItemsInPage + loop.index + 1}</td>
+            <td class="text-center">${(currentPage - 1) * companyService.maxItemsInPage + loop.index + 1}</td>
             <td class="text-center">#${com.id}</td>
             <td>${com.name}</td>
             <td>${com.location}</td>

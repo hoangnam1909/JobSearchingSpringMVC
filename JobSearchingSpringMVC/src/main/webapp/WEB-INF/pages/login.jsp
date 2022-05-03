@@ -9,7 +9,7 @@
 
 <c:url value="/login" var="action" />
 
-<h1 class="text-center text-success">ĐĂNG NHẬP HỆ THỐNG</h1>
+<h1 class="text-center dark-color">ĐĂNG NHẬP HỆ THỐNG</h1>
 
 <c:if test="${param.error != null}">
   <div class="alert alert-danger">
@@ -26,5 +26,7 @@
     <label>Mật khẩu</label>
     <input type="password" class="form-control" placeholder="Nhập mật khẩu" name="password">
   </div>
-  <button type="submit" class="btn btn-primary">Đăng nhập</button>
+  <div class="form-group mb-0">
+    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+  </div>
 </form>

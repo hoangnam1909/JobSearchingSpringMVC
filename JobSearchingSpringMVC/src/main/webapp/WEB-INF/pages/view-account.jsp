@@ -10,7 +10,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<h1 class="text-center text-success">THÔNG TIN TÀI KHOẢN</h1>
+<h1 class="text-center dark-color">THÔNG TIN TÀI KHOẢN</h1>
 
 <div class="container mt-4">
     <table class="table table-striped">

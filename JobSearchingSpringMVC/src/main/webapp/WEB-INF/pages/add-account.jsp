@@ -5,10 +5,10 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:if test="${user.id == 0}">
-    <h1 class="text-center text-success">THÊM TÀI KHOẢN</h1>
+    <h1 class="text-center dark-color">THÊM TÀI KHOẢN</h1>
 </c:if>
 <c:if test="${user.id > 0}">
-    <h1 class="text-center text-success">CHỈNH SỬA THÔNG TIN TÀI KHOẢN</h1>
+    <h1 class="text-center dark-color">CHỈNH SỬA THÔNG TIN TÀI KHOẢN</h1>
 </c:if>
 
 <c:url value="/admin/account/add-or-update" var="action"/>

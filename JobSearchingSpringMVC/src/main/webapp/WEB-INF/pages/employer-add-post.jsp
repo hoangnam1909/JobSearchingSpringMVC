@@ -3,13 +3,13 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:if test="${jobPost.id == 0}">
-    <h1 class="text-center dark-color">THÊM TÀI BÀI VIẾT</h1>
+    <h1 class="text-center dark-color">ĐĂNG TIN TUYỂN DỤNG</h1>
 </c:if>
 <c:if test="${jobPost.id > 0}">
-    <h1 class="text-center dark-color">CHỈNH SỬA THÔNG TIN BÀI VIẾT #${jobPost.id}</h1>
+    <h1 class="text-center dark-color">CHỈNH SỬA TIN TUYỂN DỤNG #${jobPost.id}</h1>
 </c:if>
 
-<c:url value="/admin/job-post/add-or-update" var="action"/>
+<c:url value="/employer/post/add-or-update" var="action"/>
 
 <form:form action="${action}" method="post" modelAttribute="jobPost">
     <form:errors path="*" element="div" cssClass="alert alert-danger mt-3"/>
@@ -34,7 +34,7 @@
         <label>Địa chỉ</label>
         <form:input path="location" class="form-control"/>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="display: none">
         <label>Ngày đăng</label>
         <form:input type="date" path="createdDateStr" value="${jobPost.createdDate}" class="form-control"/>
     </div>
@@ -42,20 +42,8 @@
         <label>Ngày hết hạn</label>
         <form:input type="date" path="expiredDateStr" value="${jobPost.expiredDate}" class="form-control"/>
     </div>
-    <div class="form-group">
-        <label>Đăng bởi người dùng</label>
-        <form:select path="postedByUserId" class="custom-select">
-            <c:forEach items="${users}" var="user">
-                <c:if test="${user.id == jobPost.postedByUser.id}">
-                    <option value="${user.id}" selected>${user.username}</option>
-                </c:if>
 
-                <c:if test="${user.id != jobPost.postedByUser.id}">
-                    <option value="${user.id}">${user.username}</option>
-                </c:if>
-            </c:forEach>
-        </form:select>
-    </div>
+    <form:hidden path="postedByUserId" value="${currentUser.id}" />
 
     <div class="form-group">
         <label>Loại công việc</label>

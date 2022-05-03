@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<h1 class="text-center text-success">QUẢN LÝ BÀI VIẾT</h1>
+<h1 class="text-center dark-color">QUẢN LÝ BÀI VIẾT</h1>
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -12,7 +12,11 @@
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
            aria-expanded="false">Sắp xếp</a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="<c:url value="/admin/job-post" />?sort=desc">Ngày đăng mới nhất</a>
+            <c:url var="editUrl" value="">
+                <c:param name="sort" value="desc"/>
+            </c:url>
+            <%--            <a class="dropdown-item" href="<c:url value="/admin/job-post" />?sort=desc">Ngày đăng mới nhất</a>--%>
+            <a class="dropdown-item" href="<c:url value="${editUrl}"/>">Ngày đăng mới nhất</a>
             <a class="dropdown-item" href="<c:url value="/admin/job-post" />?sort=asc">Ngày đăng lâu nhất</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Separated link</a>
@@ -50,7 +54,7 @@
                     <i class="fa-solid fa-trash"></i>
                 </a>
             </td>
-            <td class="text-center">${(currentPage - 1) * jobTypeService.maxItemsInPage + loop.index + 1}</td>
+            <td class="text-center">${(currentPage - 1) * jobPostService.maxItemsInPage + loop.index + 1}</td>
             <td class="text-center"> #${jp.id} </td>
             <td> ${jp.title} </td>
             <td>
@@ -81,7 +85,11 @@
 <ul class="pagination d-flex justify-content-center mt-4">
     <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">
         <li class="page-item">
-            <a class="page-link" href="${url}?page=${page}">${page}</a>
+            <c:url var="editUrl" value="">
+                <c:param name="page" value="${page}"/>
+                <c:param name="ha" value=""/>
+            </c:url>
+            <a class="page-link" href="${editUrl}">${page}</a>
         </li>
     </c:forEach>
 </ul>

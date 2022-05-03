@@ -3,17 +3,8 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<h1 class="text-center text-success">THÔNG TIN BÀI ĐĂNG</h1>
-
-<div class="row">
-    <div class="col-8">col-8</div>
-    <div class="col-4">
-        <div class="row">
-            <dt class="col-sm-3 text-right">col1</dt>
-            <dd class="col-sm-9 text-left">col2</dd>
-        </div>
-    </div>
-</div>
+<h1 class="text-left dark-color" style="padding: 0 30px">${jobPost.title}</h1>
+<h4 class="text-left" style="padding: 0 30px">${companyService.getById(jobPost.company.id).name}</h4>
 
 <div class="container mt-4">
     <table class="table table-striped">

@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $("#password").val("");
+    $("#confirmPassword").val("");
+
     if ($("#dobDay").val() === "0")
         $("#dobDay").val("");
 
@@ -7,9 +10,6 @@ $(document).ready(function () {
 
     if ($("#dobYear").val() === "0")
         $("#dobYear").val("");
-
-    $("#password").val("");
-    $("#confirmPassword").val("");
 });
 
 $('.confirmation').on('click', function () {

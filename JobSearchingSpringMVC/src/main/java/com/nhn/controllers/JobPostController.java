@@ -162,10 +162,10 @@ public class JobPostController {
 
         boolean deleteCheck = jobPostService.delete(jobPost);
         if (jobPost != null && deleteCheck) {
-            sucMsg = String.format("Xoá thành công bài đăng '%s'", jobPost.getTitle());
+            sucMsg = String.format("Xoá thành công tin tuyển dụng '%s'", jobPost.getTitle());
         } else {
             assert jobPost != null;
-            errMsg = String.format("Xoá không thành công bài đăng '%s'", jobPost.getTitle());
+            errMsg = String.format("Xoá không thành công tin tuyển dụng '%s'", jobPost.getTitle());
         }
 
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
