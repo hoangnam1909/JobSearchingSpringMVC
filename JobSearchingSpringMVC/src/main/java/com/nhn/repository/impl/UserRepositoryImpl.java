@@ -1,7 +1,9 @@
 package com.nhn.repository.impl;
 
+import com.nhn.pojo.JobPost;
 import com.nhn.pojo.User;
 import com.nhn.repository.UserRepository;
+import com.nhn.utils.utils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Transactional
@@ -112,6 +119,53 @@ public class UserRepositoryImpl implements UserRepository {
             q.setFirstResult((page - 1) * max);
         }
         return q.getResultList();
+    }
+
+    @Override
+    public List<User> getUsersMultiCondition(Map<String, String> params, int page) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> q = builder.createQuery(User.class);
+        Root root = q.from(User.class);
+        q.select(root);
+        q = q.orderBy(builder.asc(root.get("id")));
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            if (params.containsKey("fullname")) {
+                Predicate p1 = builder.like(root.get("fullName").as(String.class),
+                        String.format("%%%s%%", params.get("fullname")));
+                predicates.add(p1);
+            }
+
+            if (params.containsKey("gender")) {
+                Predicate p2 = builder.equal(root.get("gender").as(String.class), params.get("gender"));
+                predicates.add(p2);
+            }
+
+            if (params.containsKey("userType")) {
+                Predicate p3 = builder.equal(root.get("userType").as(String.class), params.get("userType"));
+                predicates.add(p3);
+            }
+
+            if (params.containsKey("active")) {
+                int activeStt = Integer.parseInt(params.get("active"));
+                Predicate p4 = builder.equal(root.get("active").as(Integer.class), activeStt);
+                predicates.add(p4);
+            }
+
+            q = q.where(predicates.toArray(new Predicate[]{}));
+        }
+
+        Query query = session.createQuery(q);
+
+        if (page != 0) {
+            int index = (page - 1) * maxItemsInPage;
+            query.setFirstResult(index);
+            query.setMaxResults(maxItemsInPage);
+        }
+
+        return query.getResultList();
     }
 
     @Override

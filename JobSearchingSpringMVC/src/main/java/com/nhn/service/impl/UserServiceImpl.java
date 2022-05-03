@@ -83,6 +83,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getUsersMultiCondition(Map<String, String> params, int page) {
+        return this.userRepository.getUsersMultiCondition(params, page);
+    }
+
+    @Override
     public List<User> getByEmail(String email) {
         return this.userRepository.getByEmail(email);
     }

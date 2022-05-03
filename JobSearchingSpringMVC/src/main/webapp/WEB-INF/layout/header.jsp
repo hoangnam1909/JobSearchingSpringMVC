@@ -2,9 +2,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <!-- Brand -->
-    <c:if test="${currentUser.userType == 'ROLE_NTD'}">
-        <a class="navbar-brand" href="<c:url value="/employer" />">Job Searching</a>
-    </c:if>
+    <c:choose>
+        <c:when test = "${currentUser.userType == 'ROLE_NTD'}">
+            <a class="navbar-brand" href="<c:url value="/employer" />">Job Searching</a>
+        </c:when>
+        <c:otherwise>
+            <a class="navbar-brand" href="<c:url value="/" />">Job Searching</a>
+        </c:otherwise>
+    </c:choose>
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -38,7 +43,7 @@
     <c:if test="${currentUser != null}">
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/" />">
+                <a class="nav-link" href="<c:url value="/me/view" />">
                             <span>
                                 <i class="fa-solid fa-user"></i>
                             </span>

@@ -29,11 +29,11 @@
                    title="Xem chi tiết">
                     <i class="fa-solid fa-eye"></i>
                 </a>
-                <a style="margin-right: 10px" href="<c:url value="/admin/company/add-or-update"/>?id=${com.id}"
+                <a style="margin-right: 10px" href="<c:url value="/admin/company/add-or-update" />?id=${com.id}"
                    data-toggle="tooltip" title="Sửa">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <a style="margin-right: 10px" href="<c:url value="/admin/company/delete"/>?id=${com.id}"
+                <a style="margin-right: 10px" href="<c:url value="/admin/company/delete" />?id=${com.id}"
                    class="confirmation" data-toggle="tooltip" title="Xoá">
                     <i class="fa-solid fa-trash"></i>
                 </a>
@@ -64,7 +64,7 @@
 <ul class="pagination d-flex justify-content-center mt-4">
     <c:forEach begin="1" end="${Math.ceil(counter/companyService.maxItemsInPage)}" var="page">
         <li class="page-item">
-            <a class="page-link" href="<c:url value="/admin/company/" />?page=${page}">${page}</a>
+            <a class="page-link" href="<c:url value="/admin/company" />?page=${page}">${page}</a>
         </li>
     </c:forEach>
 </ul>

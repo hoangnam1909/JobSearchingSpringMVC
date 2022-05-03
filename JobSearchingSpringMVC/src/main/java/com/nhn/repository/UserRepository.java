@@ -3,6 +3,7 @@ package com.nhn.repository;
 import com.nhn.pojo.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserRepository {
 
@@ -15,6 +16,8 @@ public interface UserRepository {
     List<User> getByRole(String role, int page, int active);
 
     List<User> getUsers(String username, int page);
+
+    List<User> getUsersMultiCondition(Map<String, String> params, int page);
 
     List<User> getByEmail(String email);
 

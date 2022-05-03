@@ -177,12 +177,22 @@ public class EmployerController {
                        @RequestParam(required = false) Map<String, String> params) {
 
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        String fullname = params.getOrDefault("fullname", null);
+        String gender = params.getOrDefault("gender", "-1");
 
-        List<User> users = userService.getByRole("ROLE_USER", page, 1);
-        model.addAttribute("users", users);
+        Map<String, String> pre = new HashMap<>();
+        pre.put("userType", "ROLE_USER");
+        pre.put("active", "1");
+        if (fullname != null)
+            pre.put("fullname", fullname);
+        if (!gender.equals("-1"))
+            pre.put("gender", gender);
+
+        List<User> users = userService.getUsersMultiCondition(pre, page);
 
         model.addAttribute("currentPage", page);
         model.addAttribute("counter", users.size());
+        model.addAttribute("users", users);
         model.addAttribute("userService", userService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));

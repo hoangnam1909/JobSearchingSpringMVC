@@ -1,5 +1,6 @@
 package com.nhn.utils;
 
+import javax.persistence.criteria.Expression;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,13 +12,13 @@ import java.util.regex.Pattern;
 public class utils {
 
     public static String dateToString(Date rawDate) {
-        Date date  = Calendar.getInstance().getTime();
+        Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(date);
     }
 
     public static String dateToString(Date rawDate, String pattern) {
-        Date date  = Calendar.getInstance().getTime();
+        Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat(pattern);
         return dateFormat.format(date);
     }

@@ -141,7 +141,7 @@
     }
 </style>
 
-<h1 class="text-left dark-color" style="padding: 0 30px">THÔNG TIN ỨNG VIÊN</h1>
+<h1 class="text-left dark-color" style="padding: 0 30px">THÔNG TIN TÀI KHOẢN</h1>
 
 <section class="section about-section gray-bg" id="about">
     <div class="container m-0">
@@ -149,7 +149,7 @@
             <div class="col-lg-6">
                 <div class="about-text go-to">
                     <h3 class="dark-color mb-4">
-                        ${user.fullName}
+                        ${currentUser.fullName}
                     </h3>
                     <div class="row mb-1">
                         <div class="col-md-4">
@@ -157,7 +157,7 @@
                         </div>
                         <div class="col-md-8">
                             <h5>
-                                <fmt:formatDate pattern="dd/MM/yyyy" value="${user.dob}"/>
+                                <fmt:formatDate pattern="dd/MM/yyyy" value="${currentUser.dob}"/>
                             </h5>
                         </div>
                     </div>
@@ -168,7 +168,7 @@
                         <div class="col-md-8">
                             <h5>
                                 <fmt:formatDate pattern="yyyy" value="${now}" var="yearNow"/>
-                                <fmt:formatDate pattern="yyyy" value="${user.dob}" var="yearBorn"/>
+                                <fmt:formatDate pattern="yyyy" value="${currentUser.dob}" var="yearBorn"/>
                                 ${yearNow - yearBorn}
                             </h5>
                         </div>
@@ -178,7 +178,7 @@
                             <h5>Email</h5>
                         </div>
                         <div class="col-md-8">
-                            <h5>kshitighelani@gmail.com</h5>
+                            <h5>${currentUser.email}</h5>
                         </div>
                     </div>
                     <div class="row mb-1">
@@ -186,7 +186,7 @@
                             <h5>Số điện thoại</h5>
                         </div>
                         <div class="col-md-8">
-                            <h5>${user.phone}</h5>
+                            <h5>${currentUser.phone}</h5>
                         </div>
                     </div>
                     <div class="row mb-1">
@@ -194,7 +194,7 @@
                             <h5>Địa chỉ</h5>
                         </div>
                         <div class="col-md-8">
-                            <h5>${user.address}</h5>
+                            <h5>${currentUser.address}</h5>
                         </div>
                     </div>
                     <div class="row mb-1">
@@ -203,10 +203,10 @@
                         </div>
                         <div class="col-md-8">
                             <c:choose>
-                                <c:when test = "${user.gender == 0}">
+                                <c:when test = "${currentUser.gender == 0}">
                                     <h5>Nữ</h5>
                                 </c:when>
-                                <c:when test = "${user.gender == 1}">
+                                <c:when test = "${currentUser.gender == 1}">
                                     <h5>Nam</h5>
                                 </c:when>
                                 <c:otherwise>
@@ -219,44 +219,16 @@
             </div>
             <div class="col-lg-6">
                 <div class="about-avatar d-flex justify-content-center">
-                    <c:if test="${user.avatar.startsWith('https')}">
-                        <img src="<c:url value="${user.avatar}"/>"
+                    <c:if test="${currentUser.avatar.startsWith('https')}">
+                        <img src="<c:url value="${currentUser.avatar}"/>"
                              class="rounded">
                     </c:if>
-                    <c:if test="${!user.avatar.startsWith('https')}">
+                    <c:if test="${!currentUser.avatar.startsWith('https')}">
                         <img src="<c:url value="/resources/images/none.png"/>"
                              class="rounded">
                     </c:if>
                 </div>
             </div>
         </div>
-<%--        <div class="counter mt-7">--%>
-<%--            <div class="row">--%>
-<%--                <div class="col-6 col-lg-3">--%>
-<%--                    <div class="count-data text-center">--%>
-<%--                        <h6 class="count h2" data-to="500" data-speed="500">500</h6>--%>
-<%--                        <p class="m-0px font-w-600">Happy Clients</p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="col-6 col-lg-3">--%>
-<%--                    <div class="count-data text-center">--%>
-<%--                        <h6 class="count h2" data-to="150" data-speed="150">150</h6>--%>
-<%--                        <p class="m-0px font-w-600">Project Completed</p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="col-6 col-lg-3">--%>
-<%--                    <div class="count-data text-center">--%>
-<%--                        <h6 class="count h2" data-to="850" data-speed="850">850</h6>--%>
-<%--                        <p class="m-0px font-w-600">Photo Capture</p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="col-6 col-lg-3">--%>
-<%--                    <div class="count-data text-center">--%>
-<%--                        <h6 class="count h2" data-to="190" data-speed="190">190</h6>--%>
-<%--                        <p class="m-0px font-w-600">Telephonic Talk</p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
     </div>
 </section>

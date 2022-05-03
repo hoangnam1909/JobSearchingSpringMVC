@@ -85,11 +85,7 @@
 <ul class="pagination d-flex justify-content-center mt-4">
     <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">
         <li class="page-item">
-            <c:url var="editUrl" value="">
-                <c:param name="page" value="${page}"/>
-                <c:param name="ha" value=""/>
-            </c:url>
-            <a class="page-link" href="${editUrl}">${page}</a>
+            <a class="page-link" href="<c:url value="/admin/job-post" />?page=${page}">${page}</a>
         </li>
     </c:forEach>
 </ul>
