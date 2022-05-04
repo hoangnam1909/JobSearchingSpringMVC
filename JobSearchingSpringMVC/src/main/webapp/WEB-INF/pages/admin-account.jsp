@@ -46,7 +46,15 @@
             <td>${u.username}</td>
             <td>${u.phone}</td>
             <td>${u.email}</td>
-            <td>${u.userType}</td>
+            <td>
+                    ${u.userType}
+                        <c:if test="${u.userType.equals('ROLE_UV')}">
+                            <a style="margin-left: 10px" href="<c:url value="/admin/account/candidate-info/update" />?userId=${u.id}"
+                               data-toggle="tooltip" title="Sửa thông tin ứng viên">
+                                <i class="fa-solid fa-user-pen"></i>
+                            </a>
+                        </c:if>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

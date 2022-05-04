@@ -5,7 +5,9 @@
  */
 package com.nhn.controllers;
 
+import com.nhn.pojo.CandidateInfo;
 import com.nhn.pojo.User;
+import com.nhn.service.CandidateService;
 import com.nhn.service.UserService;
 import com.nhn.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.NoResultException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +32,9 @@ public class AccountController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CandidateService candidateService;
 
     @Autowired
     private UserValidator userValidator;
@@ -54,13 +60,91 @@ public class AccountController {
     @GetMapping("/admin/account/view")
     public String viewAccount(Model model,
                               @RequestParam(name = "id", defaultValue = "0") int id) {
-        if (id > 0)
-            model.addAttribute("user", this.userService.getById(id));
-        else
+        User user = this.userService.getById(id);
+        if (user != null) {
+            model.addAttribute("user", user);
+            CandidateInfo candidate = null;
+            try {
+                candidate = candidateService.getByUserId(user.getId());
+            } catch (NoResultException nre) {
+                System.err.println(nre.getMessage());
+            }
+            if (candidate != null) {
+                model.addAttribute("candidate", candidate);
+            }
+        } else
             return "redirect:/admin/account";
 
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         return "view-account";
+    }
+
+    // XEM CHI TIET TAI KHOAN
+    @RequestMapping("/admin/candidate/view")
+    public String viewCandidate(Model model,
+                                @RequestParam(name = "userId", defaultValue = "0") int userId) {
+        CandidateInfo candidateInfo = this.candidateService.getByUserId(userId);
+        if (candidateInfo != null)
+            model.addAttribute("candidate", this.candidateService.getByUserId(userId));
+        else
+            return "redirect:/admin/account";
+
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
+        return "view-candidate";
+    }
+
+    @GetMapping("/admin/account/candidate-info/update")
+    public String updateCandidateView(Model model,
+                                      @RequestParam(name = "userId", defaultValue = "0") int userId,
+                                      final RedirectAttributes redirectAttrs) {
+        CandidateInfo candidate;
+        try {
+            candidate = candidateService.getByUserId(userId);
+        } catch (NoResultException nre){
+            redirectAttrs.addFlashAttribute("userId", userId);
+            return "redirect:/admin/account/candidate-info/add";
+        }
+        model.addAttribute("candidate", candidate);
+        model.addAttribute("userId", userId);
+        return "add-candidate";
+    }
+
+    @GetMapping("/admin/account/candidate-info/add")
+    public String addCandidateView(Model model) {
+        CandidateInfo candidate = new CandidateInfo();
+        candidate.setId(0);
+        model.addAttribute("candidate", candidate);
+        model.addAttribute("userId", model.asMap().get("userId"));
+        return "add-candidate";
+    }
+
+    @PostMapping("/admin/account/candidate-info/add-or-update")
+    public String addOrUpdateCandidate(Model model,
+                                       @ModelAttribute(value = "candidate") CandidateInfo candidate,
+                                       final RedirectAttributes redirectAttrs) {
+        String errMsg = null;
+        String sucMsg = null;
+
+        User candidateUser = userService.getById(candidate.getUserId());
+        candidate.setUser(candidateUser);
+        int checkMsg = candidate.getId();
+        if (this.candidateService.addOrUpdate(candidate)) {
+            if (checkMsg == 0)
+                sucMsg = String.format("Thêm thông tin user và ứng viên '%s' thành công", candidateUser.getUsername());
+            else
+                sucMsg = "Sửa thông tin user và ứng viên '%s' thành công";
+        } else {
+            if (checkMsg == 0)
+                errMsg = String.format("Thêm thông tin user và ứng viên '%s' không thành công", candidateUser.getUsername());
+            else
+                errMsg = "Sửa thông tin user và ứng viên '%s' không thành công";
+
+            redirectAttrs.addFlashAttribute("errMsg", errMsg);
+            return "add-candidate";
+        }
+
+        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
+        return "redirect:/admin/account";
     }
 
     // THEM HOAC CAP NHAT TAI KHOAN
@@ -88,7 +172,14 @@ public class AccountController {
         if (result.hasErrors())
             return "add-account";
 
-        if (this.userService.addOrUpdate(user)) {
+        boolean addOrUpdateCheck = this.userService.addOrUpdate(user);
+        if (addOrUpdateCheck) {
+            if (user.getUserType().equals("ROLE_UV")) {
+                redirectAttrs.addFlashAttribute("userId",
+                        userService.getByUsername(user.getUsername()).getId());
+                return "redirect:/admin/account/candidate-info/add";
+            }
+
             if (user.getId() == 0)
                 sucMsg = String.format("Thêm thông tin user '%s' thành công", user.getUsername());
             else

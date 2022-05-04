@@ -29,19 +29,19 @@ import java.util.*;
 public class EmployerController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    JobPostService jobPostService;
+    private JobPostService jobPostService;
 
     @Autowired
-    JobTypeService jobTypeService;
+    private JobTypeService jobTypeService;
 
     @Autowired
-    CompanyService companyService;
+    private CompanyService companyService;
 
     @Autowired
-    JobPostValidator jobPostValidator;
+    private JobPostValidator jobPostValidator;
 
     private void loadAllList(Model model) {
         List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
@@ -188,7 +188,7 @@ public class EmployerController {
         int nowYear = Calendar.getInstance().get(Calendar.YEAR);
 
         Map<String, String> pre = new HashMap<>();
-        pre.put("userType", "ROLE_USER");
+        pre.put("userType", "ROLE_UV");
         pre.put("active", "1");
 
         if (fromAge != null) {

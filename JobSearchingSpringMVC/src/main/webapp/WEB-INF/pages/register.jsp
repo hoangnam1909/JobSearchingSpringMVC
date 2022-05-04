@@ -86,8 +86,8 @@
     <div class="form-group">
         <label>Loại tài khoản <span style="color: red">*</span></label>
         <form:select path="userType" class="custom-select">
-            <form:option value="ROLE_USER" label="Ứng viên"
-                         selected="${user.userType.equals('ROLE_USER') ? true : ''}"/>
+            <form:option value="ROLE_UV" label="Ứng viên"
+                         selected="${user.userType.equals('ROLE_UV') ? true : ''}"/>
             <form:option value="ROLE_NTD" label="Nhà tuyển dụng"
                          selected="${user.userType.equals('ROLE_NTD') ? true : ''}"/>
         </form:select>

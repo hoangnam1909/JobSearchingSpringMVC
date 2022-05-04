@@ -14,7 +14,7 @@ import java.util.Set;
 public class User {
     public static final String ADMIN = "ROLE_ADMIN";
     public static final String NTD = "ROLE_NTD";
-    public static final String USER = "ROLE_USER";
+    public static final String USER = "ROLE_UV";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,6 +70,17 @@ public class User {
 
     @OneToMany(mappedBy = "postedByUser")
     private Set<JobPost> jobPosts = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<CandidateInfo> candidateInfos = new LinkedHashSet<>();
+
+    public Set<CandidateInfo> getCandidateInfos() {
+        return candidateInfos;
+    }
+
+    public void setCandidateInfos(Set<CandidateInfo> candidateInfos) {
+        this.candidateInfos = candidateInfos;
+    }
 
     public Set<JobPost> getJobPosts() {
         return jobPosts;
@@ -226,4 +237,5 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
 }

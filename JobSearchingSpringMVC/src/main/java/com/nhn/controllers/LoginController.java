@@ -73,7 +73,7 @@ public class LoginController {
         if (this.userService.addOrUpdate(user)) {
             sucMsg = String.format("Đăng ký thành công tài khoản '%s' với vai trò %s",
                     user.getUsername(),
-                    user.getUserType().equals("ROLE_USER") ? "Ứng viên" : "Nhà tuyển dụng");
+                    user.getUserType().equals("ROLE_UV") ? "Ứng viên" : "Nhà tuyển dụng");
         } else {
             errMsg = String.format("Thêm thông tin user '%s' không thành công", user.getUsername());
             redirectAttrs.addFlashAttribute("errMsg", errMsg);

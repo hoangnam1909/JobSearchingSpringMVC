@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Lightning
-  Date: 10/04/2022
-  Time: 3:19 CH
-  To change this template use File | Settings | File Templates.
---%>
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -77,6 +70,32 @@
             <th style="width: 30%" scope="row">Loại tài khoản</th>
             <td class="border-left">${user.userType}</td>
         </tr>
+        <c:if test="${candidate != null}">
+            <tr>
+                <th style="width: 30%" scope="row">Số năm kinh nghiệm</th>
+                <td class="border-left">${candidate.yearsExperience}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Điểm mạnh</th>
+                <td class="border-left">${candidate.strengths}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Điểm yếu</th>
+                <td class="border-left">${candidate.weaknesses}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Chuyên ngành</th>
+                <td class="border-left">${candidate.majoring}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Chứng chỉ ngoại ngữ</th>
+                <td class="border-left">${candidate.languageCertificate}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Chứng chỉ tin học</th>
+                <td class="border-left">${candidate.informaticsCertificate}</td>
+            </tr>
+        </c:if>
         </tbody>
     </table>
 </div>

@@ -18,6 +18,38 @@ USE `jobsearchingdb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `candidate_info`
+--
+
+DROP TABLE IF EXISTS `candidate_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `candidate_info` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `years_experience` int DEFAULT NULL,
+  `strengths` longtext COLLATE utf8mb4_unicode_520_ci,
+  `weaknesses` longtext COLLATE utf8mb4_unicode_520_ci,
+  `majoring` varchar(100) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `language_certificate` longtext COLLATE utf8mb4_unicode_520_ci,
+  `informatics_certificate` longtext COLLATE utf8mb4_unicode_520_ci,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_candidate_idx` (`user_id`),
+  CONSTRAINT `fk_user_candidate` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `candidate_info`
+--
+
+LOCK TABLES `candidate_info` WRITE;
+/*!40000 ALTER TABLE `candidate_info` DISABLE KEYS */;
+INSERT INTO `candidate_info` VALUES (1,7,'Ngu','Ngáo','Công nghệ thông tin','TOEIC 750','lmao',32),(6,10,'ngáo','ngu','Công nghệ thông tin','TOEIC 750','',41),(7,10,'ngáo + ngu','','Ngôn ngữ Anh','','',42),(8,100,'','già','','','',43),(10,NULL,'hài hước bro','ngu','','','',45),(12,18,'ngu','ko thông minh','','','',47),(13,46,'test update redirect to add','','','','',46);
+/*!40000 ALTER TABLE `candidate_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `company`
 --
 
@@ -129,7 +161,7 @@ CREATE TABLE `user` (
   `gender` tinyint DEFAULT NULL,
   `address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +170,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'Thanh Thuỳ','$2a$10$nvWvGaxa8BRy6IGWAkPmeuDkLZIkp/fivpHRMB9pbkkOK9GAEh42G',NULL,'ROLE_USER',0,NULL,'Thanh Thuỳ','Thanh Thuỳ',NULL,0,NULL),(3,'Hoàng Nam','$2a$10$BFk/pDHLL07taPcNuUqu8uzVsiuV1aokToQo/.labW/XELakrngKq',NULL,'ROLE_USER',0,NULL,'nam@gmail.com','0314534534',NULL,0,NULL),(4,'admin','$2a$10$yobGID0c.PI/lVnHglCncey0TsjKUa/WMiUhImftHQCsPCEjCfGeC','','ROLE_ADMIN',0,NULL,'admin@gmail.com','014324325',NULL,0,NULL),(5,'qmin1012','$2a$10$KFxH3fIeo0vH43c57G7RT.J9CfdT.oReeHx56vYQahTEQqLE6apSe',NULL,'ROLE_USER',0,NULL,'qmin1012@gmail.com','1012',NULL,0,NULL),(9,'user1','$2a$10$PoUjWZspQc/v6i3pyQjnPOQ7FNjYeHVaMSh4zvjA5wrXA5c9EeTlO',NULL,'ROLE_USER',0,NULL,'user1','user1','2020-05-30',0,NULL),(13,'date','$2a$10$lQgI9vT7i7OTpg0vRKghD.shVCQZwIHhGMfUYuMQvr.PCr7kf2LrS',NULL,'ROLE_USER',0,'date','date','date','0002-11-30',0,''),(16,'tle115','$2a$10$k3w6Q.X4xt/Xqvn930rxreUSvV5wwhDK8pZVpZ9f4RgWJxymvqJqy','https://res.cloudinary.com/dxorabap0/image/upload/v1651080613/nyg63eb0hgml3dxzmfgc.jpg','ROLE_NTD',1,'Lê Thị Thanh Thuỳ','lethuy01091997@gmail.com','0123456789','2000-05-11',1,'Bắc Kạn'),(17,'usertest9succAva','$2a$10$/PL28CaBcCo0ZEKatFx.X.l4ToKVlH6wWHP/EKl3PP3HXHy5B/4Fa',NULL,'ROLE_USER',1,'usertest9','usertest9','usertest9','2001-10-17',0,'HCM'),(19,'testfilepicker','$2a$10$arZn3WwASMPuCoD3ODh58.2kO1NcymbBedp2Ig6m8INcJvi76oT/G','https://res.cloudinary.com/dxorabap0/image/upload/v1651133332/utoiwv8cxue63w0ag3vt.webp','ROLE_ADMIN',1,'testfilepicker','testfilepicker','testfilepicker','2001-08-17',1,'Ea Súp'),(32,'ungvien1','$2a$10$16G2pK4Aq3BNFZMgfdfOAuXnPP6GoqSq6QENs/obTydBhj7/9BAv.','https://res.cloudinary.com/dxorabap0/image/upload/v1651647840/sabfg0rm32rm2voxgigm.jpg','ROLE_USER',1,'Ứng Viên 1','ungvien1@gmail.com','0123463573','1999-06-17',0,'Đà Nẵng'),(33,'ungvien2','$2a$10$PgY5PGTpSXtAKiwi.3mEn.CyISWPMhoHOYvLqprN/zaQgEeAuvMv2','https://res.cloudinary.com/dxorabap0/image/upload/v1651647876/k6per2vpnokzszvrdn7u.jpg','ROLE_USER',1,'Ứng Viên 2','ungvien2@gmail.com','086748375','2003-08-05',1,'Vũng Tàu'),(34,'nhatuyendung1','$2a$10$4f4pIi3uPFerqJxTXXGGSOCKl47cKYeuleLzsT73HRoVmTF2eYAjW','https://res.cloudinary.com/dxorabap0/image/upload/v1651651727/bvrnqaydrvw7vjdduxxa.jpg','ROLE_NTD',1,'Nhà Tuyển Dụng 1','nhatuyendung1@gmail.com','0543753475','1995-08-06',0,'Hưng Yên');
+INSERT INTO `user` VALUES (2,'Thanh Thuỳ','$2a$10$nvWvGaxa8BRy6IGWAkPmeuDkLZIkp/fivpHRMB9pbkkOK9GAEh42G',NULL,'ROLE_UV',0,NULL,'Thanh Thuỳ','Thanh Thuỳ',NULL,0,NULL),(3,'Hoàng Nam','$2a$10$BFk/pDHLL07taPcNuUqu8uzVsiuV1aokToQo/.labW/XELakrngKq',NULL,'ROLE_UV',0,NULL,'nam@gmail.com','0314534534',NULL,0,NULL),(4,'admin','$2a$10$yobGID0c.PI/lVnHglCncey0TsjKUa/WMiUhImftHQCsPCEjCfGeC','','ROLE_ADMIN',0,NULL,'admin@gmail.com','014324325',NULL,0,NULL),(5,'qmin1012','$2a$10$KFxH3fIeo0vH43c57G7RT.J9CfdT.oReeHx56vYQahTEQqLE6apSe',NULL,'ROLE_UV',0,NULL,'qmin1012@gmail.com','1012',NULL,0,NULL),(9,'user1','$2a$10$PoUjWZspQc/v6i3pyQjnPOQ7FNjYeHVaMSh4zvjA5wrXA5c9EeTlO',NULL,'ROLE_UV',0,NULL,'user1','user1','2020-05-30',0,NULL),(13,'date','$2a$10$lQgI9vT7i7OTpg0vRKghD.shVCQZwIHhGMfUYuMQvr.PCr7kf2LrS',NULL,'ROLE_UV',0,'date','date','date','0002-11-30',0,''),(16,'tle115','$2a$10$k3w6Q.X4xt/Xqvn930rxreUSvV5wwhDK8pZVpZ9f4RgWJxymvqJqy','https://res.cloudinary.com/dxorabap0/image/upload/v1651080613/nyg63eb0hgml3dxzmfgc.jpg','ROLE_NTD',1,'Lê Thị Thanh Thuỳ','lethuy01091997@gmail.com','0123456789','2000-05-11',1,'Bắc Kạn'),(17,'usertest9succAva','$2a$10$/PL28CaBcCo0ZEKatFx.X.l4ToKVlH6wWHP/EKl3PP3HXHy5B/4Fa',NULL,'ROLE_UV',1,'usertest9','usertest9','usertest9','2001-10-17',0,'HCM'),(19,'testfilepicker','$2a$10$arZn3WwASMPuCoD3ODh58.2kO1NcymbBedp2Ig6m8INcJvi76oT/G','https://res.cloudinary.com/dxorabap0/image/upload/v1651133332/utoiwv8cxue63w0ag3vt.webp','ROLE_ADMIN',1,'testfilepicker','testfilepicker','testfilepicker','2001-08-17',1,'Ea Súp'),(32,'ungvien1','$2a$10$16G2pK4Aq3BNFZMgfdfOAuXnPP6GoqSq6QENs/obTydBhj7/9BAv.','https://res.cloudinary.com/dxorabap0/image/upload/v1651647840/sabfg0rm32rm2voxgigm.jpg','ROLE_UV',1,'Ứng Viên 1','ungvien1@gmail.com','0123463573','1999-06-17',0,'Đà Nẵng'),(33,'ungvien2','$2a$10$PgY5PGTpSXtAKiwi.3mEn.CyISWPMhoHOYvLqprN/zaQgEeAuvMv2','https://res.cloudinary.com/dxorabap0/image/upload/v1651647876/k6per2vpnokzszvrdn7u.jpg','ROLE_UV',1,'Ứng Viên 2','ungvien2@gmail.com','086748375','2003-08-05',1,'Vũng Tàu'),(34,'nhatuyendung1','$2a$10$4f4pIi3uPFerqJxTXXGGSOCKl47cKYeuleLzsT73HRoVmTF2eYAjW','https://res.cloudinary.com/dxorabap0/image/upload/v1651651727/bvrnqaydrvw7vjdduxxa.jpg','ROLE_NTD',1,'Nhà Tuyển Dụng 1','nhatuyendung1@gmail.com','0543753475','1995-08-06',0,'Hưng Yên'),(41,'ungvientest1','$2a$10$53W/I2w6jEcmXijXRh.FhO29Hpz1ainG.Y9e7yKwV0uOz.0FsXe/y','https://res.cloudinary.com/dxorabap0/image/upload/v1651682182/vz1smubi4kvint0qznn2.jpg','ROLE_UV',1,'Ungvientest1','ungvientest1@gmail.com','053536546','2005-05-09',0,'ungvientest1'),(42,'ungvientest2','$2a$10$TWt2D3GovLXXvmmCNXfPZe2yip/B/cyrx.0ruKPs0/YrzqLCPtISe','https://res.cloudinary.com/dxorabap0/image/upload/v1651682408/tiyhyvj8ibp8z8gm0bxu.jpg','ROLE_UV',1,'Ungvientest2','ungvientest2@gmil.com','042352541','2002-08-19',0,'ungvientest2'),(43,'ungvientest3','$2a$10$lkN8q1upSPznhDM6d7n2WuG/kkTQksnXa61hoMgyodiB6dzPE2Z7q','https://res.cloudinary.com/dxorabap0/image/upload/v1651682671/t7uiktmeolsvy8o0iutj.jpg','ROLE_UV',1,'Ungvientest3','ungvientest3@gmail.com','0534587346','2000-03-04',1,'ungvientest3'),(45,'ungvientest4','$2a$10$lV/Qkf3e455XMeOavIlfR.B5ygX1s6vDZ6PdCcDjF3WWHrvbuV72S','https://res.cloudinary.com/dxorabap0/image/upload/v1651684357/jtf3cm9urse044selfrm.jpg','ROLE_UV',1,'Ungvientest4','ungvientest4@gmail.com','0583457834','2004-08-06',0,'ungvientest4'),(46,'ungvientest5','$2a$10$LzOPkaHFX73wbYwPga8J0uu58R/f0XUOdJHjELZ44TXbwDXEnCeRe','https://res.cloudinary.com/dxorabap0/image/upload/v1651684725/d51vstyy0mneok1kmd5b.jpg','ROLE_UV',1,'Ungvientest5','ungvientest5@gmail.com','0534543','2004-05-06',0,'ungvientest5'),(47,'ungvientest6','$2a$10$szCkJUO37e688rL0Sx1Ife9T.5PzDrVZ3M/JQ9Sz/DpGBA1q52M9q','https://res.cloudinary.com/dxorabap0/image/upload/v1651684859/ftkbetrrlbm7xpmefowu.jpg','ROLE_UV',1,'Ungvientest6','ungvientest6@gmail.com','0435374','2004-06-08',1,'ungvientest6');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -151,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-04 21:22:37
+-- Dump completed on 2022-05-05  1:03:17

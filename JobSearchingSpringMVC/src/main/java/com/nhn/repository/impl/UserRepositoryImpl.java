@@ -27,6 +27,7 @@ import java.util.Map;
 @Repository
 @Transactional
 public class UserRepositoryImpl implements UserRepository {
+
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
@@ -246,10 +247,8 @@ public class UserRepositoryImpl implements UserRepository {
             } catch (HibernateException ex) {
                 System.err.println(ex.getMessage());
             }
-            return false;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override

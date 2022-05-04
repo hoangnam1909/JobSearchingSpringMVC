@@ -63,6 +63,12 @@ and open the template in the editor.
         <put-attribute name="content" value="/WEB-INF/pages/employer-view-user.jsp" />
     </definition>
 
+<!--    UNG VIEN-->
+    <definition name="candidate" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ ứng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/candidate.jsp" />
+    </definition>
+
 <!--    ADMIN-->
     <definition name="adminLayout" template="/WEB-INF/layout/base.jsp">
         <put-attribute name="title" value="" />
@@ -86,6 +92,14 @@ and open the template in the editor.
     <definition name="view-account" extends="adminLayout">
         <put-attribute name="title" value="Xem thông tin tài khoản" />
         <put-attribute name="content" value="/WEB-INF/pages/view-account.jsp" />
+    </definition>
+    <definition name="view-candidate" extends="adminLayout">
+        <put-attribute name="title" value="Xem thông tin ứng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/view-candidate.jsp" />
+    </definition>
+    <definition name="add-candidate" extends="baseLayout">
+        <put-attribute name="title" value="Thêm thông tin ứng viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/add-candidate.jsp" />
     </definition>
 
     <definition name="admin-job-post" extends="adminLayout">
