@@ -73,10 +73,17 @@ public class CompanyController {
         String sucMsg = null;
 
         boolean companyAddedCheck = this.companyService.addOrUpdate(company);
-        if (companyAddedCheck)
-            sucMsg = String.format("Thêm thông tin công ty '%s' thành công", company.getName());
-        else
-            errMsg = "Thêm thông tin công ty không thành công";
+        if (companyAddedCheck) {
+            if (company.getId() == 0)
+                sucMsg = String.format("Thêm thông tin công ty '%s' thành công", company.getName());
+            else
+                sucMsg = String.format("Sửa thông tin công ty '%s' thành công", company.getName());
+        } else {
+            if (company.getId() == 0)
+                errMsg = "Thêm thông tin công ty không thành công";
+            else
+                errMsg = "Sửa thông tin công ty không thành công";
+        }
 
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);

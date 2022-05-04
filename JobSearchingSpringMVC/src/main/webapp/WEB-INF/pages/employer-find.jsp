@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="now" class="java.util.Date"/>
 
 <h1 class="text-center dark-color">TÌM KIẾM ỨNG VIÊN</h1>
 
@@ -8,12 +10,29 @@
         <form>
             <input style="display: none;" name="page" value="${currentPage}">
             <div class="form-group">
-                <label for="fullname">Họ và tên</label>
-                <input class="form-control" name="fullname" id="fullname">
+                <h6>Họ và tên</h6>
+                <input class="form-control" name="fullname">
             </div>
             <div class="form-group">
-                <label for="gender">Giới tính</label>
-                <select class="form-control" name="gender" id="gender">
+                <h6>Độ tuổi</h6>
+                <div class="row">
+                    <div class="col-6 border-right">
+                        <div>
+                            <label for="fromAge">Từ</label>
+                            <input class="form-control" name="fromAge" id="fromAge">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div>
+                            <label for="toAge">Đến</label>
+                            <input class="form-control" name="toAge" id="toAge">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <h6>Giới tính</h6>
+                <select class="form-control" name="gender">
                     <option value="-1" selected>Chọn giới tính</option>
                     <option value="0">Nam</option>
                     <option value="1">Nữ</option>
@@ -47,6 +66,12 @@
                     <td>${u.fullName}</td>
                     <td>${u.phone}</td>
                     <td>${u.email}</td>
+                    <td>${u.dob}</td>
+                    <td>
+                        <fmt:formatDate pattern="yyyy" value="${now}" var="yearNow"/>
+                        <fmt:formatDate pattern="yyyy" value="${u.dob}" var="yearBorn"/>
+                            ${yearNow - yearBorn}
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -77,8 +102,8 @@
 <script>
     $(document).ready(function () {
         $("form").submit(function () {
-            $("input").each(function (index, obj) {
-                if ($(obj).val() === "") {
+            $("input, select").each(function (index, obj) {
+                if ($(obj).val() === "" || $(obj).val() === "-1") {
                     $(obj).remove();
                 }
             });

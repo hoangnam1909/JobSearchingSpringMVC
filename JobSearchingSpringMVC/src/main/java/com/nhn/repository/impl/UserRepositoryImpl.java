@@ -154,6 +154,28 @@ public class UserRepositoryImpl implements UserRepository {
                 predicates.add(p4);
             }
 
+            if (params.containsKey("fromAge")) {
+                Date fromAgeDate = null;
+                try {
+                    fromAgeDate = utils.stringToDate(params.get("fromAge"), "dd/MM/yyyy");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Predicate p5 = builder.lessThanOrEqualTo(root.get("dob").as(Date.class), fromAgeDate);
+                predicates.add(p5);
+            }
+
+            if (params.containsKey("toAge")) {
+                Date toAgeDate = null;
+                try {
+                    toAgeDate = utils.stringToDate(params.get("toAge"), "dd/MM/yyyy");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Predicate p6 = builder.greaterThanOrEqualTo(root.get("dob").as(Date.class), toAgeDate);
+                predicates.add(p6);
+            }
+
             q = q.where(predicates.toArray(new Predicate[]{}));
         }
 

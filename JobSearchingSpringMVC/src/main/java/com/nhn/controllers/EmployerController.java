@@ -22,10 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @Transactional
@@ -51,6 +48,11 @@ public class EmployerController {
         model.addAttribute("jobTypes", jobTypes);
         List<Company> companies = companyService.getCompanies(null, 0);
         model.addAttribute("companies", companies);
+    }
+
+    private void loadAllService(Model model) {
+        model.addAttribute("jobTypeService", jobTypeService);
+        model.addAttribute("companyService", companyService);
     }
 
     @RequestMapping("/employer")
@@ -85,7 +87,7 @@ public class EmployerController {
         model.addAttribute("counter", jobPosts.size());
         model.addAttribute("jobPostService", jobPostService);
 
-        loadAllList(model);
+        loadAllService(model);
         model.addAttribute("jobPosts", jobPosts);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
@@ -179,10 +181,29 @@ public class EmployerController {
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
         String fullname = params.getOrDefault("fullname", null);
         String gender = params.getOrDefault("gender", "-1");
+        String fromAge = params.getOrDefault("fromAge", null);
+        String toAge = params.getOrDefault("toAge", null);
+
+        int nowYear = Calendar.getInstance().get(Calendar.YEAR);
+
 
         Map<String, String> pre = new HashMap<>();
         pre.put("userType", "ROLE_USER");
         pre.put("active", "1");
+
+        if (fromAge != null) {
+            int fromYear = nowYear - Integer.parseInt(fromAge);
+            String fromDate = String.format("31/12/%d", fromYear);
+            System.out.println("fromAge >= " + fromDate);
+            pre.put("fromAge", fromDate);
+        }
+        if (toAge != null) {
+            int toYear = nowYear - Integer.parseInt(toAge);
+            String toDate = String.format("01/01/%d", toYear);
+            System.out.println("toDate <= " + toDate);
+            pre.put("toAge", toDate);
+        }
+
         if (fullname != null)
             pre.put("fullname", fullname);
         if (!gender.equals("-1"))

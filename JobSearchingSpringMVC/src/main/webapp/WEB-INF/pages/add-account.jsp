@@ -25,7 +25,7 @@
     <form:hidden path="avatar"/>
     <div class="form-group">
         <label>Tên đăng nhập <span style="color: red">*</span></label>
-        <form:input path="username" class="form-control" required="required"/>
+        <form:input path="username" class="form-control" required="required" autofocus="autofocus"/>
     </div>
     <div class="form-group">
         <label>Mật khẩu <span style="color: red">*</span></label>

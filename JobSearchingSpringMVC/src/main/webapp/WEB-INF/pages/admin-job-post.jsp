@@ -29,7 +29,7 @@
     <tr>
         <th class="text-center" style="width: 15%">Thực thi</th>
         <th class="text-center" style="width: 5%">STT</th>
-        <th class="text-center" style="width: 10%">ID</th>
+<%--        <th class="text-center" style="width: 10%">ID</th>--%>
         <th>Tiêu đề</th>
         <th>Ngày đăng</th>
         <th>Đăng bởi</th>
@@ -55,7 +55,7 @@
                 </a>
             </td>
             <td class="text-center">${(currentPage - 1) * jobPostService.maxItemsInPage + loop.index + 1}</td>
-            <td class="text-center"> #${jp.id} </td>
+<%--            <td class="text-center"> #${jp.id} </td>--%>
             <td> ${jp.title} </td>
             <td>
                 <c:if test="${jp.createdDate != null}">

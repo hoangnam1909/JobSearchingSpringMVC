@@ -15,7 +15,7 @@
     <tr>
         <th class="text-center" style="width: 15%">Thực thi</th>
         <th class="text-center" style="width: 5%">STT</th>
-        <th class="text-center" style="width: 10%">ID</th>
+<%--        <th class="text-center" style="width: 10%">ID</th>--%>
         <th>Tên loại việc làm</th>
     </tr>
     </thead>
@@ -37,7 +37,7 @@
                 </a>
             </td>
             <td class="text-center">${(currentPage - 1) * jobTypeService.maxItemsInPage + loop.index + 1}</td>
-            <td class="text-center">#${jt.id}</td>
+<%--            <td class="text-center">#${jt.id}</td>--%>
             <td>${jt.name}</td>
         </tr>
     </c:forEach>

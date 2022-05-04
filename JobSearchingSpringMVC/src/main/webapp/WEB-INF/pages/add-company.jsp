@@ -2,7 +2,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<h1 class="text-center dark-color">THÊM CÔNG TY</h1>
+<c:if test="${company.id == 0}">
+    <h1 class="text-center dark-color">THÊM CÔNG TY</h1>
+</c:if>
+<c:if test="${company.id > 0}">
+    <h1 class="text-center dark-color">CHỈNH SỬA THÔNG TIN CÔNG TY</h1>
+</c:if>
 
 <c:url value="/admin/company/add-or-update" var="action"/>
 
@@ -12,7 +17,7 @@
     </div>
     <div class="form-group">
         <label>Tên</label>
-        <form:input path="name" class="form-control"/>
+        <form:input path="name" class="form-control" autofocus="autofocus"/>
     </div>
     <div class="form-group">
         <label>Mô tả</label>
@@ -30,7 +35,14 @@
         <label>Trang web</label>
         <form:input path="website" class="form-control"/>
     </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Thêm</button>
-    </div>
+    <c:if test="${company.id == 0}">
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Thêm</button>
+        </div>
+    </c:if>
+    <c:if test="${company.id > 0}">
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </div>
+    </c:if>
 </form:form>

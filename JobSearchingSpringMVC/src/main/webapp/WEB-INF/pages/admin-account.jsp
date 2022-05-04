@@ -15,7 +15,7 @@
     <tr>
         <th class="text-center" style="width: 15%">Thực thi</th>
         <th class="text-center" style="width: 5%">STT</th>
-        <th class="text-center" style="width: 10%">ID</th>
+<%--        <th class="text-center" style="width: 10%">ID</th>--%>
         <th>Tên đăng nhập</th>
         <th>Số điện thoại</th>
         <th>Email</th>
@@ -39,7 +39,7 @@
                 </a>
             </td>
             <td class="text-center">${(currentPage - 1) * userService.maxItemsInPage + loop.index + 1}</td>
-            <td class="text-center">#${u.id}</td>
+<%--            <td class="text-center">#${u.id}</td>--%>
             <td>${u.username}</td>
             <td>${u.phone}</td>
             <td>${u.email}</td>

@@ -44,7 +44,7 @@ public class JobPostController {
     @Autowired
     JobPostValidator jobPostValidator;
 
-    private void loadAllList(Model model){
+    private void loadAllList(Model model) {
         List<User> users = userService.getByRole(User.NTD, 0, 1);
         model.addAttribute("users", users);
         List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
@@ -139,10 +139,17 @@ public class JobPostController {
             jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));
 
         boolean jobPostAddedCheck = this.jobPostService.addOrUpdate(jobPost);
-        if (jobPostAddedCheck)
-            sucMsg = String.format("Thêm thành công bài viết '%s'", jobPost.getTitle());
-        else
-            errMsg = String.format("Thêm bài viết '%s' thất bại", jobPost.getTitle());
+        if (jobPostAddedCheck) {
+            if (jobPost.getId() == 0)
+                sucMsg = String.format("Thêm thành công bài viết '%s'", jobPost.getTitle());
+            else
+                sucMsg = String.format("Sửa thành công bài viết '%s'", jobPost.getTitle());
+        } else {
+            if (jobPost.getId() == 0)
+                errMsg = String.format("Thêm bài viết '%s' thất bại", jobPost.getTitle());
+            else
+                errMsg = String.format("Sửa bài viết '%s' thất bại", jobPost.getTitle());
+        }
 
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);

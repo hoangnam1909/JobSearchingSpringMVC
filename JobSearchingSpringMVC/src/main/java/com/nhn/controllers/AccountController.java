@@ -89,9 +89,16 @@ public class AccountController {
             return "add-account";
 
         if (this.userService.addOrUpdate(user)) {
-            sucMsg = String.format("Thêm thông tin user '%s' thành công", user.getUsername());
+            if (user.getId() == 0)
+                sucMsg = String.format("Thêm thông tin user '%s' thành công", user.getUsername());
+            else
+                sucMsg = String.format("Sửa thông tin user '%s' thành công", user.getUsername());
         } else {
-            errMsg = String.format("Thêm thông tin user '%s' không thành công", user.getUsername());
+            if (user.getId() == 0)
+                errMsg = String.format("Thêm thông tin user '%s' không thành công", user.getUsername());
+            else
+                errMsg = String.format("Sửa thông tin user '%s' không thành công", user.getUsername());
+
             redirectAttrs.addFlashAttribute("errMsg", errMsg);
             return "add-account";
         }

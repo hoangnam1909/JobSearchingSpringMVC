@@ -9,10 +9,10 @@
 <div class="container mt-4">
     <table class="table table-striped">
         <tbody>
-        <tr>
-            <th style="width: 30%" scope="row">ID</th>
-            <td class="border-left">${jobPost.id}</td>
-        </tr>
+<%--        <tr>--%>
+<%--            <th style="width: 30%" scope="row">ID</th>--%>
+<%--            <td class="border-left">${jobPost.id}</td>--%>
+<%--        </tr>--%>
         <tr>
             <th style="width: 30%" scope="row">Tiêu đề</th>
             <td class="border-left">${jobPost.title}</td>

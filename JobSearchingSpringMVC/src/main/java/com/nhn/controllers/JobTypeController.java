@@ -85,10 +85,17 @@ public class JobTypeController {
             return "add-job-type";
 
         boolean jobTypeAddedCheck = this.jobTypeService.addOrUpdate(jobType);
-        if (jobTypeAddedCheck)
-            sucMsg = String.format("Thêm thông tin loại việc làm '%s' thành công", jobType.getName());
-        else
-            errMsg = String.format("Thêm thông tin loại việc làm '%s' không thành công", jobType.getName());
+        if (jobTypeAddedCheck) {
+            if (jobType.getId() == 0)
+                sucMsg = String.format("Thêm thông tin loại việc làm '%s' thành công", jobType.getName());
+            else
+                sucMsg = String.format("Sửa thông tin loại việc làm '%s' thành công", jobType.getName());
+        } else {
+            if (jobType.getId() == 0)
+                errMsg = String.format("Thêm thông tin loại việc làm '%s' không thành công", jobType.getName());
+            else
+                errMsg = String.format("Sửa thông tin loại việc làm '%s' không thành công", jobType.getName());
+        }
 
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);

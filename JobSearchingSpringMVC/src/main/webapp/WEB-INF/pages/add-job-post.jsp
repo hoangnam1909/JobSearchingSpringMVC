@@ -16,7 +16,7 @@
     <form:hidden path="id"/>
     <div class="form-group">
         <label>Tiêu đề</label>
-        <form:input path="title" class="form-control"/>
+        <form:input path="title" class="form-control" autofocus="autofocus"/>
     </div>
     <div class="form-group">
         <label>Mô tả</label>

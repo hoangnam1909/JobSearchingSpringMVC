@@ -20,7 +20,7 @@
 <form method="post" action="${action}">
   <div class="form-group">
     <label>Tài khoản</label>
-    <input type="username" class="form-control" placeholder="Tên tài khoản" name="username">
+    <input type="username" class="form-control" placeholder="Tên tài khoản" name="username" autofocus>
   </div>
   <div class="form-group">
     <label>Mật khẩu</label>
