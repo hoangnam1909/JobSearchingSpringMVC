@@ -183,9 +183,9 @@ public class EmployerController {
         String gender = params.getOrDefault("gender", "-1");
         String fromAge = params.getOrDefault("fromAge", null);
         String toAge = params.getOrDefault("toAge", null);
+        String address = params.getOrDefault("address", null);
 
         int nowYear = Calendar.getInstance().get(Calendar.YEAR);
-
 
         Map<String, String> pre = new HashMap<>();
         pre.put("userType", "ROLE_USER");
@@ -203,11 +203,15 @@ public class EmployerController {
             System.out.println("toDate <= " + toDate);
             pre.put("toAge", toDate);
         }
-
-        if (fullname != null)
+        if (fullname != null) {
             pre.put("fullname", fullname);
-        if (!gender.equals("-1"))
+        }
+        if (!gender.equals("-1")) {
             pre.put("gender", gender);
+        }
+        if (address != null) {
+            pre.put("address", address);
+        }
 
         List<User> users = userService.getUsersMultiCondition(pre, page);
 

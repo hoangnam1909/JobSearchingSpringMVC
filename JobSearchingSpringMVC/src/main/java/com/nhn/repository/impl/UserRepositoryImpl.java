@@ -176,6 +176,12 @@ public class UserRepositoryImpl implements UserRepository {
                 predicates.add(p6);
             }
 
+            if (params.containsKey("address")) {
+                Predicate p7 = builder.like(root.get("address").as(String.class),
+                        String.format("%%%s%%", params.get("address").trim().toLowerCase()));
+                predicates.add(p7);
+            }
+
             q = q.where(predicates.toArray(new Predicate[]{}));
         }
 

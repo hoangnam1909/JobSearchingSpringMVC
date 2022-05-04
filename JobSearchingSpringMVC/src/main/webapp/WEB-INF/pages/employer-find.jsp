@@ -38,6 +38,10 @@
                     <option value="1">Nữ</option>
                 </select>
             </div>
+            <div class="form-group">
+                <h6>Nơi sinh sống</h6>
+                <input class="form-control" name="address">
+            </div>
             <button type="submit" class="btn btn-primary">Tìm kiếm</button>
         </form>
     </div>
@@ -66,12 +70,6 @@
                     <td>${u.fullName}</td>
                     <td>${u.phone}</td>
                     <td>${u.email}</td>
-                    <td>${u.dob}</td>
-                    <td>
-                        <fmt:formatDate pattern="yyyy" value="${now}" var="yearNow"/>
-                        <fmt:formatDate pattern="yyyy" value="${u.dob}" var="yearBorn"/>
-                            ${yearNow - yearBorn}
-                    </td>
                 </tr>
             </c:forEach>
             </tbody>

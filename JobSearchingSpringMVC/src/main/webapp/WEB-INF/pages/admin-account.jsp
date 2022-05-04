@@ -6,7 +6,10 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/admin/account/add-or-update"/>">Thêm</a>
+        <a class="nav-link" href="<c:url value="/admin/account/add-or-update"/>">
+            <i class="fa-solid fa-plus"></i>
+            Thêm
+        </a>
     </li>
 </ul>
 

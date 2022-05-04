@@ -5,7 +5,10 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/admin/company/add-or-update"/>">Thêm</a>
+        <a class="nav-link" href="<c:url value="/admin/company/add-or-update"/>">
+            <i class="fa-solid fa-plus"></i>
+            Thêm
+        </a>
     </li>
 </ul>
 
@@ -14,7 +17,6 @@
     <tr>
         <th class="text-center" style="width: 15%">Thực thi</th>
         <th class="text-center" style="width: 5%">STT</th>
-<%--        <th class="text-center" style="width: 10%">ID</th>--%>
         <th style="width: 15%">Tên</th>
         <th style="width: 25%">Địa điểm</th>
         <th style="width: 20%">Liên hệ</th>
@@ -39,7 +41,6 @@
                 </a>
             </td>
             <td class="text-center">${(currentPage - 1) * companyService.maxItemsInPage + loop.index + 1}</td>
-<%--            <td class="text-center">#${com.id}</td>--%>
             <td>${com.name}</td>
             <td>${com.location}</td>
             <td>${com.contact}</td>

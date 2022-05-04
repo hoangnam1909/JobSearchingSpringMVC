@@ -178,7 +178,7 @@
                             <h5>Email</h5>
                         </div>
                         <div class="col-md-8">
-                            <h5>kshitighelani@gmail.com</h5>
+                            <h5>${user.email}</h5>
                         </div>
                     </div>
                     <div class="row mb-1">
@@ -203,10 +203,10 @@
                         </div>
                         <div class="col-md-8">
                             <c:choose>
-                                <c:when test = "${user.gender == 0}">
+                                <c:when test = "${user.gender == 1}">
                                     <h5>Nữ</h5>
                                 </c:when>
-                                <c:when test = "${user.gender == 1}">
+                                <c:when test = "${user.gender == 0}">
                                     <h5>Nam</h5>
                                 </c:when>
                                 <c:otherwise>

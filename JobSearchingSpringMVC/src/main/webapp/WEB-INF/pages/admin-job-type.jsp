@@ -6,7 +6,10 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/admin/job-type/add-or-update"/>">Thêm</a>
+        <a class="nav-link" href="<c:url value="/admin/job-type/add-or-update"/>">
+            <i class="fa-solid fa-plus"></i>
+            Thêm
+        </a>
     </li>
 </ul>
 
@@ -15,7 +18,6 @@
     <tr>
         <th class="text-center" style="width: 15%">Thực thi</th>
         <th class="text-center" style="width: 5%">STT</th>
-<%--        <th class="text-center" style="width: 10%">ID</th>--%>
         <th>Tên loại việc làm</th>
     </tr>
     </thead>
@@ -37,7 +39,6 @@
                 </a>
             </td>
             <td class="text-center">${(currentPage - 1) * jobTypeService.maxItemsInPage + loop.index + 1}</td>
-<%--            <td class="text-center">#${jt.id}</td>--%>
             <td>${jt.name}</td>
         </tr>
     </c:forEach>
