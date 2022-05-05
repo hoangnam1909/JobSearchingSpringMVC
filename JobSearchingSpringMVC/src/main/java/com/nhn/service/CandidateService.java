@@ -1,11 +1,11 @@
 package com.nhn.service;
 
-import com.nhn.pojo.CandidateInfo;
+import com.nhn.pojo.Candidate;
 
 public interface CandidateService {
 
-    CandidateInfo getByUserId(int userId);
+    Candidate getByUserId(int userId);
 
-    boolean addOrUpdate(CandidateInfo candidateInfo);
+    boolean addOrUpdate(Candidate candidate);
 
 }

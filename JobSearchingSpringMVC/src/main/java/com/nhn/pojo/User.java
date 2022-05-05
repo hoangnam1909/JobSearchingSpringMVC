@@ -64,6 +64,7 @@ public class User {
     @JsonIgnore
     @Transient
     private String confirmPassword;
+
     @JsonIgnore
     @Transient
     private MultipartFile file;
@@ -72,14 +73,14 @@ public class User {
     private Set<JobPost> jobPosts = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private Set<CandidateInfo> candidateInfos = new LinkedHashSet<>();
+    private Set<Candidate> candidates = new LinkedHashSet<>();
 
-    public Set<CandidateInfo> getCandidateInfos() {
-        return candidateInfos;
+    public Set<Candidate> getCandidates() {
+        return candidates;
     }
 
-    public void setCandidateInfos(Set<CandidateInfo> candidateInfos) {
-        this.candidateInfos = candidateInfos;
+    public void setCandidates(Set<Candidate> candidates) {
+        this.candidates = candidates;
     }
 
     public Set<JobPost> getJobPosts() {

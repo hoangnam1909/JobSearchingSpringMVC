@@ -5,7 +5,7 @@
  */
 package com.nhn.controllers;
 
-import com.nhn.pojo.CandidateInfo;
+import com.nhn.pojo.Candidate;
 import com.nhn.pojo.User;
 import com.nhn.service.CandidateService;
 import com.nhn.service.UserService;
@@ -63,7 +63,7 @@ public class AccountController {
         User user = this.userService.getById(id);
         if (user != null) {
             model.addAttribute("user", user);
-            CandidateInfo candidate = null;
+            Candidate candidate = null;
             try {
                 candidate = candidateService.getByUserId(user.getId());
             } catch (NoResultException nre) {
@@ -79,12 +79,11 @@ public class AccountController {
         return "view-account";
     }
 
-    // XEM CHI TIET TAI KHOAN
     @RequestMapping("/admin/candidate/view")
     public String viewCandidate(Model model,
                                 @RequestParam(name = "userId", defaultValue = "0") int userId) {
-        CandidateInfo candidateInfo = this.candidateService.getByUserId(userId);
-        if (candidateInfo != null)
+        Candidate candidate = this.candidateService.getByUserId(userId);
+        if (candidate != null)
             model.addAttribute("candidate", this.candidateService.getByUserId(userId));
         else
             return "redirect:/admin/account";
@@ -97,7 +96,7 @@ public class AccountController {
     public String updateCandidateView(Model model,
                                       @RequestParam(name = "userId", defaultValue = "0") int userId,
                                       final RedirectAttributes redirectAttrs) {
-        CandidateInfo candidate;
+        Candidate candidate;
         try {
             candidate = candidateService.getByUserId(userId);
         } catch (NoResultException nre){
@@ -111,7 +110,7 @@ public class AccountController {
 
     @GetMapping("/admin/account/candidate-info/add")
     public String addCandidateView(Model model) {
-        CandidateInfo candidate = new CandidateInfo();
+        Candidate candidate = new Candidate();
         candidate.setId(0);
         model.addAttribute("candidate", candidate);
         model.addAttribute("userId", model.asMap().get("userId"));
@@ -120,7 +119,7 @@ public class AccountController {
 
     @PostMapping("/admin/account/candidate-info/add-or-update")
     public String addOrUpdateCandidate(Model model,
-                                       @ModelAttribute(value = "candidate") CandidateInfo candidate,
+                                       @ModelAttribute(value = "candidate") Candidate candidate,
                                        final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
@@ -132,12 +131,12 @@ public class AccountController {
             if (checkMsg == 0)
                 sucMsg = String.format("Thêm thông tin user và ứng viên '%s' thành công", candidateUser.getUsername());
             else
-                sucMsg = "Sửa thông tin user và ứng viên '%s' thành công";
+                sucMsg = "Sửa thông tin user và ứng viên thành công";
         } else {
             if (checkMsg == 0)
                 errMsg = String.format("Thêm thông tin user và ứng viên '%s' không thành công", candidateUser.getUsername());
             else
-                errMsg = "Sửa thông tin user và ứng viên '%s' không thành công";
+                errMsg = "Sửa thông tin user và ứng viên không thành công";
 
             redirectAttrs.addFlashAttribute("errMsg", errMsg);
             return "add-candidate";

@@ -151,21 +151,21 @@
                     <h3 class="dark-color mb-4">
                         ${currentUser.fullName}
                     </h3>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Ngày sinh</h5>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <h5>
                                 <fmt:formatDate pattern="dd/MM/yyyy" value="${currentUser.dob}"/>
                             </h5>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Tuổi</h5>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <h5>
                                 <fmt:formatDate pattern="yyyy" value="${now}" var="yearNow"/>
                                 <fmt:formatDate pattern="yyyy" value="${currentUser.dob}" var="yearBorn"/>
@@ -173,35 +173,35 @@
                             </h5>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Email</h5>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <h5>${currentUser.email}</h5>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Số điện thoại</h5>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <h5>${currentUser.phone}</h5>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Địa chỉ</h5>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <h5>${currentUser.address}</h5>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Giới tính</h5>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <c:choose>
                                 <c:when test = "${currentUser.gender == 0}">
                                     <h5>Nữ</h5>
@@ -215,6 +215,64 @@
                             </c:choose>
                         </div>
                     </div>
+                    <c:if test="${currentUser.userType.equals('ROLE_UV')}">
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Số năm kinh nghiệm</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>${candidate.yearsExperience}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Điểm mạnh</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>${candidate.strengths}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Điểm yếu</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>${candidate.weaknesses}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Chuyên ngành</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>${candidate.majoring}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Chứng chỉ ngoại ngữ</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>${candidate.languageCertificate}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Chứng chỉ tin học</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>${candidate.informaticsCertificate}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>CV</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5><a target="_blank" href="${candidate.cv}">Bản xem trước CV</a></h5>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
             </div>
             <div class="col-lg-6">

@@ -2,13 +2,21 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="now" class="java.util.Date"/>
+<c:set value="${Math.ceil(counter/userService.maxItemsInPage)}" var="numbersOfPage"/>
 
 <h1 class="text-center dark-color">TÌM KIẾM ỨNG VIÊN</h1>
 
 <div class="row mt-5">
     <div class="col-3">
         <form>
-            <input style="display: none;" name="page" value="${currentPage}">
+            <c:choose>
+                <c:when test="${currentPage > numbersOfPage}">
+                    <input style="display: none;" name="page" value="${currentPage}">
+                </c:when>
+                <c:otherwise>
+                    <input style="display: none;" name="page" value="1">
+                </c:otherwise>
+            </c:choose>
             <div class="form-group">
                 <h6>Họ và tên</h6>
                 <input class="form-control" name="fullname">
@@ -90,7 +98,7 @@
 </c:if>
 
 <ul class="pagination d-flex justify-content-center mt-2 mx-auto">
-    <c:forEach begin="1" end="${Math.ceil(counter/userService.maxItemsInPage)}" var="page">
+    <c:forEach begin="1" end="${numbersOfPage}" var="page">
         <li class="page-item">
             <a class="page-link" href="<c:url value="/employer/find" />?page=${page}">${page}</a>
         </li>

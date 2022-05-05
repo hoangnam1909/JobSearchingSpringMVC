@@ -1,7 +1,6 @@
 package com.nhn.repository.impl;
 
-import com.nhn.pojo.CandidateInfo;
-import com.nhn.pojo.User;
+import com.nhn.pojo.Candidate;
 import com.nhn.repository.CandidateRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -20,27 +19,27 @@ public class CandidateRepositoryImpl implements CandidateRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public CandidateInfo getByUserId(int userId) {
+    public Candidate getByUserId(int userId) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<CandidateInfo> query = builder.createQuery(CandidateInfo.class);
-        Root root = query.from(CandidateInfo.class);
+        CriteriaQuery<Candidate> query = builder.createQuery(Candidate.class);
+        Root root = query.from(Candidate.class);
         query = query.select(root);
 
         query = query.where(builder.equal(root.join("user").get("id").as(Integer.class), userId));
 
         org.hibernate.query.Query q = session.createQuery(query);
-        return (CandidateInfo) q.getSingleResult();
+        return (Candidate) q.getSingleResult();
     }
 
     @Override
-    public boolean addOrUpdate(CandidateInfo candidateInfo) {
+    public boolean addOrUpdate(Candidate candidate) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            if (candidateInfo.getId() > 0)
-                session.update(candidateInfo);
+            if (candidate.getId() > 0)
+                session.update(candidate);
             else
-                session.save(candidateInfo);
+                session.save(candidate);
             return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();

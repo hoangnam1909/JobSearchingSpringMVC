@@ -6,6 +6,9 @@
         <c:when test = "${currentUser.userType == 'ROLE_NTD'}">
             <a class="navbar-brand" href="<c:url value="/employer" />">Job Searching</a>
         </c:when>
+        <c:when test = "${currentUser.userType == 'ROLE_UV'}">
+            <a class="navbar-brand" href="<c:url value="/candidate" />">Job Searching</a>
+        </c:when>
         <c:otherwise>
             <a class="navbar-brand" href="<c:url value="/" />">Job Searching</a>
         </c:otherwise>
@@ -18,6 +21,14 @@
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
+            <c:if test="${currentUser.userType == 'ROLE_ADMIN'}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/admin" />">Trang chủ Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/employer" />">Nhà tuyển dụng</a>
+                </li>
+            </c:if>
             <c:if test="${currentUser.userType == 'ROLE_NTD'}">
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/employer/management" />">Quản lý tin tuyển dụng</a>
@@ -29,13 +40,9 @@
                     <a class="nav-link" href="<c:url value="/employer/find" />">Tìm kiếm ứng viên</a>
                 </li>
             </c:if>
-
-            <c:if test="${currentUser.userType == 'ROLE_ADMIN'}">
+            <c:if test="${currentUser.userType == 'ROLE_UV'}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/admin" />">Trang chủ Admin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/employer" />">Nhà tuyển dụng</a>
+                    <a class="nav-link" href="<c:url value="/candidate/candidate-info/update"/>?userId=${currentUser.id}">Cập nhật thông tin ứng viên</a>
                 </li>
             </c:if>
         </ul>

@@ -95,6 +95,17 @@
                 <th style="width: 30%" scope="row">Chứng chỉ tin học</th>
                 <td class="border-left">${candidate.informaticsCertificate}</td>
             </tr>
+            <tr>
+                <th style="width: 30%" scope="row">CV</th>
+                <td class="border-left">
+                    <c:if test="${candidate.cv.length() == 0}">
+                        Chưa upload CV
+                    </c:if>
+                    <c:if test="${candidate.cv.length() > 0}">
+                        <a href="${candidate.cv}">Xem trước CV tại đây</a>
+                    </c:if>
+                </td>
+            </tr>
         </c:if>
         </tbody>
     </table>

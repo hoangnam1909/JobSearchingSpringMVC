@@ -43,7 +43,7 @@ public class LoginHandler implements AuthenticationSuccessHandler {
                 redirectUrl = "employer";
                 break;
             case User.USER:
-                redirectUrl = "user";
+                redirectUrl = "candidate";
                 break;
         }
 

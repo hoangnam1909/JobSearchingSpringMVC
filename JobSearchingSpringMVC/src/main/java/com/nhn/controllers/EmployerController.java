@@ -214,14 +214,14 @@ public class EmployerController {
         }
 
         List<User> users = userService.getUsersMultiCondition(pre, page);
+        List<User> usersSize = userService.getUsersMultiCondition(pre, 0);
 
         model.addAttribute("currentPage", page);
-        model.addAttribute("counter", users.size());
+        model.addAttribute("counter", usersSize.size());
         model.addAttribute("users", users);
         model.addAttribute("userService", userService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
-
         return "employer-find";
     }
 

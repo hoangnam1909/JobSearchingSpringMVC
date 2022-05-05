@@ -189,11 +189,10 @@ public class UserRepositoryImpl implements UserRepository {
         Query query = session.createQuery(q);
 
         if (page != 0) {
-            int index = (page - 1) * maxItemsInPage;
-            query.setFirstResult(index);
-            query.setMaxResults(maxItemsInPage);
+            int max = maxItemsInPage;
+            query.setMaxResults(max);
+            query.setFirstResult((page - 1) * max);
         }
-
         return query.getResultList();
     }
 

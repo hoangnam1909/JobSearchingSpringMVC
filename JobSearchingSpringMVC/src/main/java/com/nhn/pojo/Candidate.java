@@ -1,12 +1,13 @@
 package com.nhn.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "candidate_info")
-public class CandidateInfo {
+@Table(name = "candidate")
+public class Candidate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +43,29 @@ public class CandidateInfo {
     @JsonIgnore
     @Transient
     private int userId;
+
+    @JsonIgnore
+    @Transient
+    private MultipartFile file;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    @Column(name = "cv", length = 300)
+    private String cv;
+
+    public String getCv() {
+        return cv;
+    }
+
+    public void setCv(String cv) {
+        this.cv = cv;
+    }
 
     public int getUserId() {
         return userId;
