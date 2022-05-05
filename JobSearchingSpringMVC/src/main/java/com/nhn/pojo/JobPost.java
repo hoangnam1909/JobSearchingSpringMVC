@@ -4,7 +4,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -48,10 +47,6 @@ public class JobPost {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_type_id")
     private JobType jobType;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private Company company;
 
     @Transient
     private int postedByUserId;
@@ -102,14 +97,6 @@ public class JobPost {
 
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
     }
 
     public JobType getJobType() {

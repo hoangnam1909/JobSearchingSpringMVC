@@ -1,10 +1,10 @@
 package com.nhn.controllers;
 
-import com.nhn.pojo.Company;
+import com.nhn.pojo.Employer;
 import com.nhn.pojo.JobPost;
 import com.nhn.pojo.JobType;
 import com.nhn.pojo.User;
-import com.nhn.service.CompanyService;
+import com.nhn.service.EmployerService;
 import com.nhn.service.JobPostService;
 import com.nhn.service.JobTypeService;
 import com.nhn.service.UserService;
@@ -12,6 +12,7 @@ import com.nhn.utils.utils;
 import com.nhn.validator.JobPostValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class JobPostController {
     JobTypeService jobTypeService;
 
     @Autowired
-    CompanyService companyService;
+    EmployerService employerService;
 
     @Autowired
     JobPostValidator jobPostValidator;
@@ -49,8 +50,6 @@ public class JobPostController {
         model.addAttribute("users", users);
         List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
         model.addAttribute("jobTypes", jobTypes);
-        List<Company> companies = companyService.getCompanies(null, 0);
-        model.addAttribute("companies", companies);
     }
 
     @RequestMapping(value = "/admin/job-post")
@@ -62,16 +61,17 @@ public class JobPostController {
         Map<String, String> pre = new HashMap<>();
         pre.put("sort", sort);
         List<JobPost> jobPosts = jobPostService.getPosts(pre, page, 0);
+        List<JobPost> jobPostsSize = jobPostService.getPosts(pre, 0, 0);
         model.addAttribute("jobPosts", jobPosts);
 
         model.addAttribute("currentPage", page);
-        model.addAttribute("counter", jobPostService.count());
+        model.addAttribute("counter", jobPostsSize.size());
         model.addAttribute("jobPostService", jobPostService);
 
         // another
         model.addAttribute("userService", userService);
         model.addAttribute("jobTypeService", jobTypeService);
-        model.addAttribute("companyService", companyService);
+        model.addAttribute("employerService", employerService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
 
@@ -85,7 +85,7 @@ public class JobPostController {
             model.addAttribute("jobPost", this.jobPostService.getById(id));
             model.addAttribute("userService", userService);
             model.addAttribute("jobTypeService", jobTypeService);
-            model.addAttribute("companyService", companyService);
+            model.addAttribute("employerService", employerService);
         } else {
             return "redirect:/admin/job-post";
         }
@@ -106,7 +106,7 @@ public class JobPostController {
         }
 
         loadAllList(model);
-
+        model.addAttribute("employerService", employerService);
         return "add-job-post";
     }
 
@@ -126,7 +126,6 @@ public class JobPostController {
 
         jobPost.setPostedByUser(userService.getById(jobPost.getPostedByUserId()));
         jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
-        jobPost.setCompany(companyService.getById(jobPost.getCompanyId()));
 
         if (!jobPost.getCreatedDateStr().equals(""))
             jobPost.setCreatedDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getCreatedDateStr()));

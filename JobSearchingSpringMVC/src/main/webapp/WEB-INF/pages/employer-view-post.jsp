@@ -3,16 +3,13 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<div class="container">
+
 <h1 class="text-left dark-color" style="padding: 0 30px">${jobPost.title}</h1>
-<h4 class="text-left" style="padding: 0 30px">${companyService.getById(jobPost.company.id).name}</h4>
 
 <div class="container mt-4">
     <table class="table table-striped">
         <tbody>
-<%--        <tr>--%>
-<%--            <th style="width: 30%" scope="row">ID</th>--%>
-<%--            <td class="border-left">${jobPost.id}</td>--%>
-<%--        </tr>--%>
         <tr>
             <th style="width: 30%" scope="row">Tiêu đề</th>
             <td class="border-left">${jobPost.title}</td>
@@ -53,10 +50,7 @@
             <th style="width: 30%" scope="row">Loại công việc</th>
             <td class="border-left">${jobTypeService.getById(jobPost.jobType.id).name}</td>
         </tr>
-        <tr>
-            <th style="width: 30%" scope="row">Công ty</th>
-            <td class="border-left">${companyService.getById(jobPost.company.id).name}</td>
-        </tr>
         </tbody>
     </table>
+</div>
 </div>

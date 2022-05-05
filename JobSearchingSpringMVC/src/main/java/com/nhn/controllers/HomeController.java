@@ -6,7 +6,9 @@
 package com.nhn.controllers;
 
 import com.nhn.pojo.Candidate;
+import com.nhn.pojo.Employer;
 import com.nhn.service.CandidateService;
+import com.nhn.service.EmployerService;
 import com.nhn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,11 +27,13 @@ import javax.persistence.NoResultException;
  */
 @Controller
 @ControllerAdvice
-@Transactional
 public class HomeController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmployerService employerService;
 
     @Autowired
     private CandidateService candidateService;
@@ -53,6 +57,15 @@ public class HomeController {
         try {
             candidate = candidateService.getByUserId(userService.getByUsername(authentication.getName()).getId());
             model.addAttribute("candidate", candidate);
+        } catch (NoResultException nre){
+            System.out.println(nre.getMessage());
+        }
+
+        Employer employer;
+
+        try {
+            employer = employerService.getByUserId(userService.getByUsername(authentication.getName()).getId());
+            model.addAttribute("employer", employer);
         } catch (NoResultException nre){
             System.out.println(nre.getMessage());
         }

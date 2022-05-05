@@ -1,6 +1,5 @@
 package com.nhn.repository.impl;
 
-import com.nhn.pojo.Company;
 import com.nhn.pojo.JobType;
 import com.nhn.repository.JobTypeRepository;
 import org.hibernate.HibernateException;

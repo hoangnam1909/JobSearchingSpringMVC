@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 
+<div class="container">
+
 <h1 class="text-center dark-color">QUẢN LÝ LOẠI VIỆC LÀM</h1>
 
 <ul class="nav nav-tabs">
@@ -64,4 +66,4 @@
         </li>
     </c:forEach>
 </ul>
-
+</div>

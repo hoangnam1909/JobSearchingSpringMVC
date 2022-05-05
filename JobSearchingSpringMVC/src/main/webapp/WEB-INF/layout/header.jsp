@@ -3,12 +3,18 @@
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <!-- Brand -->
     <c:choose>
+        <c:when test = "${currentUser.userType == 'ROLE_ADMIN'}">
+            <a class="navbar-brand" href="<c:url value="/admin" />">Job Searching</a>
+        </c:when>
+
         <c:when test = "${currentUser.userType == 'ROLE_NTD'}">
             <a class="navbar-brand" href="<c:url value="/employer" />">Job Searching</a>
         </c:when>
+
         <c:when test = "${currentUser.userType == 'ROLE_UV'}">
             <a class="navbar-brand" href="<c:url value="/candidate" />">Job Searching</a>
         </c:when>
+
         <c:otherwise>
             <a class="navbar-brand" href="<c:url value="/" />">Job Searching</a>
         </c:otherwise>
@@ -23,18 +29,29 @@
         <ul class="navbar-nav">
             <c:if test="${currentUser.userType == 'ROLE_ADMIN'}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/admin" />">Trang chủ Admin</a>
+                    <a class="nav-link" href="<c:url value="/admin/account"/> ">Tài khoản</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/employer" />">Nhà tuyển dụng</a>
+                    <a class="nav-link" href="<c:url value="/admin/account-permission"/> ">Duyệt NTD</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/admin/job-post"/> ">Bài viết</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/admin/job-type"/> ">Loại việc làm</a>
                 </li>
             </c:if>
             <c:if test="${currentUser.userType == 'ROLE_NTD'}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/employer/management" />">Quản lý tin tuyển dụng</a>
+                    <a class="nav-link" href="<c:url value="/employer/employer-info/add-or-update"/>?userId=${currentUser.id}">
+                        Cập nhật thông tin nhà tuyển dụng
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/employer/post/add-or-update" />">Đăng tin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/employer/management" />">Quản lý tin tuyển dụng</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/employer/find" />">Tìm kiếm ứng viên</a>
@@ -42,7 +59,10 @@
             </c:if>
             <c:if test="${currentUser.userType == 'ROLE_UV'}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/candidate/candidate-info/update"/>?userId=${currentUser.id}">Cập nhật thông tin ứng viên</a>
+                    <a class="nav-link" href="<c:url value="/candidate/candidate-info/add-or-update"/>?userId=${currentUser.id}">Cập nhật thông tin ứng viên</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/candidate/find-employer"/>">Gợi ý nhà tuyển dụng</a>
                 </li>
             </c:if>
         </ul>

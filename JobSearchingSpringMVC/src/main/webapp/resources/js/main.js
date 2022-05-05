@@ -16,6 +16,13 @@ $('.confirmation').on('click', function () {
     return confirm('Bạn có chắc chắn muốn xoá?');
 });
 
+$("textarea").each(function () {
+    this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
+}).on("input", function () {
+    this.style.height = "auto";
+    this.style.height = (this.scrollHeight) + "px";
+});
+
 imgInp.onchange = evt => {
     const [file] = imgInp.files
     if (file) {

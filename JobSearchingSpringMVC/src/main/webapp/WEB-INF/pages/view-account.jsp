@@ -3,6 +3,8 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<div class="container">
+
 <h1 class="text-center dark-color">THÔNG TIN TÀI KHOẢN</h1>
 
 <div class="container mt-4">
@@ -107,6 +109,34 @@
                 </td>
             </tr>
         </c:if>
+
+        <c:if test="${employer != null}">
+            <tr>
+                <th style="width: 30%" scope="row">Tên công ty</th>
+                <td class="border-left">${employer.name}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Mô tả</th>
+                <td class="border-left">${employer.description}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Trụ sở</th>
+                <td class="border-left">${employer.location}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Liên hệ</th>
+                <td class="border-left">${employer.contact}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Trang web</th>
+                <td class="border-left">${employer.website}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Chuyên ngành</th>
+                <td class="border-left">${employer.majoring}</td>
+            </tr>
+        </c:if>
         </tbody>
     </table>
+</div>
 </div>

@@ -4,6 +4,8 @@
 <jsp:useBean id="now" class="java.util.Date"/>
 <c:set value="${Math.ceil(counter/userService.maxItemsInPage)}" var="numbersOfPage"/>
 
+<div class="container">
+
 <h1 class="text-center dark-color">TÌM KIẾM ỨNG VIÊN</h1>
 
 <div class="row mt-5">
@@ -116,3 +118,4 @@
         });
     });
 </script>
+</div>

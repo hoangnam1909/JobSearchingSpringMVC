@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <c:url value="/login" var="action" />
+<div class="container">
 
 <h1 class="text-center dark-color">ĐĂNG NHẬP</h1>
 
@@ -33,3 +34,4 @@
     <button type="submit" class="btn btn-primary">Đăng nhập</button>
   </div>
 </form>
+</div>

@@ -1,20 +1,20 @@
 package com.nhn.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "company")
-public class Company {
+@Table(name = "employer")
+public class Employer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
     @Basic
-    @Size(min = 5, max = 100, message = "ten ngan qua bro")
     @Column(name = "name", nullable = false, length = 100)
     private String name;
     @Basic
@@ -31,6 +31,25 @@ public class Company {
     @Column(name = "website", length = 100)
     private String website;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @JsonIgnore
+    @Transient
+    private int userId;
+
+    @Column(name = "majoring", length = 100)
+    private String majoring;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -38,15 +57,20 @@ public class Company {
                 '}';
     }
 
-    @OneToMany(mappedBy = "company")
-    private Set<JobPost> jobPosts = new LinkedHashSet<>();
-
-    public Set<JobPost> getJobPosts() {
-        return jobPosts;
+    public String getMajoring() {
+        return majoring;
     }
 
-    public void setJobPosts(Set<JobPost> jobPosts) {
-        this.jobPosts = jobPosts;
+    public void setMajoring(String majoring) {
+        this.majoring = majoring;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getWebsite() {
@@ -106,14 +130,14 @@ public class Company {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Company company = (Company) o;
+        Employer employer = (Employer) o;
 
-        if (id != null ? !id.equals(company.id) : company.id != null) return false;
-        if (name != null ? !name.equals(company.name) : company.name != null) return false;
-        if (description != null ? !description.equals(company.description) : company.description != null) return false;
-        if (location != null ? !location.equals(company.location) : company.location != null) return false;
-        if (contact != null ? !contact.equals(company.contact) : company.contact != null) return false;
-        if (website != null ? !website.equals(company.website) : company.website != null) return false;
+        if (id != null ? !id.equals(employer.id) : employer.id != null) return false;
+        if (name != null ? !name.equals(employer.name) : employer.name != null) return false;
+        if (description != null ? !description.equals(employer.description) : employer.description != null) return false;
+        if (location != null ? !location.equals(employer.location) : employer.location != null) return false;
+        if (contact != null ? !contact.equals(employer.contact) : employer.contact != null) return false;
+        if (website != null ? !website.equals(employer.website) : employer.website != null) return false;
 
         return true;
     }

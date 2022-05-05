@@ -32,9 +32,6 @@
                 <a class="nav-link" href="<c:url value="/admin/job-post"/> ">Bài viết</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/admin/company"/> ">Công ty</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/admin/job-type"/> ">Loại việc làm</a>
             </li>
         </ul>

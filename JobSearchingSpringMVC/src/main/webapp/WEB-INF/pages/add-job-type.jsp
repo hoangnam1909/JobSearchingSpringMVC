@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-
+<div class="container">
 <c:if test="${jobType.id == 0}">
     <h1 class="text-center dark-color">THÊM LOẠI VIỆC LÀM</h1>
 </c:if>
@@ -30,3 +30,4 @@
         </div>
     </c:if>
 </form:form>
+</div>

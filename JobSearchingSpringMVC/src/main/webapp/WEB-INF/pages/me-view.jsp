@@ -141,152 +141,205 @@
     }
 </style>
 
-<h1 class="text-left dark-color" style="padding: 0 30px">THÔNG TIN TÀI KHOẢN</h1>
+<div class="container">
 
-<section class="section about-section gray-bg" id="about">
-    <div class="container m-0">
-        <div class="row flex-row-reverse">
-            <div class="col-lg-6">
-                <div class="about-text go-to">
-                    <h3 class="dark-color mb-4">
-                        ${currentUser.fullName}
-                    </h3>
-                    <div class="row mb-2">
-                        <div class="col-md-5">
-                            <h5>Ngày sinh</h5>
+    <h1 class="text-left dark-color" style="padding: 0 30px">THÔNG TIN TÀI KHOẢN</h1>
+
+    <section class="section about-section gray-bg" id="about">
+        <div class="container m-0">
+            <div class="row flex-row-reverse">
+                <div class="col-lg-6">
+                    <div class="about-text go-to">
+                        <h3 class="dark-color mb-4">
+                            ${currentUser.fullName}
+                        </h3>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Ngày sinh</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>
+                                    <fmt:formatDate pattern="dd/MM/yyyy" value="${currentUser.dob}"/>
+                                </h5>
+                            </div>
                         </div>
-                        <div class="col-md-7">
-                            <h5>
-                                <fmt:formatDate pattern="dd/MM/yyyy" value="${currentUser.dob}"/>
-                            </h5>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Tuổi</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>
+                                    <fmt:formatDate pattern="yyyy" value="${now}" var="yearNow"/>
+                                    <fmt:formatDate pattern="yyyy" value="${currentUser.dob}" var="yearBorn"/>
+                                    ${yearNow - yearBorn}
+                                </h5>
+                            </div>
                         </div>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Email</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>${currentUser.email}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Số điện thoại</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>${currentUser.phone}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Địa chỉ</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>${currentUser.address}</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-5">
+                                <h5>Giới tính</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <c:choose>
+                                    <c:when test="${currentUser.gender == 0}">
+                                        <h5>Nam</h5>
+                                    </c:when>
+                                    <c:when test="${currentUser.gender == 1}">
+                                        <h5>Nữ</h5>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h5>Khác</h5>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                        <c:if test="${currentUser.userType.equals('ROLE_NTD')}">
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Tên công ty</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${employer.name}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Mô tả</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${employer.description}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Trụ sở</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${employer.location}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Liên hệ</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${employer.contact}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Trang web</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${employer.website}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Chuyên ngành</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${employer.majoring}</h5>
+                                </div>
+                            </div>
+                        </c:if>
+                        <c:if test="${currentUser.userType.equals('ROLE_UV')}">
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Số năm kinh nghiệm</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${candidate.yearsExperience}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Điểm mạnh</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${candidate.strengths}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Điểm yếu</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${candidate.weaknesses}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Chuyên ngành</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${candidate.majoring}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Chứng chỉ ngoại ngữ</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${candidate.languageCertificate}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>Chứng chỉ tin học</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5>${candidate.informaticsCertificate}</h5>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-5">
+                                    <h5>CV</h5>
+                                </div>
+                                <div class="col-md-7">
+                                    <h5><a target="_blank" href="${candidate.cv}">Bản xem trước CV</a></h5>
+                                </div>
+                            </div>
+                        </c:if>
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-md-5">
-                            <h5>Tuổi</h5>
-                        </div>
-                        <div class="col-md-7">
-                            <h5>
-                                <fmt:formatDate pattern="yyyy" value="${now}" var="yearNow"/>
-                                <fmt:formatDate pattern="yyyy" value="${currentUser.dob}" var="yearBorn"/>
-                                ${yearNow - yearBorn}
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-5">
-                            <h5>Email</h5>
-                        </div>
-                        <div class="col-md-7">
-                            <h5>${currentUser.email}</h5>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-5">
-                            <h5>Số điện thoại</h5>
-                        </div>
-                        <div class="col-md-7">
-                            <h5>${currentUser.phone}</h5>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-5">
-                            <h5>Địa chỉ</h5>
-                        </div>
-                        <div class="col-md-7">
-                            <h5>${currentUser.address}</h5>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-5">
-                            <h5>Giới tính</h5>
-                        </div>
-                        <div class="col-md-7">
-                            <c:choose>
-                                <c:when test = "${currentUser.gender == 0}">
-                                    <h5>Nữ</h5>
-                                </c:when>
-                                <c:when test = "${currentUser.gender == 1}">
-                                    <h5>Nam</h5>
-                                </c:when>
-                                <c:otherwise>
-                                    <h5>Khác</h5>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </div>
-                    <c:if test="${currentUser.userType.equals('ROLE_UV')}">
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5>Số năm kinh nghiệm</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <h5>${candidate.yearsExperience}</h5>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5>Điểm mạnh</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <h5>${candidate.strengths}</h5>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5>Điểm yếu</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <h5>${candidate.weaknesses}</h5>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5>Chuyên ngành</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <h5>${candidate.majoring}</h5>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5>Chứng chỉ ngoại ngữ</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <h5>${candidate.languageCertificate}</h5>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5>Chứng chỉ tin học</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <h5>${candidate.informaticsCertificate}</h5>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5>CV</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <h5><a target="_blank" href="${candidate.cv}">Bản xem trước CV</a></h5>
-                            </div>
-                        </div>
-                    </c:if>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="about-avatar d-flex justify-content-center">
-                    <c:if test="${currentUser.avatar.startsWith('https')}">
-                        <img src="<c:url value="${currentUser.avatar}"/>"
-                             class="rounded">
-                    </c:if>
-                    <c:if test="${!currentUser.avatar.startsWith('https')}">
-                        <img src="<c:url value="/resources/images/none.png"/>"
-                             class="rounded">
-                    </c:if>
+                <div class="col-lg-6">
+                    <div class="about-avatar d-flex justify-content-center">
+                        <c:if test="${currentUser.avatar.startsWith('https')}">
+                            <img src="<c:url value="${currentUser.avatar}"/>"
+                                 class="rounded">
+                        </c:if>
+                        <c:if test="${!currentUser.avatar.startsWith('https')}">
+                            <img src="<c:url value="/resources/images/none.png"/>"
+                                 class="rounded">
+                        </c:if>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>

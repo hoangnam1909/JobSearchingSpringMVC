@@ -1,10 +1,10 @@
 package com.nhn.controllers;
 
-import com.nhn.pojo.Company;
+import com.nhn.pojo.Employer;
 import com.nhn.pojo.JobPost;
 import com.nhn.pojo.JobType;
 import com.nhn.pojo.User;
-import com.nhn.service.CompanyService;
+import com.nhn.service.EmployerService;
 import com.nhn.service.JobPostService;
 import com.nhn.service.JobTypeService;
 import com.nhn.service.UserService;
@@ -13,19 +13,18 @@ import com.nhn.validator.JobPostValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.NoResultException;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
-@Transactional
 public class EmployerController {
 
     @Autowired
@@ -38,7 +37,7 @@ public class EmployerController {
     private JobTypeService jobTypeService;
 
     @Autowired
-    private CompanyService companyService;
+    private EmployerService employerService;
 
     @Autowired
     private JobPostValidator jobPostValidator;
@@ -46,13 +45,11 @@ public class EmployerController {
     private void loadAllList(Model model) {
         List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
         model.addAttribute("jobTypes", jobTypes);
-        List<Company> companies = companyService.getCompanies(null, 0);
-        model.addAttribute("companies", companies);
     }
 
     private void loadAllService(Model model) {
         model.addAttribute("jobTypeService", jobTypeService);
-        model.addAttribute("companyService", companyService);
+        model.addAttribute("employerService", employerService);
     }
 
     @RequestMapping("/employer")
@@ -82,9 +79,10 @@ public class EmployerController {
         Map<String, String> pre = new HashMap<>();
         pre.put("postedByUserId", String.valueOf(this.userService.getByUsername(authentication.getName()).getId()));
         List<JobPost> jobPosts = jobPostService.getPosts(pre, page, 20);
+        List<JobPost> jobPostsSize = jobPostService.getPosts(pre, 0, 20);
 
         model.addAttribute("currentPage", page);
-        model.addAttribute("counter", jobPosts.size());
+        model.addAttribute("counter", jobPostsSize.size());
         model.addAttribute("jobPostService", jobPostService);
 
         loadAllService(model);
@@ -102,7 +100,7 @@ public class EmployerController {
             model.addAttribute("jobPost", this.jobPostService.getById(id));
             model.addAttribute("userService", userService);
             model.addAttribute("jobTypeService", jobTypeService);
-            model.addAttribute("companyService", companyService);
+            model.addAttribute("employerService", employerService);
         } else {
             return "employer-management";
         }
@@ -144,7 +142,6 @@ public class EmployerController {
 
         jobPost.setPostedByUser(userService.getById(jobPost.getPostedByUserId()));
         jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
-        jobPost.setCompany(companyService.getById(jobPost.getCompanyId()));
 
         if (!jobPost.getCreatedDateStr().equals(""))
             jobPost.setCreatedDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getCreatedDateStr()));
@@ -260,6 +257,50 @@ public class EmployerController {
         redirectAttrs.addFlashAttribute("errMsg", errMsg);
         redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
         return "redirect:/employer/management";
+    }
+
+    @GetMapping("/employer/employer-info/add-or-update")
+    public String updateEmployerView(Model model,
+                                      @RequestParam(name = "userId", defaultValue = "0") int userId) {
+        Employer employer;
+        try {
+            employer = employerService.getByUserId(userId);
+        } catch (NoResultException nre) {
+            employer = new Employer();
+            employer.setId(0);
+        }
+        model.addAttribute("employer", employer);
+        model.addAttribute("userId", userId);
+        model.addAttribute("actionUrl", "/employer/employer-info/add-or-update");
+        return "add-employer";
+    }
+
+    @PostMapping("/employer/employer-info/add-or-update")
+    public String addOrUpdateEmployer(Model model,
+                                       @ModelAttribute(value = "employer") Employer employer) {
+        String errMsg = null;
+        String sucMsg = null;
+
+        User employerUser = userService.getById(employer.getUserId());
+        employer.setUser(employerUser);
+        int checkMsg = employer.getId();
+        if (this.employerService.addOrUpdate(employer)) {
+            if (checkMsg == 0)
+                sucMsg = String.format("Thêm thông tin user và thông tin nhà tuyển dụng '%s' thành công", employerUser.getUsername());
+            else
+                sucMsg = "Cập nhật thông tin user và thông tin nhà tuyển dụng thành công";
+        } else {
+            if (checkMsg == 0)
+                errMsg = String.format("Thêm thông tin user và thông tin nhà tuyển dụng '%s' không thành công", employerUser.getUsername());
+            else
+                errMsg = "Cập nhật thông tin user và thông tin nhà tuyển dụng không thành công";
+
+            model.addAttribute("errMsg", errMsg);
+        }
+
+        model.addAttribute("actionUrl", "/employer/employer-info/add-or-update");
+        model.addAttribute("sucMsg", sucMsg);
+        return "add-employer";
     }
 
 }

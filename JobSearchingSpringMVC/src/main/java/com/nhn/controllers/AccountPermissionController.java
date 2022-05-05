@@ -27,10 +27,11 @@ public class AccountPermissionController {
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
 
         List<User> users = userService.getByRole(User.NTD, page, 0);
+        List<User> usersSize = userService.getByRole(User.NTD, 0, 0);
         model.addAttribute("users", users);
 
         model.addAttribute("currentPage", page);
-        model.addAttribute("counter", users.size());
+        model.addAttribute("counter", usersSize.size());
         model.addAttribute("userService", userService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));

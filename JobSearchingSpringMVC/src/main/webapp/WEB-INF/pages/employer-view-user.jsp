@@ -141,6 +141,8 @@
     }
 </style>
 
+<div class="container">
+
 <h1 class="text-left dark-color" style="padding: 0 30px">THÔNG TIN ỨNG VIÊN</h1>
 
 <section class="section about-section gray-bg" id="about">
@@ -260,3 +262,4 @@
 <%--        </div>--%>
     </div>
 </section>
+</div>

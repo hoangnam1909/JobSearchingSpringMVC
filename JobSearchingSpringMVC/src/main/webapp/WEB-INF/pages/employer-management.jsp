@@ -2,11 +2,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<div class="container">
+
 <h1 class="text-center dark-color">TRANG QUẢN LÝ TIN TUYỂN DỤNG</h1>
 
 <c:if test="${jobPosts.size() == 0}">
-    <div class="alert alert-danger h-100 text-center align-middle mt-5" role="alert">
-        Không có dữ liệu về bài viết!
+    <div class="alert alert-danger mt-4 d-flex justify-content-center align-items-center" style="height: 80px"
+         role="alert">
+        <h5>Không có dữ liệu về bài viết!</h5>
     </div>
 </c:if>
 <c:if test="${jobPosts.size() != 0}">
@@ -47,7 +50,7 @@
                     </c:if>
                 </td>
                 <td> ${jobTypeService.getById(jp.jobType.id).name} </td>
-                <td> ${companyService.getById(jp.company.id).name} </td>
+                <td> ${companyService.getById(jp.employer.id).name} </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -60,3 +63,4 @@
         </c:forEach>
     </ul>
 </c:if>
+</div>

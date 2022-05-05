@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<div class="container">
+
 <c:if test="${jobPost.id == 0}">
     <h1 class="text-center dark-color">ĐĂNG TIN TUYỂN DỤNG</h1>
 </c:if>
@@ -20,7 +22,7 @@
     </div>
     <div class="form-group">
         <label>Mô tả</label>
-        <form:textarea path="description" class="form-control" cssStyle="min-height: 120px"/>
+        <form:textarea path="description" class="form-control"/>
     </div>
     <div class="form-group">
         <label>Lương tối thiểu</label>
@@ -59,20 +61,6 @@
             </c:forEach>
         </form:select>
     </div>
-    <div class="form-group">
-        <label>Công ty</label>
-        <form:select path="companyId" class="custom-select">
-            <c:forEach items="${companies}" var="company">
-                <c:if test="${company.id == jobPost.company.id}">
-                    <option value="${company.id}" selected>${company.name}</option>
-                </c:if>
-
-                <c:if test="${company.id != jobPost.company.id}">
-                    <option value="${company.id}">${company.name}</option>
-                </c:if>
-            </c:forEach>
-        </form:select>
-    </div>
 
     <div class="form-group">
         <c:if test="${jobPost.id == 0}">
@@ -83,3 +71,4 @@
         </c:if>
     </div>
 </form:form>
+</div>

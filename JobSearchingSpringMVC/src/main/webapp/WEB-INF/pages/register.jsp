@@ -4,6 +4,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
+<div class="container">
+
 <h1 class="text-center dark-color">ĐĂNG KÝ TÀI KHOẢN</h1>
 
 <c:url value="/register" var="action"/>
@@ -97,3 +99,4 @@
         <button type="submit" class="btn btn-primary">Đăng ký</button>
     </div>
 </form:form>
+</div>

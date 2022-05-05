@@ -1,8 +1,8 @@
 package com.nhn.repository.impl;
 
-import com.nhn.pojo.Company;
-import com.nhn.pojo.JobPost;
-import com.nhn.repository.CompanyRepository;
+import com.nhn.pojo.Candidate;
+import com.nhn.pojo.Employer;
+import com.nhn.repository.EmployerRepository;
 import com.nhn.service.JobPostService;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -19,11 +19,10 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Repository
 @Transactional
-public class CompanyRepositoryImpl implements CompanyRepository {
+public class EmployerRepositoryImpl implements EmployerRepository {
 
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
@@ -38,19 +37,33 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     @Override
-    public Company getById(int id) {
+    public Employer getById(int id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        return session.get(Company.class, id);
+        return session.get(Employer.class, id);
     }
 
     @Override
-    public boolean addOrUpdate(Company company) {
+    public Employer getByUserId(int userId) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Employer> query = builder.createQuery(Employer.class);
+        Root root = query.from(Employer.class);
+        query = query.select(root);
+
+        query = query.where(builder.equal(root.join("user").get("id").as(Integer.class), userId));
+
+        org.hibernate.query.Query q = session.createQuery(query);
+        return (Employer) q.getSingleResult();
+    }
+
+    @Override
+    public boolean addOrUpdate(Employer employer) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            if (company.getId() > 0)
-                session.update(company);
+            if (employer.getId() > 0)
+                session.update(employer);
             else
-                session.save(company);
+                session.save(employer);
             return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();
@@ -60,11 +73,11 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     @Override
-    public Company getByName(String name) {
+    public Employer getByName(String name) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Company> query = builder.createQuery(Company.class);
-        Root root = query.from(Company.class);
+        CriteriaQuery<Employer> query = builder.createQuery(Employer.class);
+        Root root = query.from(Employer.class);
         query = query.select(root);
 
         if (!name.isEmpty()) {
@@ -73,15 +86,15 @@ public class CompanyRepositoryImpl implements CompanyRepository {
         }
 
         Query q = session.createQuery(query);
-        return (Company) q.getResultList().get(0);
+        return (Employer) q.getResultList().get(0);
     }
 
     @Override
-    public List<Company> getCompanies(Map<String, String> params, int page) {
+    public List<Employer> getCompanies(Map<String, String> params, int page) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Company> q = builder.createQuery(Company.class);
-        Root root = q.from(Company.class);
+        CriteriaQuery<Employer> q = builder.createQuery(Employer.class);
+        Root root = q.from(Employer.class);
         q.select(root);
 
         if (params != null) {
@@ -132,10 +145,10 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     @Override
-    public boolean delete(Company company) {
+    public boolean delete(Employer employer) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            session.delete(company);
+            session.delete(employer);
             return true;
         } catch (HibernateException ex) {
             System.err.println(ex.getMessage());
@@ -146,7 +159,7 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     @Override
     public long count() {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        Query q = session.createQuery("Select Count(*) From Company ");
+        Query q = session.createQuery("Select Count(*) From Employer ");
 
         return Long.parseLong(q.getSingleResult().toString());
     }

@@ -34,9 +34,11 @@
 <body>
 <tiles:insertAttribute name="header"/>
 
-<div class="container">
-    <tiles:insertAttribute name="content"/>
-</div>
+<tiles:insertAttribute name="content"/>
+
+<%--<div class="container">--%>
+<%--    <tiles:insertAttribute name="content"/>--%>
+<%--</div>--%>
 
 <tiles:insertAttribute name="footer"/>
 <script src="<c:url value="/resources/js/main.js"/>"></script>
