@@ -6,6 +6,7 @@ import com.nhn.service.CandidateService;
 import com.nhn.service.UserService;
 import com.nhn.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,10 @@ public class CandidateController {
 
     @GetMapping("/candidate/candidate-info/add-or-update")
     public String updateCandidateView(Model model,
-                                      @RequestParam(name = "userId", defaultValue = "0") int userId) {
+                                      Authentication authentication) {
+
+        int userId = this.userService.getByUsername(authentication.getName()).getId();
+
         Candidate candidate;
         try {
             candidate = candidateService.getByUserId(userId);

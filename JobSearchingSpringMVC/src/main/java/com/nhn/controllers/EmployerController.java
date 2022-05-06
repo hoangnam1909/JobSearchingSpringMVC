@@ -95,12 +95,21 @@ public class EmployerController {
 
     @GetMapping("/employer/post/view")
     public String viewJobPost(Model model,
+                              Authentication authentication,
                               @RequestParam(name = "id", defaultValue = "0") int id) {
+
+        int userId = this.userService.getByUsername(authentication.getName()).getId();
+
         if (id > 0) {
-            model.addAttribute("jobPost", this.jobPostService.getById(id));
-            model.addAttribute("userService", userService);
-            model.addAttribute("jobTypeService", jobTypeService);
-            model.addAttribute("employerService", employerService);
+            JobPost jobPost = this.jobPostService.getById(id);
+            if (jobPost != null && jobPost.getPostedByUser().getId() == userId) {
+                model.addAttribute("jobPost", jobPost);
+                model.addAttribute("userService", userService);
+                model.addAttribute("jobTypeService", jobTypeService);
+                model.addAttribute("employerService", employerService);
+            } else {
+                return "redirect:/access-denied";
+            }
         } else {
             return "employer-management";
         }
@@ -111,11 +120,19 @@ public class EmployerController {
 
     @GetMapping("/employer/post/add-or-update")
     public String addOrUpdateJobPostView(Model model,
+                                         Authentication authentication,
                                          @RequestParam(name = "id", defaultValue = "0") int id) {
 
-        if (id > 0)
-            model.addAttribute("jobPost", this.jobPostService.getById(id));
-        else {
+        int userId = this.userService.getByUsername(authentication.getName()).getId();
+
+        if (id > 0) {
+            JobPost jobPost = this.jobPostService.getById(id);
+            if (jobPost != null && jobPost.getPostedByUser().getId() == userId) {
+                model.addAttribute("jobPost", jobPost);
+            } else {
+                return "redirect:/access-denied";
+            }
+        } else {
             JobPost jobPost = new JobPost();
             jobPost.setId(0);
             model.addAttribute("jobPost", jobPost);
@@ -237,20 +254,27 @@ public class EmployerController {
 
     @GetMapping(path = "/employer/post/delete")
     public String deleteJobPostById(Model model,
+                                    Authentication authentication,
                                     @RequestParam(name = "id", defaultValue = "0") int id,
                                     final RedirectAttributes redirectAttrs) {
+
+        int userId = this.userService.getByUsername(authentication.getName()).getId();
+
         String errMsg = null;
         String sucMsg = null;
         JobPost jobPost = new JobPost();
 
-        if (id > 0)
+        if (id > 0) {
             jobPost = this.jobPostService.getById(id);
+            if (!(jobPost != null && jobPost.getPostedByUser().getId() == userId)) {
+                return "redirect:/access-denied";
+            }
+        }
 
         boolean deleteCheck = jobPostService.delete(jobPost);
-        if (jobPost != null && deleteCheck) {
+        if (deleteCheck) {
             sucMsg = String.format("Xoá thành công tin tuyển dụng '%s'", jobPost.getTitle());
         } else {
-            assert jobPost != null;
             errMsg = String.format("Xoá không thành công tin tuyển dụng '%s'", jobPost.getTitle());
         }
 
@@ -261,7 +285,10 @@ public class EmployerController {
 
     @GetMapping("/employer/employer-info/add-or-update")
     public String updateEmployerView(Model model,
-                                      @RequestParam(name = "userId", defaultValue = "0") int userId) {
+                                     Authentication authentication) {
+
+        int userId = this.userService.getByUsername(authentication.getName()).getId();
+
         Employer employer;
         try {
             employer = employerService.getByUserId(userId);
@@ -277,7 +304,7 @@ public class EmployerController {
 
     @PostMapping("/employer/employer-info/add-or-update")
     public String addOrUpdateEmployer(Model model,
-                                       @ModelAttribute(value = "employer") Employer employer) {
+                                      @ModelAttribute(value = "employer") Employer employer) {
         String errMsg = null;
         String sucMsg = null;
 

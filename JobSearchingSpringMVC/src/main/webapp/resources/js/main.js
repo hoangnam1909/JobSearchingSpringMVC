@@ -29,3 +29,7 @@ imgInp.onchange = evt => {
         blah.src = URL.createObjectURL(file)
     }
 }
+
+function refreshPage(){
+    window.location.reload();
+}

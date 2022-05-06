@@ -40,10 +40,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/admin/job-type"/> ">Loại việc làm</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Thống kê
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<c:url value="/admin/stats/user"/>">Thống kê loại tài khoản</a>
+                        <a class="dropdown-item" href="<c:url value="/admin/stats/jobPostDate"/>">Thống kê bài viết theo ngày đăng</a>
+                        <a class="dropdown-item" href="<c:url value="/admin/stats/jobPostByJobType"/>">Thống kê bài viết theo loại việc làm</a>
+                    </div>
+                </li>
             </c:if>
             <c:if test="${currentUser.userType == 'ROLE_NTD'}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/employer/employer-info/add-or-update"/>?userId=${currentUser.id}">
+                    <a class="nav-link" href="<c:url value="/employer/employer-info/add-or-update"/>">
                         Cập nhật thông tin nhà tuyển dụng
                     </a>
                 </li>
@@ -59,7 +69,7 @@
             </c:if>
             <c:if test="${currentUser.userType == 'ROLE_UV'}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/candidate/candidate-info/add-or-update"/>?userId=${currentUser.id}">Cập nhật thông tin ứng viên</a>
+                    <a class="nav-link" href="<c:url value="/candidate/candidate-info/add-or-update"/>">Cập nhật thông tin ứng viên</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/candidate/find-employer"/>">Gợi ý nhà tuyển dụng</a>

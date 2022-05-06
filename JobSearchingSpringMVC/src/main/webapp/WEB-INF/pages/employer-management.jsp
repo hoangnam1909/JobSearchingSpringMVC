@@ -50,7 +50,7 @@
                     </c:if>
                 </td>
                 <td> ${jobTypeService.getById(jp.jobType.id).name} </td>
-                <td> ${companyService.getById(jp.employer.id).name} </td>
+                <td> ${employerService.getByUserId(jp.postedByUser.id).name} </td>
             </tr>
         </c:forEach>
         </tbody>

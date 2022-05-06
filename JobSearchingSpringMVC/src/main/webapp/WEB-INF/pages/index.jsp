@@ -10,7 +10,7 @@
 <div class="container">
 
 <c:if test="${sucMsg != null}">
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-success my-0" role="alert">
             ${sucMsg}
         <br>
         <a class="link-success" href="<c:url value="/login"/>">
