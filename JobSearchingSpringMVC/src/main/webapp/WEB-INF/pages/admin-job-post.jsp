@@ -3,27 +3,63 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="container">
-    <h1 class="text-center dark-color">QUẢN LÝ BÀI VIẾT</h1>
+    <h1 class="text-center dark-color">QUẢN LÝ TIN TUYỂN DỤNG</h1>
 
+    <section class="d-flex justify-content-center">
+        <form class="mt-3 w-50">
+            <div class="form-group">
+                <label for="title">Tiêu đề</label>
+                <input class="form-control" name="title" id="title" value="${title}">
+            </div>
+
+            <div class="form-group">
+                <label for="beginningSalary">Lương khởi điểm từ</label>
+                <input class="form-control" name="beginningSalary" id="beginningSalary" value="${beginningSalary}">
+            </div>
+
+            <div class="form-group">
+                <label for="endingSalary">Lương tối đa đến</label>
+                <input class="form-control" name="endingSalary" id="endingSalary" value="${endingSalary}">
+            </div>
+
+            <div class="form-group">
+                <label for="location">Địa điểm làm việc</label>
+                <input class="form-control" name="location" id="location" value="${location}">
+            </div>
+
+            <div class="form-group">
+                <label for="sort">Sắp xếp</label>
+                <select class="form-control" name="sort" id="sort">
+                    <option value="" selected>Không chọn</option>
+                    <c:if test="${sort.equals('asc')}">
+                        <option value="asc" selected>Tăng dần ngày đăng</option>
+                    </c:if>
+                    <c:if test="${!sort.equals('asc')}">
+                        <option value="asc">Tăng dần ngày đăng</option>
+                    </c:if>
+
+                    <c:if test="${sort.equals('desc')}">
+                        <option value="desc" selected>Giảm dần ngày đăng</option>
+                    </c:if>
+                    <c:if test="${!sort.equals('desc')}">
+                        <option value="desc">Giảm dần ngày đăng</option>
+                    </c:if>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-info">Tra cứu</button>
+            <input type="button" class="btn btn-dark" onclick="removeFilter()" value="Loại bỏ bộ lọc"/>
+        </form>
+    </section>
+</div>
+
+<div class="container">
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link" href="<c:url value="/admin/job-post/add-or-update"/>">
                 <i class="fa-solid fa-plus"></i>
                 Thêm
             </a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-               aria-expanded="false">Sắp xếp</a>
-            <div class="dropdown-menu">
-                <c:url var="editUrl" value="">
-                    <c:param name="sort" value="desc"/>
-                </c:url>
-                <a class="dropdown-item" href="<c:url value="${editUrl}"/>">Ngày đăng mới nhất</a>
-                <a class="dropdown-item" href="<c:url value="/admin/job-post" />?sort=asc">Ngày đăng lâu nhất</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
-            </div>
         </li>
     </ul>
 
@@ -86,8 +122,20 @@
     <ul class="pagination d-flex justify-content-center mt-4">
         <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">
             <li class="page-item">
-                <a class="page-link" href="<c:url value="/admin/job-post" />?page=${page}">${page}</a>
+                <a class="page-link" onclick="updateQueryStringParameter('page', ${page})">${page}</a>
             </li>
         </c:forEach>
     </ul>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("form").submit(function () {
+            $("input, select").each(function (index, obj) {
+                if ($(obj).val() === "" || $(obj).val() === "-1") {
+                    $(obj).remove();
+                }
+            });
+        });
+    });
+</script>

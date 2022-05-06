@@ -183,6 +183,30 @@ public class UserRepositoryImpl implements UserRepository {
                 predicates.add(p7);
             }
 
+            if (params.containsKey("username")) {
+                Predicate p8 = builder.like(root.get("username").as(String.class),
+                        String.format("%%%s%%", params.get("username")));
+                predicates.add(p8);
+            }
+
+            if (params.containsKey("phone")) {
+                Predicate p9 = builder.like(root.get("phone").as(String.class),
+                        String.format("%%%s%%", params.get("phone")));
+                predicates.add(p9);
+            }
+
+            if (params.containsKey("email")) {
+                Predicate p10 = builder.like(root.get("email").as(String.class),
+                        String.format("%%%s%%", params.get("email")));
+                predicates.add(p10);
+            }
+
+            if (params.containsKey("userType")) {
+                Predicate p11 = builder.like(root.get("userType").as(String.class),
+                        String.format("%%%s%%", params.get("userType")));
+                predicates.add(p11);
+            }
+
             q = q.where(predicates.toArray(new Predicate[]{}));
         }
 

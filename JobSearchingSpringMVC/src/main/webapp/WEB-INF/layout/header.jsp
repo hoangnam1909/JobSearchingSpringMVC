@@ -71,8 +71,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/candidate/candidate-info/add-or-update"/>">Cập nhật thông tin ứng viên</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Tìm nhà tuyển dụng
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<c:url value="/candidate/find-employer"/>">Tìm kiếm nhà tuyển dụng</a>
+                        <a class="dropdown-item" href="<c:url value="/candidate/suggest-employer"/>">Gợi ý nhà tuyển dụng</a>
+                    </div>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/candidate/find-employer"/>">Gợi ý nhà tuyển dụng</a>
+                    <a class="nav-link" href="<c:url value="/candidate"/>">Tìm việc làm</a>
                 </li>
             </c:if>
         </ul>

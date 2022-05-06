@@ -1,6 +1,7 @@
 package com.nhn.service.impl;
 
 import com.nhn.pojo.Employer;
+import com.nhn.pojo.User;
 import com.nhn.repository.EmployerRepository;
 import com.nhn.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class EmployerServiceImpl implements EmployerService {
     @Override
     public Employer getByUserId(int userId) {
         return this.employerRepository.getByUserId(userId);
+    }
+
+    @Override
+    public List<Employer> getUsersMultiCondition(Map<String, String> params) {
+        return this.employerRepository.getUsersMultiCondition(params);
     }
 
     @Override

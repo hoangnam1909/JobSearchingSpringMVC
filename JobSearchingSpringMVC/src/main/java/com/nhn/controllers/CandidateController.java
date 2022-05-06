@@ -1,8 +1,10 @@
 package com.nhn.controllers;
 
 import com.nhn.pojo.Candidate;
+import com.nhn.pojo.Employer;
 import com.nhn.pojo.User;
 import com.nhn.service.CandidateService;
+import com.nhn.service.EmployerService;
 import com.nhn.service.UserService;
 import com.nhn.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.NoResultException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CandidateController {
@@ -22,6 +27,9 @@ public class CandidateController {
 
     @Autowired
     private CandidateService candidateService;
+
+    @Autowired
+    private EmployerService employerService;
 
     @Autowired
     UserValidator userValidator;
@@ -96,8 +104,37 @@ public class CandidateController {
 
     @RequestMapping("/candidate/find-employer")
     public String findCandidate(Model model,
-                                @RequestParam(name = "userId", defaultValue = "0") int userId) {
+                                @RequestParam(required = false) Map<String, String> params) {
+
+        String name = params.getOrDefault("name", null);
+        String location = params.getOrDefault("location", null);
+        String majoring = params.getOrDefault("majoring", null);
+
+        Map<String, String> pre = new HashMap<>();
+        if (name != null) {
+            pre.put("name", name);
+            model.addAttribute("name", name);
+        }
+        if (location != null) {
+            pre.put("location", location);
+            model.addAttribute("location", location);
+        }
+        if (majoring != null) {
+            pre.put("majoring", majoring);
+            model.addAttribute("majoring", majoring);
+        }
+
+        List<Employer> employers = employerService.getUsersMultiCondition(pre);
+
+        model.addAttribute("userService", userService);
+        model.addAttribute("employers", employers);
         return "candidate-find-employer";
+    }
+
+    @RequestMapping("/candidate/suggest-employer")
+    public String suggestCandidate(Model model,
+                                   @RequestParam(name = "userId", defaultValue = "0") int userId) {
+        return "candidate-suggest-employer";
     }
 
 }

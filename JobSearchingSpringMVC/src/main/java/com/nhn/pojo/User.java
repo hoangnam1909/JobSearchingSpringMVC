@@ -75,6 +75,17 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Candidate> candidates = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    private Set<Employer> employers = new LinkedHashSet<>();
+
+    public Set<Employer> getEmployers() {
+        return employers;
+    }
+
+    public void setEmployers(Set<Employer> employers) {
+        this.employers = employers;
+    }
+
     public Set<Candidate> getCandidates() {
         return candidates;
     }

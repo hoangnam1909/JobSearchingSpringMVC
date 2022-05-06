@@ -104,6 +104,22 @@ public class JobPostRepositoryImpl implements JobPostRepository {
                 predicates.add(p5);
             }
 
+            if (params.containsKey("beginningSalary")) {
+                Predicate p6 = builder.greaterThanOrEqualTo(root.get("beginningSalary").as(Integer.class), params.get("beginningSalary"));
+                predicates.add(p6);
+            }
+
+            if (params.containsKey("endingSalary")) {
+                Predicate p7 = builder.lessThanOrEqualTo(root.get("endingSalary").as(Integer.class), params.get("endingSalary"));
+                predicates.add(p7);
+            }
+
+            if (params.containsKey("location")) {
+                Predicate p8 = builder.like(root.get("location").as(String.class),
+                        String.format("%%%s%%", params.get("location")));
+                predicates.add(p8);
+            }
+
             q = q.where(predicates.toArray(new Predicate[]{}));
 
             if (params.containsKey("sort")) {

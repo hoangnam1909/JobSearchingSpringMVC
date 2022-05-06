@@ -5,85 +5,154 @@
 <div class="container">
     <h1 class="text-center dark-color">QUẢN LÝ NGƯỜI DÙNG</h1>
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value="/admin/account/add-or-update"/>">
-                <i class="fa-solid fa-plus"></i>
-                Thêm
-            </a>
-        </li>
-    </ul>
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th class="text-center" style="width: 15%">Thực thi</th>
-            <th class="text-center" style="width: 5%">STT</th>
-            <th>Tên đăng nhập</th>
-            <th>Số điện thoại</th>
-            <th>Email</th>
-            <th>Loại tài khoản</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${users}" var="u" varStatus="loop">
-            <tr>
-                <td style="text-align: center">
-                    <a style="margin-right: 10px" href="<c:url value="/admin/account/view" />?id=${u.id}"
-                       title="Xem chi tiết">
-                        <i class="fa-solid fa-eye"></i>
-                    </a>
-                    <a style="margin-right: 10px" href="<c:url value="/admin/account/add-or-update" />?id=${u.id}"
-                       data-toggle="tooltip" title="Sửa">
-                        <i class="fa-solid fa-pen"></i>
-                    </a>
-                    <a href="<c:url value="/admin/account/delete" />?id=${u.id}" class="confirmation" title="Xoá">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
-                </td>
-                <td class="text-center">${(currentPage - 1) * userService.maxItemsInPage + loop.index + 1}</td>
-                <td>${u.username}</td>
-                <td>${u.phone}</td>
-                <td>${u.email}</td>
-                <td>
-                        ${u.userType}
-                    <c:if test="${u.userType.equals('ROLE_UV')}">
-                        <a style="margin-left: 10px"
-                           href="<c:url value="/admin/account/candidate-info/update" />?userId=${u.id}"
-                           data-toggle="tooltip" title="Sửa thông tin ứng viên">
-                            <i class="fa-solid fa-user-pen"></i>
-                        </a>
+    <section class="d-flex justify-content-center">
+        <form class="mt-3 w-50">
+            <div class="form-group">
+                <label for="username">Tên đăng nhập</label>
+                <input class="form-control" name="username" id="username" value="${username}">
+            </div>
+            <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input class="form-control" name="phone" id="phone" value="${phone}">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" name="email" id="email" value="${email}">
+            </div>
+            <div class="form-group">
+                <label for="userType">Loại tài khoản</label>
+                <select class="form-control" name="userType" id="userType">
+                    <option value="" selected>Không chọn</option>
+                    <c:if test="${userType.equals('ROLE_ADMIN')}">
+                        <option value="ROLE_ADMIN" selected>Admin</option>
                     </c:if>
-                            <c:if test="${u.userType.equals('ROLE_NTD')}">
-                                <a style="margin-left: 10px"
-                                   href="<c:url value="/admin/account/employer-info/update" />?userId=${u.id}"
-                                   data-toggle="tooltip" title="Sửa thông tin nhà tuyển dụng">
-                                    <i class="fa-solid fa-user-pen"></i>
-                                </a>
-                            </c:if>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+                    <c:if test="${!userType.equals('ROLE_ADMIN')}">
+                        <option value="ROLE_ADMIN">Admin</option>
+                    </c:if>
 
-    <c:if test="${sucMsg != null}">
-        <div class="alert alert-success" role="alert">
-                ${sucMsg}
-        </div>
-    </c:if>
+                    <c:if test="${userType.equals('ROLE_NTD')}">
+                        <option value="ROLE_NTD" selected>Nhà tuyển dụng</option>
+                    </c:if>
+                    <c:if test="${!userType.equals('ROLE_NTD')}">
+                        <option value="ROLE_NTD">Nhà tuyển dụng</option>
+                    </c:if>
 
-    <c:if test="${errMsg != null}">
-        <div class="alert alert-danger" role="alert">
-                ${errMsg}
-        </div>
-    </c:if>
+                    <c:if test="${userType.equals('ROLE_UV')}">
+                        <option value="ROLE_UV" selected>Ứng viên</option>
+                    </c:if>
+                    <c:if test="${!userType.equals('ROLE_UV')}">
+                        <option value="ROLE_UV">Ứng viên</option>
+                    </c:if>
+                </select>
+            </div>
 
-    <ul class="pagination d-flex justify-content-center mt-4">
-        <c:forEach begin="1" end="${Math.ceil(counter/userService.maxItemsInPage)}" var="page">
-            <li class="page-item">
-                <a class="page-link" href="<c:url value="/admin/account" />?page=${page}">${page}</a>
-            </li>
-        </c:forEach>
-    </ul>
+            <button type="submit" class="btn btn-info">Tra cứu</button>
+            <input type="button" class="btn btn-dark" onclick="removeFilter()" value="Loại bỏ bộ lọc"/>
+        </form>
+    </section>
 </div>
+
+<div class="container">
+    <c:if test="${users.size() == 0}">
+        <div class="alert alert-danger mt-4 d-flex justify-content-center align-items-center" style="height: 80px"
+             role="alert">
+            <h5>KHÔNG CÓ DỮ LIỆU!</h5>
+        </div>
+    </c:if>
+
+    <c:if test="${users.size() > 0}">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/admin/account/add-or-update"/>">
+                    <i class="fa-solid fa-plus"></i>
+                    Thêm
+                </a>
+            </li>
+        </ul>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="text-center" style="width: 15%">Thực thi</th>
+                <th class="text-center" style="width: 5%">STT</th>
+                <th>Tên đăng nhập</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Loại tài khoản</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${users}" var="u" varStatus="loop">
+                <tr>
+                    <td style="text-align: center">
+                        <a style="margin-right: 10px" href="<c:url value="/admin/account/view" />?id=${u.id}"
+                           title="Xem chi tiết">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                        <a style="margin-right: 10px" href="<c:url value="/admin/account/add-or-update" />?id=${u.id}"
+                           data-toggle="tooltip" title="Sửa">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a href="<c:url value="/admin/account/delete" />?id=${u.id}" class="confirmation" title="Xoá">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                    <td class="text-center">${(currentPage - 1) * userService.maxItemsInPage + loop.index + 1}</td>
+                    <td>${u.username}</td>
+                    <td>${u.phone}</td>
+                    <td>${u.email}</td>
+                    <td>
+                            ${u.userType}
+                        <c:if test="${u.userType.equals('ROLE_UV')}">
+                            <a style="margin-left: 10px"
+                               href="<c:url value="/admin/account/candidate-info/update" />?userId=${u.id}"
+                               data-toggle="tooltip" title="Sửa thông tin ứng viên">
+                                <i class="fa-solid fa-user-pen"></i>
+                            </a>
+                        </c:if>
+                        <c:if test="${u.userType.equals('ROLE_NTD')}">
+                            <a style="margin-left: 10px"
+                               href="<c:url value="/admin/account/employer-info/update" />?userId=${u.id}"
+                               data-toggle="tooltip" title="Sửa thông tin nhà tuyển dụng">
+                                <i class="fa-solid fa-user-pen"></i>
+                            </a>
+                        </c:if>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+
+        <c:if test="${sucMsg != null}">
+            <div class="alert alert-success" role="alert">
+                    ${sucMsg}
+            </div>
+        </c:if>
+
+        <c:if test="${errMsg != null}">
+            <div class="alert alert-danger" role="alert">
+                    ${errMsg}
+            </div>
+        </c:if>
+
+        <ul class="pagination d-flex justify-content-center mt-4">
+            <c:forEach begin="1" end="${Math.ceil(counter/userService.maxItemsInPage)}" var="page">
+                <li class="page-item">
+                    <a class="page-link" onclick="updateQueryStringParameter('page', ${page})">${page}</a>
+                </li>
+            </c:forEach>
+        </ul>
+    </c:if>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("form").submit(function () {
+            $("input, select").each(function (index, obj) {
+                if ($(obj).val() === "" || $(obj).val() === "-1") {
+                    $(obj).remove();
+                }
+            });
+        });
+    });
+</script>

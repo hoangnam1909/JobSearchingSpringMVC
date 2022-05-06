@@ -2,8 +2,10 @@ package com.nhn.repository.impl;
 
 import com.nhn.pojo.Candidate;
 import com.nhn.pojo.Employer;
+import com.nhn.pojo.User;
 import com.nhn.repository.EmployerRepository;
 import com.nhn.service.JobPostService;
+import com.nhn.utils.utils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +58,43 @@ public class EmployerRepositoryImpl implements EmployerRepository {
 
         org.hibernate.query.Query q = session.createQuery(query);
         return (Employer) q.getSingleResult();
+    }
+
+    @Override
+    public List<Employer> getUsersMultiCondition(Map<String, String> params) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Employer> q = builder.createQuery(Employer.class);
+        Root root = q.from(Employer.class);
+        q.select(root);
+        q = q.orderBy(builder.asc(root.get("id")));
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            if (params.containsKey("name")) {
+                Predicate p1 = builder.like(root.get("name").as(String.class),
+                        String.format("%%%s%%", params.get("name")));
+                predicates.add(p1);
+            }
+
+            if (params.containsKey("location")) {
+                Predicate p2 = builder.like(root.get("location").as(String.class),
+                        String.format("%%%s%%", params.get("location")));
+                predicates.add(p2);
+            }
+
+            if (params.containsKey("majoring")) {
+                Predicate p3 = builder.like(root.get("majoring").as(String.class),
+                        String.format("%%%s%%", params.get("majoring")));
+                predicates.add(p3);
+            }
+
+            q = q.where(predicates.toArray(new Predicate[]{}));
+        }
+
+        Query query = session.createQuery(q);
+
+        return query.getResultList();
     }
 
     @Override

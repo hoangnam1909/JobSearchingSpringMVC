@@ -14,6 +14,7 @@ import com.nhn.service.UserService;
 import com.nhn.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.NoResultException;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,12 +48,35 @@ public class AccountController {
     public String index(Model model,
                         @RequestParam(required = false) Map<String, String> params) {
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        String username = params.getOrDefault("username", null);
+        String phone = params.getOrDefault("phone", null);
+        String email = params.getOrDefault("email", null);
+        String userType = params.getOrDefault("userType", null);
 
-        List<User> users = userService.getUsers("", page);
+        Map<String, String> pre = new HashMap<>();
+        if (username != null) {
+            pre.put("username", username);
+            model.addAttribute("username", username);
+        }
+        if (phone != null) {
+            pre.put("phone", phone);
+            model.addAttribute("phone", phone);
+        }
+        if (email != null) {
+            pre.put("email", email);
+            model.addAttribute("email", email);
+        }
+        if (userType != null) {
+            pre.put("userType", userType);
+            model.addAttribute("userType", userType);
+        }
+
+        List<User> users = userService.getUsersMultiCondition(pre, page);
+        List<User> usersSize = userService.getUsersMultiCondition(pre, 0);
         model.addAttribute("users", users);
 
         model.addAttribute("currentPage", page);
-        model.addAttribute("counter", userService.count());
+        model.addAttribute("counter", usersSize.size());
         model.addAttribute("userService", userService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
@@ -148,6 +173,7 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/admin/account/delete")
+    @Transactional
     public String deleteAccountById(Model model,
                                     @RequestParam(name = "id", defaultValue = "0") int id,
                                     final RedirectAttributes redirectAttrs) {
