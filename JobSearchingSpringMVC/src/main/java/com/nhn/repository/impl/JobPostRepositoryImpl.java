@@ -68,13 +68,13 @@ public class JobPostRepositoryImpl implements JobPostRepository {
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
             if (params.containsKey("title")) {
-                Predicate p1 = builder.like(root.get("jobTitle").as(String.class),
+                Predicate p1 = builder.like(root.get("title").as(String.class),
                         String.format("%%%s%%", params.get("title")));
                 predicates.add(p1);
             }
 
             if (params.containsKey("description")) {
-                Predicate p2 = builder.like(root.get("jobDescription").as(String.class),
+                Predicate p2 = builder.like(root.get("description").as(String.class),
                         String.format("%%%s%%", params.get("description")));
                 predicates.add(p2);
             }

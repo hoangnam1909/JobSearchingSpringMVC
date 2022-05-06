@@ -159,13 +159,8 @@ public class EmployerController {
 
         jobPost.setPostedByUser(userService.getById(jobPost.getPostedByUserId()));
         jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
-
-        if (!jobPost.getCreatedDateStr().equals(""))
-            jobPost.setCreatedDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getCreatedDateStr()));
-        else {
-            jobPost.setCreatedDateStr(utils.dateToString(new Date()));
+        if (jobPost.getId() == 0)
             jobPost.setCreatedDate(new Date());
-        }
 
         if (!jobPost.getExpiredDateStr().equals(""))
             jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));

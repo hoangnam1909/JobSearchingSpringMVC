@@ -9,38 +9,38 @@
         <form class="mt-3 w-50">
             <div class="form-group">
                 <label for="username">Tên đăng nhập</label>
-                <input class="form-control" name="username" id="username" value="${username}">
+                <input class="form-control" name="username" id="username" value="${usernameSearch}">
             </div>
             <div class="form-group">
                 <label for="phone">Số điện thoại</label>
-                <input class="form-control" name="phone" id="phone" value="${phone}">
+                <input class="form-control" name="phone" id="phone" value="${phoneSearch}">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input class="form-control" name="email" id="email" value="${email}">
+                <input class="form-control" name="email" id="email" value="${emailSearch}">
             </div>
             <div class="form-group">
                 <label for="userType">Loại tài khoản</label>
                 <select class="form-control" name="userType" id="userType">
                     <option value="" selected>Không chọn</option>
-                    <c:if test="${userType.equals('ROLE_ADMIN')}">
+                    <c:if test="${userTypeSearch.equals('ROLE_ADMIN')}">
                         <option value="ROLE_ADMIN" selected>Admin</option>
                     </c:if>
-                    <c:if test="${!userType.equals('ROLE_ADMIN')}">
+                    <c:if test="${!userTypeSearch.equals('ROLE_ADMIN')}">
                         <option value="ROLE_ADMIN">Admin</option>
                     </c:if>
 
-                    <c:if test="${userType.equals('ROLE_NTD')}">
+                    <c:if test="${userTypeSearch.equals('ROLE_NTD')}">
                         <option value="ROLE_NTD" selected>Nhà tuyển dụng</option>
                     </c:if>
-                    <c:if test="${!userType.equals('ROLE_NTD')}">
+                    <c:if test="${!userTypeSearch.equals('ROLE_NTD')}">
                         <option value="ROLE_NTD">Nhà tuyển dụng</option>
                     </c:if>
 
-                    <c:if test="${userType.equals('ROLE_UV')}">
+                    <c:if test="${userTypeSearch.equals('ROLE_UV')}">
                         <option value="ROLE_UV" selected>Ứng viên</option>
                     </c:if>
-                    <c:if test="${!userType.equals('ROLE_UV')}">
+                    <c:if test="${!userTypeSearch.equals('ROLE_UV')}">
                         <option value="ROLE_UV">Ứng viên</option>
                     </c:if>
                 </select>
@@ -76,17 +76,9 @@
                 <th class="text-center" style="width: 15%">Thực thi</th>
                 <th class="text-center" style="width: 5%">STT</th>
                 <th>Tên đăng nhập</th>
-
-                <c:if test="${userType.equals('ROLE_NTD')}">
-                    <th style="width: 25%;">Tên công ty</th>
-                </c:if>
-
                 <th>Số điện thoại</th>
                 <th>Email</th>
-
-                <c:if test="${userType == null}">
-                    <th>Loại tài khoản</th>
-                </c:if>
+                <th>Loại tài khoản</th>
             </tr>
             </thead>
             <tbody>
@@ -120,19 +112,9 @@
                     </td>
                     <td class="text-center">${(currentPage - 1) * userService.maxItemsInPage + loop.index + 1}</td>
                     <td>${u.username}</td>
-
-                    <c:if test="${userType != null}">
-                        <c:if test="${u.userType.equals('ROLE_NTD')}">
-                            <td>${employerService.getByUserId(u.id).name}</td>
-                        </c:if>
-                    </c:if>
-
                     <td>${u.phone}</td>
                     <td>${u.email}</td>
-
-                    <c:if test="${userType == null}">
-                        <td>${u.userType}</td>
-                    </c:if>
+                    <td>${u.userType}</td>
                 </tr>
             </c:forEach>
             </tbody>

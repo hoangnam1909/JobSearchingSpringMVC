@@ -20,7 +20,7 @@
             </div>
 
             <button type="submit" class="btn btn-info">Tra cứu</button>
-            <input type="button" class="btn btn-dark" onclick="removeFilter()" value="Loại bỏ bộ lọc" />
+            <input type="button" class="btn btn-dark" onclick="removeFilter()" value="Loại bỏ bộ lọc"/>
         </form>
     </section>
 </div>
@@ -44,7 +44,8 @@
                          src="${userService.getById(emp.user.id).avatar}" alt="Image Description">
                     <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
                         <div class="g-mb-15">
-                            <a class="text-decoration-none" href="<c:url value="/candidate/view-employer"/>?employerId=${emp.id}">
+                            <a class="text-decoration-none"
+                               href="<c:url value="/candidate/view-employer"/>?employerId=${emp.id}">
                                 <h3 class="g-color-gray-dark-v1 mb-3">
                                         ${emp.name}
                                 </h3>
@@ -52,11 +53,8 @@
                         </div>
                         <c:if test="${emp.description.length() > 0}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Mô tả:
+                                Mô tả: <span style="font-weight: 400"> ${emp.description} </span>
                             </h5>
-                            <p>
-                                    ${emp.description}
-                            </p>
                         </c:if>
 
                         <c:if test="${emp.location.length() > 0}">

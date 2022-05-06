@@ -48,11 +48,15 @@ public class User {
 
     @Column(name = "dob")
     private Date dob;
+
     @Transient
+    @JsonIgnore
     private int day;
     @Transient
+    @JsonIgnore
     private int month;
     @Transient
+    @JsonIgnore
     private int year;
 
     @Column(name = "gender")
@@ -61,22 +65,37 @@ public class User {
     @Column(name = "address", length = 100)
     private String address;
 
-    @JsonIgnore
     @Transient
+    @JsonIgnore
     private String confirmPassword;
 
-    @JsonIgnore
     @Transient
+    @JsonIgnore
     private MultipartFile file;
 
     @OneToMany(mappedBy = "postedByUser")
+    @JsonIgnore
     private Set<JobPost> jobPosts = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private Set<Candidate> candidates = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private Set<Employer> employers = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Comment> comments = new LinkedHashSet<>();
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 
     public Set<Employer> getEmployers() {
         return employers;

@@ -44,8 +44,49 @@ function updateQueryStringParameter(key, value) {
     let separator = uri.indexOf('?') !== -1 ? "&" : "?";
     if (uri.match(re)) {
         window.location.href = uri.replace(re, '$1' + key + "=" + value + '$2');
-    }
-    else {
+    } else {
         window.location.href = uri + separator + key + "=" + value;
     }
 }
+
+function addComment(employerId, userId) {
+    fetch("/JobSearchingSpringMVC/api/add-comment", {
+        method: 'post',
+        body: JSON.stringify({
+            "content": document.getElementById("commentId").value,
+            "employerId": employerId,
+            "userId": userId
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (res) {
+        console.info(res)
+        return res.json();
+    }).then(function (data) {
+        console.info(data);
+
+        let area = document.getElementById("commentArea");
+        moment.locale('vi');
+
+        area.innerHTML = `                         
+              <div class="row">
+                <div class="media g-mb-30 media-comment w-100">
+                    <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
+                         src="${data.user.avatar}"
+                         alt="Image Description">
+                    <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                        <div class="g-mb-15 mb-2">
+                            <h4 class="g-color-gray-dark-v1 mb-0">
+                                    ${data.user.fullName}
+                            </h4>
+                            <span class="g-color-gray-dark-v4 g-font-size-12"> ${moment(data.createdDate).fromNow()} </span>
+                        </div>
+                        <p style="font-weight: 400"> ${data.content} </p>
+                    </div>
+                </div>
+            </div>  
+        ` + area.innerHTML
+    })
+}
+

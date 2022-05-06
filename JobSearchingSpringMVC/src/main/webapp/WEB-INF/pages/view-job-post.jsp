@@ -36,13 +36,13 @@
             <tr>
                 <th style="width: 30%" scope="row">Ngày đăng</th>
                 <td class="border-left">
-                    <fmt:formatDate pattern="dd/MM/yyyy" value="${jobPost.createdDate}"/>
+                    <fmt:formatDate pattern="HH:mm:ss - dd/MM/yyyy" value="${jobPost.createdDate}"/>
                 </td>
             </tr>
             <tr>
                 <th style="width: 30%" scope="row">Ngày hết hạn</th>
                 <td class="border-left">
-                    <fmt:formatDate pattern="dd/MM/yyyy" value="${jobPost.expiredDate}"/>
+                    <fmt:formatDate pattern="HH:mm:ss - dd/MM/yyyy" value="${jobPost.expiredDate}"/>
                 </td>
             </tr>
             <tr>

@@ -56,19 +56,19 @@ public class AccountController {
         Map<String, String> pre = new HashMap<>();
         if (username != null) {
             pre.put("username", username);
-            model.addAttribute("username", username);
+            model.addAttribute("usernameSearch", username);
         }
         if (phone != null) {
             pre.put("phone", phone);
-            model.addAttribute("phone", phone);
+            model.addAttribute("phoneSearch", phone);
         }
         if (email != null) {
             pre.put("email", email);
-            model.addAttribute("email", email);
+            model.addAttribute("emailSearch", email);
         }
         if (userType != null) {
             pre.put("userType", userType);
-            model.addAttribute("userType", userType);
+            model.addAttribute("userTypeSearch", userType);
         }
 
         List<User> users = userService.getUsersMultiCondition(pre, page);

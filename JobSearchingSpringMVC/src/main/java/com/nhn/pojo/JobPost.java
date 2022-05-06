@@ -1,7 +1,6 @@
 package com.nhn.pojo;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -30,13 +29,11 @@ public class JobPost {
     @Column(name = "location", nullable = false, length = 45)
     private String location;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     private Date createdDate;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "expired_date")
     private Date expiredDate;
 

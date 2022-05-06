@@ -4,6 +4,177 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="now" class="java.util.Date"/>
 
+<div class="container">
+
+    <h1 class="text-left dark-color" style="padding: 0 30px">THÔNG TIN NHÀ TUYỂN DỤNG</h1>
+
+    <section class="section about-section gray-bg" id="about">
+        <div class="container m-0">
+            <div class="row flex-row-reverse">
+                <div class="col-lg-6">
+                    <div class="about-text go-to">
+                        <h3 class="dark-color mb-4">
+                            ${employer.name}
+                        </h3>
+                        <div class="row mb-1">
+                            <div class="col-md-4">
+                                <h5>Mô tả</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    ${employer.description}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-md-4">
+                                <h5>Trụ sở</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <p>
+                                    ${employer.location}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-md-4">
+                                <h5>Liên hệ</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <p>${employer.contact}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-md-4">
+                                <h5>Trang web</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <p>${employer.website}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-md-4">
+                                <h5>Chuyên ngành</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <p>${employer.majoring}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-avatar d-flex justify-content-center">
+                        <c:if test="${userService.getById(employer.user.id).avatar.startsWith('https')}">
+                            <img src="<c:url value="${userService.getById(employer.user.id).avatar}"/>"
+                                 class="rounded">
+                        </c:if>
+                        <c:if test="${!userService.getById(employer.user.id).avatar.startsWith('https')}">
+                            <img src="<c:url value="/resources/images/none.png"/>"
+                                 class="rounded">
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="container pt-2">
+    <div class="col">
+        <div class="row my-4">
+            <form class="w-100">
+                <div class="form-group">
+                    <textarea class="form-control" id="commentId" placeholder="Nhập bình luận"></textarea>
+                </div>
+                <input type="button" value="Đăng bình luận" onclick="addComment(${employer.id}, ${currentUser.id})"
+                       class="btn btn-info"/>
+            </form>
+        </div>
+
+        <div class="d-flex flex-column-reverse" id="commentArea"></div>
+
+        <div class="d-flex flex-column-reverse">
+            <c:forEach items="${employer.comments}" var="cmt">
+                <div class="row">
+                    <div class="media g-mb-30 media-comment w-100">
+                        <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
+                             src="${cmt.user.avatar}"
+                             alt="Image Description">
+                        <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                            <div class="g-mb-15 mb-2">
+                                <h4 class="text-info g-color-gray-dark-v1 mb-0">
+                                        ${cmt.user.fullName}
+                                </h4>
+                                <span class="g-color-gray-dark-v4 g-font-size-12" id="cmtDatePosted">
+                                    ${cmt.createdDate}
+                                </span>
+                            </div>
+                            <p style="font-weight: 400"> ${cmt.content} </p>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+</div>
+
+<script>
+    moment.locale('vi')
+    let dates = document.querySelectorAll("#cmtDatePosted")
+    for (let i = 0; i < dates.length; i++) {
+        let d = dates[i];
+        d.innerText = moment(d.innerText).fromNow();
+    }
+</script>
+
+<style>
+    @media (min-width: 0) {
+        .g-mr-15 {
+            margin-right: 15px !important;
+        }
+    }
+
+    @media (min-width: 0) {
+        .g-mt-3 {
+            margin-top: 10px !important;
+        }
+    }
+
+    .g-height-50 {
+        height: 50px;
+    }
+
+    .g-width-50 {
+        width: 50px !important;
+    }
+
+    @media (min-width: 0) {
+        .g-pa-30 {
+            padding: 20px !important;
+        }
+    }
+
+    .g-bg-secondary {
+        background-color: #fafafa !important;
+    }
+
+    .u-shadow-v18 {
+        box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.15);
+    }
+
+    .g-color-gray-dark-v4 {
+        color: #777 !important;
+    }
+
+    .g-font-size-12 {
+        font-size: 0.85714rem !important;
+    }
+
+    .media-comment {
+        margin-top: 20px
+    }
+</style>
+
 <style>
     .gray-bg {
         background-color: #f5f5f5;
@@ -140,106 +311,3 @@
         color: #20247b;
     }
 </style>
-
-<div class="container">
-
-    <h1 class="text-left dark-color" style="padding: 0 30px">THÔNG TIN NHÀ TUYỂN DỤNG</h1>
-
-    <section class="section about-section gray-bg" id="about">
-        <div class="container m-0">
-            <div class="row flex-row-reverse">
-                <div class="col-lg-6">
-                    <div class="about-text go-to">
-                        <h3 class="dark-color mb-4">
-                            ${employer.name}
-                        </h3>
-                        <div class="row mb-1">
-                            <div class="col-md-4">
-                                <h5>Mô tả</h5>
-                            </div>
-                            <div class="col-md-8">
-                                <p>
-                                    ${employer.description}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row mb-1">
-                            <div class="col-md-4">
-                                <h5>Trụ sở</h5>
-                            </div>
-                            <div class="col-md-8">
-                                <p>
-                                    ${employer.location}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row mb-1">
-                            <div class="col-md-4">
-                                <h5>Liên hệ</h5>
-                            </div>
-                            <div class="col-md-8">
-                                <p>${employer.contact}</p>
-                            </div>
-                        </div>
-                        <div class="row mb-1">
-                            <div class="col-md-4">
-                                <h5>Trang web</h5>
-                            </div>
-                            <div class="col-md-8">
-                                <p>${employer.website}</p>
-                            </div>
-                        </div>
-                        <div class="row mb-1">
-                            <div class="col-md-4">
-                                <h5>Chuyên ngành</h5>
-                            </div>
-                            <div class="col-md-8">
-                                <p>${employer.majoring}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="about-avatar d-flex justify-content-center">
-                        <c:if test="${userService.getById(employer.user.id).avatar.startsWith('https')}">
-                            <img src="<c:url value="${userService.getById(employer.user.id).avatar}"/>"
-                                 class="rounded">
-                        </c:if>
-                        <c:if test="${!userService.getById(employer.user.id).avatar.startsWith('https')}">
-                            <img src="<c:url value="/resources/images/none.png"/>"
-                                 class="rounded">
-                        </c:if>
-                    </div>
-                </div>
-            </div>
-            <%--        <div class="counter mt-7">--%>
-            <%--            <div class="row">--%>
-            <%--                <div class="col-6 col-lg-3">--%>
-            <%--                    <div class="count-data text-center">--%>
-            <%--                        <h6 class="count h2" data-to="500" data-speed="500">500</h6>--%>
-            <%--                        <p class="m-0px font-w-600">Happy Clients</p>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <%--                <div class="col-6 col-lg-3">--%>
-            <%--                    <div class="count-data text-center">--%>
-            <%--                        <h6 class="count h2" data-to="150" data-speed="150">150</h6>--%>
-            <%--                        <p class="m-0px font-w-600">Project Completed</p>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <%--                <div class="col-6 col-lg-3">--%>
-            <%--                    <div class="count-data text-center">--%>
-            <%--                        <h6 class="count h2" data-to="850" data-speed="850">850</h6>--%>
-            <%--                        <p class="m-0px font-w-600">Photo Capture</p>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <%--                <div class="col-6 col-lg-3">--%>
-            <%--                    <div class="count-data text-center">--%>
-            <%--                        <h6 class="count h2" data-to="190" data-speed="190">190</h6>--%>
-            <%--                        <p class="m-0px font-w-600">Telephonic Talk</p>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <%--            </div>--%>
-            <%--        </div>--%>
-        </div>
-    </section>
-</div>

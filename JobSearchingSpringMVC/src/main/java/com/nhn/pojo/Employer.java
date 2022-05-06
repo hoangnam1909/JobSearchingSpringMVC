@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -41,6 +42,17 @@ public class Employer {
 
     @Column(name = "majoring", length = 100)
     private String majoring;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "employer")
+    private Collection<Comment> comments;
+
+    public Collection<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Collection<Comment> comments) {
+        this.comments = comments;
+    }
 
     public int getUserId() {
         return userId;

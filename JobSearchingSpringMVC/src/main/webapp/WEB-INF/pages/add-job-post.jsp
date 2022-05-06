@@ -35,10 +35,10 @@
             <label>Địa chỉ</label>
             <form:input path="location" class="form-control"/>
         </div>
-        <div class="form-group">
-            <label>Ngày đăng</label>
-            <form:input type="date" path="createdDateStr" value="${jobPost.createdDate}" class="form-control"/>
-        </div>
+<%--        <div class="form-group">--%>
+<%--            <label>Ngày đăng</label>--%>
+<%--            <form:input type="date" path="createdDateStr" value="${jobPost.createdDate}" class="form-control"/>--%>
+<%--        </div>--%>
         <div class="form-group">
             <label>Ngày hết hạn</label>
             <form:input type="date" path="expiredDateStr" value="${jobPost.expiredDate}" class="form-control"/>

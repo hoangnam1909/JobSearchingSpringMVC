@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "candidate")
@@ -44,8 +46,8 @@ public class Candidate {
     @Transient
     private int userId;
 
-    @JsonIgnore
     @Transient
+    @JsonIgnore
     private MultipartFile file;
 
     public MultipartFile getFile() {
