@@ -41,19 +41,6 @@ public class CandidateController {
         return "candidate";
     }
 
-    @RequestMapping("/candidate/candidate-info/view")
-    public String viewCandidate(Model model,
-                                @RequestParam(name = "userId", defaultValue = "0") int userId) {
-        Candidate candidate = this.candidateService.getByUserId(userId);
-        if (candidate != null)
-            model.addAttribute("candidate", this.candidateService.getByUserId(userId));
-        else
-            return "redirect:/admin/account";
-
-        model.addAttribute("errMsg", model.asMap().get("errMsg"));
-        return "view-candidate";
-    }
-
     @GetMapping("/candidate/candidate-info/add-or-update")
     public String updateCandidateView(Model model,
                                       Authentication authentication) {
@@ -105,7 +92,7 @@ public class CandidateController {
     @RequestMapping("/candidate/find-employer")
     public String findCandidate(Model model,
                                 @RequestParam(required = false) Map<String, String> params) {
-
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
         String name = params.getOrDefault("name", null);
         String location = params.getOrDefault("location", null);
         String majoring = params.getOrDefault("majoring", null);
@@ -125,10 +112,27 @@ public class CandidateController {
         }
 
         List<Employer> employers = employerService.getUsersMultiCondition(pre);
+        List<Employer> employersSize = employerService.getUsersMultiCondition(pre);
+        model.addAttribute("employers", employers);
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("counter", employersSize.size());
+        model.addAttribute("userService", userService);
+        return "candidate-find-employer";
+    }
+
+    @RequestMapping("/candidate/view-employer")
+    public String viewEmployer(Model model,
+                                @RequestParam(name = "employerId", defaultValue = "0") int employerId) {
+        if (employerId > 0) {
+            model.addAttribute("employer", this.employerService.getById(employerId));
+        } else {
+            return "candidate-find-employer";
+        }
 
         model.addAttribute("userService", userService);
-        model.addAttribute("employers", employers);
-        return "candidate-find-employer";
+        model.addAttribute("errMsg", model.asMap().get("errMsg"));
+        return "candidate-view-employer";
     }
 
     @RequestMapping("/candidate/suggest-employer")

@@ -58,9 +58,9 @@ and open the template in the editor.
         <put-attribute name="title" value="Tìm kiếm ứng viên" />
         <put-attribute name="content" value="/WEB-INF/pages/employer-find.jsp" />
     </definition>
-    <definition name="employer-view-user" extends="baseLayout">
+    <definition name="employer-view-candidate" extends="baseLayout">
         <put-attribute name="title" value="Xem thông tin ứng viên" />
-        <put-attribute name="content" value="/WEB-INF/pages/employer-view-user.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/employer-view-candidate.jsp" />
     </definition>
 
 <!--    UNG VIEN-->
@@ -76,7 +76,12 @@ and open the template in the editor.
         <put-attribute name="title" value="Gợi ý nhà tuyển dụng" />
         <put-attribute name="content" value="/WEB-INF/pages/candidate-suggest-employer.jsp" />
     </definition>
+    <definition name="candidate-view-employer" extends="baseLayout">
+        <put-attribute name="title" value="Thông tin nhà tuyển dụng" />
+        <put-attribute name="content" value="/WEB-INF/pages/candidate-view-employer.jsp" />
+    </definition>
 
+<!--    ADMIN-->
     <definition name="admin" extends="baseLayout">
         <put-attribute name="title" value="Trang quản trị" />
         <put-attribute name="content" value="/WEB-INF/pages/admin.jsp" />

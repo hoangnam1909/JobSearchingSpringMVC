@@ -76,15 +76,23 @@
                 <th class="text-center" style="width: 15%">Thực thi</th>
                 <th class="text-center" style="width: 5%">STT</th>
                 <th>Tên đăng nhập</th>
+
+                <c:if test="${userType.equals('ROLE_NTD')}">
+                    <th style="width: 25%;">Tên công ty</th>
+                </c:if>
+
                 <th>Số điện thoại</th>
                 <th>Email</th>
-                <th>Loại tài khoản</th>
+
+                <c:if test="${userType == null}">
+                    <th>Loại tài khoản</th>
+                </c:if>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${users}" var="u" varStatus="loop">
                 <tr>
-                    <td style="text-align: center">
+                    <td style="text-align: justify-all; padding-left: 30px">
                         <a style="margin-right: 10px" href="<c:url value="/admin/account/view" />?id=${u.id}"
                            title="Xem chi tiết">
                             <i class="fa-solid fa-eye"></i>
@@ -93,31 +101,38 @@
                            data-toggle="tooltip" title="Sửa">
                             <i class="fa-solid fa-pen"></i>
                         </a>
-                        <a href="<c:url value="/admin/account/delete" />?id=${u.id}" class="confirmation" title="Xoá">
+                        <a style="margin-right: 10px"
+                           href="<c:url value="/admin/account/delete" />?id=${u.id}" class="confirmation" title="Xoá">
                             <i class="fa-solid fa-trash"></i>
                         </a>
-                    </td>
-                    <td class="text-center">${(currentPage - 1) * userService.maxItemsInPage + loop.index + 1}</td>
-                    <td>${u.username}</td>
-                    <td>${u.phone}</td>
-                    <td>${u.email}</td>
-                    <td>
-                            ${u.userType}
                         <c:if test="${u.userType.equals('ROLE_UV')}">
-                            <a style="margin-left: 10px"
-                               href="<c:url value="/admin/account/candidate-info/update" />?userId=${u.id}"
+                            <a href="<c:url value="/admin/account/candidate-info/update" />?userId=${u.id}"
                                data-toggle="tooltip" title="Sửa thông tin ứng viên">
                                 <i class="fa-solid fa-user-pen"></i>
                             </a>
                         </c:if>
                         <c:if test="${u.userType.equals('ROLE_NTD')}">
-                            <a style="margin-left: 10px"
-                               href="<c:url value="/admin/account/employer-info/update" />?userId=${u.id}"
+                            <a href="<c:url value="/admin/account/employer-info/update" />?userId=${u.id}"
                                data-toggle="tooltip" title="Sửa thông tin nhà tuyển dụng">
                                 <i class="fa-solid fa-user-pen"></i>
                             </a>
                         </c:if>
                     </td>
+                    <td class="text-center">${(currentPage - 1) * userService.maxItemsInPage + loop.index + 1}</td>
+                    <td>${u.username}</td>
+
+                    <c:if test="${userType != null}">
+                        <c:if test="${u.userType.equals('ROLE_NTD')}">
+                            <td>${employerService.getByUserId(u.id).name}</td>
+                        </c:if>
+                    </c:if>
+
+                    <td>${u.phone}</td>
+                    <td>${u.email}</td>
+
+                    <c:if test="${userType == null}">
+                        <td>${u.userType}</td>
+                    </c:if>
                 </tr>
             </c:forEach>
             </tbody>

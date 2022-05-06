@@ -9,7 +9,7 @@
     <c:if test="${users.size() == 0}">
         <div class="alert alert-success mt-4 d-flex justify-content-center align-items-center" style="height: 80px"
              role="alert">
-            <h5>TẤT CẢ NHÀ TUYỂN DỤNG ĐÃ ĐƯỢC XÁC NHẬN!</h5>
+            <h5 class="m-0">TẤT CẢ NHÀ TUYỂN DỤNG ĐÃ ĐƯỢC XÁC NHẬN!</h5>
         </div>
     </c:if>
 

@@ -46,12 +46,12 @@
                 </td>
             </tr>
             <tr>
-                <th style="width: 30%" scope="row">Tài khoản đăng bài</th>
-                <td class="border-left">${userService.getById(jobPost.postedByUser.id).username}</td>
-            </tr>
-            <tr>
                 <th style="width: 30%" scope="row">Loại công việc</th>
                 <td class="border-left">${jobTypeService.getById(jobPost.jobType.id).name}</td>
+            </tr>
+            <tr>
+                <th style="width: 30%" scope="row">Tài khoản đăng bài</th>
+                <td class="border-left">${userService.getById(jobPost.postedByUser.id).username}</td>
             </tr>
             <tr>
                 <th style="width: 30%" scope="row">Công ty</th>

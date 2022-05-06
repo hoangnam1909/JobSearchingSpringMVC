@@ -78,6 +78,7 @@ public class AccountController {
         model.addAttribute("currentPage", page);
         model.addAttribute("counter", usersSize.size());
         model.addAttribute("userService", userService);
+        model.addAttribute("employerService", employerService);
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
 
@@ -138,20 +139,24 @@ public class AccountController {
         String errMsg = null;
         String sucMsg = null;
 
-        userValidator.validate(user, result);
-        if (result.hasErrors())
-            return "add-account";
+        if (user.getId() == 0) {
+            userValidator.validate(user, result);
+            if (result.hasErrors())
+                return "add-account";
+        }
 
         boolean addOrUpdateCheck = this.userService.addOrUpdate(user);
         if (addOrUpdateCheck) {
-            if (user.getUserType().equals("ROLE_UV")) {
-                redirectAttrs.addFlashAttribute("userId",
-                        userService.getByUsername(user.getUsername()).getId());
-                return "redirect:/admin/account/candidate-info/add";
-            } else if (user.getUserType().equals("ROLE_NTD")) {
-                redirectAttrs.addFlashAttribute("userId",
-                        userService.getByUsername(user.getUsername()).getId());
-                return "redirect:/admin/account/employer-info/add";
+            if (user.getId() == 0) {
+                if (user.getUserType().equals("ROLE_UV")) {
+                    redirectAttrs.addFlashAttribute("userId",
+                            userService.getByUsername(user.getUsername()).getId());
+                    return "redirect:/admin/account/candidate-info/add";
+                } else if (user.getUserType().equals("ROLE_NTD")) {
+                    redirectAttrs.addFlashAttribute("userId",
+                            userService.getByUsername(user.getUsername()).getId());
+                    return "redirect:/admin/account/employer-info/add";
+                }
             }
 
             if (user.getId() == 0)

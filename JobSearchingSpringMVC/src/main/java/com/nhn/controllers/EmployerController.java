@@ -249,7 +249,7 @@ public class EmployerController {
         }
 
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
-        return "employer-view-user";
+        return "employer-view-candidate";
     }
 
     @GetMapping(path = "/employer/post/delete")

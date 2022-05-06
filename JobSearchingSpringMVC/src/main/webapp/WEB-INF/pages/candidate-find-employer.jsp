@@ -25,51 +25,61 @@
     </section>
 </div>
 
-<c:forEach items="${employers}" var="employer">
+<div class="container">
+    <ul class="pagination d-flex justify-content-center m-0">
+        <c:forEach begin="1" end="${Math.ceil(counter/userService.maxItemsInPage)}" var="page">
+            <li class="page-item">
+                <a class="page-link" onclick="updateQueryStringParameter('page', ${page})">${page}</a>
+            </li>
+        </c:forEach>
+    </ul>
+</div>
+
+<c:forEach items="${employers}" var="emp">
     <div class="container pt-2">
         <div class="col">
             <div class="row">
                 <div class="media g-mb-30 media-comment w-100">
                     <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
-                         src="${userService.getById(employer.user.id).avatar}" alt="Image Description">
+                         src="${userService.getById(emp.user.id).avatar}" alt="Image Description">
                     <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
                         <div class="g-mb-15">
-                            <a class="text-decoration-none" href="#">
+                            <a class="text-decoration-none" href="<c:url value="/candidate/view-employer"/>?employerId=${emp.id}">
                                 <h3 class="g-color-gray-dark-v1 mb-3">
-                                        ${employer.name}
+                                        ${emp.name}
                                 </h3>
                             </a>
                         </div>
-                        <c:if test="${employer.description.length() > 0}">
+                        <c:if test="${emp.description.length() > 0}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
                                 Mô tả:
                             </h5>
                             <p>
-                                    ${employer.description}
+                                    ${emp.description}
                             </p>
                         </c:if>
 
-                        <c:if test="${employer.location.length() > 0}">
+                        <c:if test="${emp.location.length() > 0}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Địa điểm: <span style="font-weight: 400"> ${employer.location} </span>
+                                Địa điểm: <span style="font-weight: 400"> ${emp.location} </span>
                             </h5>
                         </c:if>
 
-                        <c:if test="${employer.contact.length() > 0}">
+                        <c:if test="${emp.contact.length() > 0}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Liên hệ: <span style="font-weight: 400"> ${employer.contact} </span>
+                                Liên hệ: <span style="font-weight: 400"> ${emp.contact} </span>
                             </h5>
                         </c:if>
 
-                        <c:if test="${employer.website.length() > 0}">
+                        <c:if test="${emp.website.length() > 0}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Trang web: <span style="font-weight: 400"> ${employer.website} </span>
+                                Trang web: <span style="font-weight: 400"> ${emp.website} </span>
                             </h5>
                         </c:if>
 
-                        <c:if test="${employer.majoring.length() > 0}">
+                        <c:if test="${emp.majoring.length() > 0}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Chuyên ngành: <span style="font-weight: 400"> ${employer.majoring} </span>
+                                Chuyên ngành: <span style="font-weight: 400"> ${emp.majoring} </span>
                             </h5>
                         </c:if>
                     </div>

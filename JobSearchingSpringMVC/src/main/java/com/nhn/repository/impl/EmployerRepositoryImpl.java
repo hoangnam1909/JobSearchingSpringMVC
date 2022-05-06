@@ -31,9 +31,6 @@ public class EmployerRepositoryImpl implements EmployerRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
-    @Autowired
-    private JobPostService jobPostService;
-
     private final int maxItemsInPage = 10;
 
     public int getMaxItemsInPage() {

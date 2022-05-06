@@ -64,10 +64,10 @@
         <div class="form-group">
             <label>CV
                 <mark>Chỉ upload file hình ảnh</mark>
+                <c:if test="${candidate.cv.startsWith('http')}">
+                    <br>Đã upload CV. Bản xem trước <span><a target="_blank" href="${candidate.cv}">Tại đây</a></span>
+                </c:if>
             </label>
-            <c:if test="${candidate.cv.length() > 0}">
-                . Đã upload CV. Bản xem trước <span><a target="_blank" href="${candidate.cv}">Tại đây</a></span>
-            </c:if>
             <form:input type="file" path="file" accept="image/*" class="form-control"/>
 
         </div>
