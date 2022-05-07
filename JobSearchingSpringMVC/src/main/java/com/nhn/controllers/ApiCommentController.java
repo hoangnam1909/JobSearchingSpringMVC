@@ -31,7 +31,6 @@ public class ApiCommentController {
             int userId = Integer.parseInt(params.get("userId"));
 
             Comment comment = this.commentService.addComment(content, employerId, userId);
-//            Comment comment = this.commentService.addComment(content, employerId, userId);
 
             return new ResponseEntity<>(comment, HttpStatus.CREATED);
         } catch (Exception ex) {

@@ -49,27 +49,44 @@ function updateQueryStringParameter(key, value) {
     }
 }
 
-function addComment(employerId, userId) {
-    fetch("/JobSearchingSpringMVC/api/add-comment", {
-        method: 'post',
-        body: JSON.stringify({
-            "content": document.getElementById("commentId").value,
-            "employerId": employerId,
-            "userId": userId
-        }),
-        headers: {
-            "Content-Type": "application/json"
+function process(e) {
+    let code = (e.keyCode ? e.keyCode : e.which);
+    let textarea = document.getElementById('commentId');
+    if (code === 13) {
+        if (textarea.value.trim() !== '') {
+            document.getElementById("commentSubmitButton").click();
+            e.preventDefault()
         }
-    }).then(function (res) {
-        console.info(res)
-        return res.json();
-    }).then(function (data) {
-        console.info(data);
+    }
+}
 
-        let area = document.getElementById("commentArea");
-        moment.locale('vi');
+function eraseText() {
+    document.getElementById("commentId").value = "";
+}
 
-        area.innerHTML = `                         
+function addComment(employerId, userId) {
+    let textarea = document.getElementById('commentId');
+    if (textarea.value.trim() !== '') {
+        fetch("/JobSearchingSpringMVC/api/add-comment", {
+            method: 'post',
+            body: JSON.stringify({
+                "content": document.getElementById("commentId").value,
+                "employerId": employerId,
+                "userId": userId
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (res) {
+            console.info(res)
+            return res.json();
+        }).then(function (data) {
+            console.info(data);
+
+            let area = document.getElementById("commentArea");
+            moment.locale('vi');
+
+            area.innerHTML = `                         
               <div class="row">
                 <div class="media g-mb-30 media-comment w-100">
                     <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
@@ -87,6 +104,7 @@ function addComment(employerId, userId) {
                 </div>
             </div>  
         ` + area.innerHTML
-    })
+        })
+    }
 }
 

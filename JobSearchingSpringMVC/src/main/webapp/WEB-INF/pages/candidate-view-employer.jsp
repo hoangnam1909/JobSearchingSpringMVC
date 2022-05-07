@@ -60,6 +60,23 @@
                                 <p>${employer.majoring}</p>
                             </div>
                         </div>
+                        <div class="mb-1">
+                            <div class="content text-center">
+                                <div class="ratings">
+                                    <span class="product-rating">4.6</span><span>/5</span>
+                                    <div class="stars">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="rating-text">
+                                        <span>46 ratings & 15 reviews</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -79,19 +96,21 @@
     </section>
 </div>
 
-<div class="container pt-2">
+<div class="container">
     <div class="col">
-        <div class="row my-4">
+        <div class="row mt-3 mb-4">
             <form class="w-100">
                 <div class="form-group">
-                    <textarea class="form-control" id="commentId" placeholder="Nhập bình luận"></textarea>
+                    <textarea class="form-control" id="commentId" onkeypress="process(event, this)"
+                              placeholder="Nhập bình luận"></textarea>
                 </div>
-                <input type="button" value="Đăng bình luận" onclick="addComment(${employer.id}, ${currentUser.id})"
+                <input type="button" value="Đăng bình luận" id="commentSubmitButton"
+                       onclick="addComment(${employer.id}, ${currentUser.id}); eraseText();"
                        class="btn btn-info"/>
             </form>
         </div>
 
-        <div class="d-flex flex-column-reverse" id="commentArea"></div>
+        <div class="d-flex flex-column" id="commentArea"></div>
 
         <div class="d-flex flex-column-reverse">
             <c:forEach items="${employer.comments}" var="cmt">
@@ -106,7 +125,7 @@
                                         ${cmt.user.fullName}
                                 </h4>
                                 <span class="g-color-gray-dark-v4 g-font-size-12" id="cmtDatePosted">
-                                    ${cmt.createdDate}
+                                        ${cmt.createdDate}
                                 </span>
                             </div>
                             <p style="font-weight: 400"> ${cmt.content} </p>
@@ -125,9 +144,155 @@
         let d = dates[i];
         d.innerText = moment(d.innerText).fromNow();
     }
+
+    $(function () {
+
+        $(document).on({
+            mouseover: function (event) {
+                $(this).find('.far').addClass('star-over');
+                $(this).prevAll().find('.far').addClass('star-over');
+            },
+            mouseleave: function (event) {
+                $(this).find('.far').removeClass('star-over');
+                $(this).prevAll().find('.far').removeClass('star-over');
+            }
+        }, '.rate');
+
+
+        $(document).on('click', '.rate', function () {
+            if (!$(this).find('.star').hasClass('rate-active')) {
+                $(this).siblings().find('.star').addClass('far').removeClass('fas rate-active');
+                $(this).find('.star').addClass('rate-active fas').removeClass('far star-over');
+                $(this).prevAll().find('.star').addClass('fas').removeClass('far star-over');
+            } else {
+                console.log('has');
+            }
+        });
+
+    });
 </script>
 
 <style>
+    .wrap {
+        height: 50px;
+        background: #fff;
+        border-radius: 10px;
+    }
+
+    .stars {
+        width: fit-content;
+        margin: 0 auto;
+        cursor: pointer;
+    }
+
+    .star {
+        color: #17a2b8 !important;
+    }
+
+    .rate {
+        height: 50px;
+        margin-left: -5px;
+        padding: 5px;
+        font-size: 25px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .rate input[type="radio"] {
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        pointer-events: none;
+    }
+
+    .star-over::after {
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        font-size: 16px;
+        content: "\f005";
+        display: inline-block;
+        color: #17a2b8;
+        z-index: 1;
+        position: absolute;
+        top: 17px;
+        left: 10px;
+    }
+
+    .rate:nth-child(1) .face::after {
+        content: "\f119"; /* ☹ */
+    }
+
+    .rate:nth-child(2) .face::after {
+        content: "\f11a"; /* 😐 */
+    }
+
+    .rate:nth-child(3) .face::after {
+        content: "\f118"; /* 🙂 */
+    }
+
+    .rate:nth-child(4) .face::after {
+        content: "\f580"; /* 😊 */
+    }
+
+    .rate:nth-child(5) .face::after {
+        content: "\f59a"; /* 😄 */
+    }
+
+    .face {
+        opacity: 0;
+        position: absolute;
+        width: 35px;
+        height: 35px;
+        background: #17a2b8;
+        border-radius: 5px;
+        top: -50px;
+        left: 2px;
+        transition: 0.2s;
+        pointer-events: none;
+    }
+
+    .face::before {
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        content: "\f0dd";
+        display: inline-block;
+        color: #17a2b8;
+        z-index: 1;
+        position: absolute;
+        left: 9px;
+        bottom: -15px;
+    }
+
+    .face::after {
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        display: inline-block;
+        color: #fff;
+        z-index: 1;
+        position: absolute;
+        left: 5px;
+        top: -1px;
+    }
+
+    .rate:hover .face {
+        opacity: 1;
+    }
+
+    /*===*/
+
+    .ratings {
+        background-color: #fff;
+        padding: 30px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 10px 10px #E0E0E0;
+    }
+
+    .product-rating {
+        font-size: 50px;
+    }
+
     @media (min-width: 0) {
         .g-mr-15 {
             margin-right: 15px !important;
