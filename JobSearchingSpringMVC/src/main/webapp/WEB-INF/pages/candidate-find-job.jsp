@@ -73,7 +73,7 @@
                     <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
                         <div class="g-mb-15">
                             <a class="text-decoration-none"
-                               href="<c:url value="/candidate/view-post"/>?jobPostId=${jp.id}">
+                               href="<c:url value="/candidate/view-post"/>?id=${jp.id}">
                                 <h3 class="g-color-gray-dark-v1 mb-3">
                                         ${jp.title}
                                 </h3>

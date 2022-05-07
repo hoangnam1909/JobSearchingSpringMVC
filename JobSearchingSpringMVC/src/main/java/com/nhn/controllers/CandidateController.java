@@ -1,13 +1,7 @@
 package com.nhn.controllers;
 
-import com.nhn.pojo.Candidate;
-import com.nhn.pojo.Employer;
-import com.nhn.pojo.JobPost;
-import com.nhn.pojo.User;
-import com.nhn.service.CandidateService;
-import com.nhn.service.EmployerService;
-import com.nhn.service.JobPostService;
-import com.nhn.service.UserService;
+import com.nhn.pojo.*;
+import com.nhn.service.*;
 import com.nhn.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -36,6 +30,9 @@ public class CandidateController {
 
     @Autowired
     private JobPostService jobPostService;
+
+    @Autowired
+    private JobTypeService jobTypeService;
 
     @Autowired
     UserValidator userValidator;
@@ -193,6 +190,24 @@ public class CandidateController {
         model.addAttribute("userService", userService);
         model.addAttribute("employerService", employerService);
         return "candidate-find-job";
+    }
+
+    @RequestMapping("/candidate/view-post")
+    public String viewPost(Model model,
+                           @RequestParam(name = "id", defaultValue = "0") int id) {
+        try {
+            JobPost jobPost = this.jobPostService.getById(id);
+            model.addAttribute("jobPost", jobPost);
+
+            Employer postedByEmployer = this.employerService.getByUserId(jobPost.getPostedByUser().getId());
+            model.addAttribute("postedByEmployer", postedByEmployer);
+
+            JobType jobType = this.jobTypeService.getById(jobPost.getJobType().getId());
+            model.addAttribute("jobType", jobType);
+        } catch (NoResultException nre){
+            return "redirect:/candidate/find-job";
+        }
+        return "candidate-view-post";
     }
 
 }

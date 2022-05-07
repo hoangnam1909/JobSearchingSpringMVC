@@ -51,7 +51,7 @@
                     </div>
                 </li>
             </c:if>
-            <c:if test="${currentUser.userType == 'ROLE_NTD'}">
+            <c:if test="${currentUser.userType == 'ROLE_NTD' && currentUser.active == 1}">
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/employer/employer-info/add-or-update"/>">
                         Cập nhật thông tin
@@ -71,14 +71,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/candidate/candidate-info/add-or-update"/>">Cập nhật thông tin</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        Tìm nhà tuyển dụng
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="<c:url value="/candidate/find-employer"/>">Tìm kiếm nhà tuyển dụng</a>
-                        <a class="dropdown-item" href="<c:url value="/candidate/suggest-employer"/>">Gợi ý nhà tuyển dụng</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/candidate/find-employer"/>">Tìm kiếm nhà tuyển dụng</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/candidate/find-job"/>">Tìm việc làm</a>
@@ -93,7 +87,15 @@
                             <span>
                                 <i class="fa-solid fa-user"></i>
                             </span>
-                        ${currentUser.username}
+
+                    <c:if test="${!(currentUser.userType == 'ROLE_NTD')}">
+                        ${currentUser.fullName}
+                    </c:if>
+
+                    <c:if test="${currentUser.userType == 'ROLE_NTD'}">
+                        ${employerService.getByUserId(currentUser.id).name}
+                    </c:if>
+
                     <span class="badge badge-secondary">${currentUser.userType}</span>
                 </a>
             </li>

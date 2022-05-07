@@ -150,8 +150,7 @@ public class JobPostController {
 
         jobPost.setPostedByUser(userService.getById(jobPost.getPostedByUserId()));
         jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
-        if (jobPost.getId() == 0)
-            jobPost.setCreatedDate(new Date());
+        jobPost.setCreatedDate(new Date());
 
         if (!jobPost.getExpiredDateStr().equals(""))
             jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));

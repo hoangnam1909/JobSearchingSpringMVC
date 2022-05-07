@@ -8,6 +8,7 @@ import com.nhn.service.*;
 import com.nhn.utils.utils;
 import com.nhn.validator.JobPostValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,6 +62,10 @@ public class EmployerController {
     public String management(Model model,
                              Authentication authentication,
                              @RequestParam(required = false) Map<String, String> params) {
+
+        if (this.userService.getByUsername(authentication.getName()).getActive() == 0)
+            return "employer";
+
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
         String title = params.getOrDefault("title", null);
         String beginningSalary = params.getOrDefault("beginningSalary", null);
@@ -114,6 +119,9 @@ public class EmployerController {
                               Authentication authentication,
                               @RequestParam(name = "id", defaultValue = "0") int id) {
 
+        if (this.userService.getByUsername(authentication.getName()).getActive() == 0)
+            return "employer";
+
         int userId = this.userService.getByUsername(authentication.getName()).getId();
 
         if (id > 0) {
@@ -139,6 +147,9 @@ public class EmployerController {
                                          Authentication authentication,
                                          @RequestParam(name = "id", defaultValue = "0") int id) {
 
+        if (this.userService.getByUsername(authentication.getName()).getActive() == 0)
+            return "employer";
+
         int userId = this.userService.getByUsername(authentication.getName()).getId();
 
         if (id > 0) {
@@ -161,9 +172,14 @@ public class EmployerController {
 
     @PostMapping(value = "/employer/post/add-or-update")
     public String addOrUpdateJobPost(Model model,
+                                     Authentication authentication,
                                      @ModelAttribute(value = "jobPost") @Valid JobPost jobPost,
                                      BindingResult result,
                                      final RedirectAttributes redirectAttrs) throws ParseException {
+
+        if (this.userService.getByUsername(authentication.getName()).getActive() == 0)
+            return "employer";
+
         String errMsg = null;
         String sucMsg = null;
 
@@ -175,8 +191,7 @@ public class EmployerController {
 
         jobPost.setPostedByUser(userService.getById(jobPost.getPostedByUserId()));
         jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
-        if (jobPost.getId() == 0)
-            jobPost.setCreatedDate(new Date());
+        jobPost.setCreatedDate(new Date());
 
         if (!jobPost.getExpiredDateStr().equals(""))
             jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));
@@ -201,7 +216,11 @@ public class EmployerController {
 
     @RequestMapping("/employer/find")
     public String find(Model model,
+                       Authentication authentication,
                        @RequestParam(required = false) Map<String, String> params) {
+
+        if (this.userService.getByUsername(authentication.getName()).getActive() == 0)
+            return "employer";
 
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
         String fullname = params.getOrDefault("fullname", null);
@@ -252,11 +271,15 @@ public class EmployerController {
 
     @RequestMapping("/employer/find/view")
     public String viewFoundUser(Model model,
+                                Authentication authentication,
                                 @RequestParam(name = "id", defaultValue = "0") int id) {
+        if (this.userService.getByUsername(authentication.getName()).getActive() == 0)
+            return "employer";
+
         try {
             model.addAttribute("user", this.userService.getById(id));
             model.addAttribute("candidate", this.candidateService.getByUserId(id));
-        } catch (NoResultException nre){
+        } catch (NoResultException nre) {
             return "redirect:/employer/find";
         }
 
@@ -269,6 +292,8 @@ public class EmployerController {
                                     Authentication authentication,
                                     @RequestParam(name = "id", defaultValue = "0") int id,
                                     final RedirectAttributes redirectAttrs) {
+        if (this.userService.getByUsername(authentication.getName()).getActive() == 0)
+            return "employer";
 
         int userId = this.userService.getByUsername(authentication.getName()).getId();
 
@@ -298,6 +323,8 @@ public class EmployerController {
     @GetMapping("/employer/employer-info/add-or-update")
     public String updateEmployerView(Model model,
                                      Authentication authentication) {
+        if (this.userService.getByUsername(authentication.getName()).getActive() == 0)
+            return "employer";
 
         int userId = this.userService.getByUsername(authentication.getName()).getId();
 
@@ -316,7 +343,11 @@ public class EmployerController {
 
     @PostMapping("/employer/employer-info/add-or-update")
     public String addOrUpdateEmployer(Model model,
+                                      Authentication authentication,
                                       @ModelAttribute(value = "employer") Employer employer) {
+        if (this.userService.getByUsername(authentication.getName()).getActive() == 0)
+            return "employer";
+
         String errMsg = null;
         String sucMsg = null;
 

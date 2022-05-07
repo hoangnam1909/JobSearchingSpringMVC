@@ -84,6 +84,10 @@ and open the template in the editor.
         <put-attribute name="title" value="Tìm việc làm" />
         <put-attribute name="content" value="/WEB-INF/pages/candidate-find-job.jsp" />
     </definition>
+    <definition name="candidate-view-post" extends="baseLayout">
+        <put-attribute name="title" value="Thông tin việc làm" />
+        <put-attribute name="content" value="/WEB-INF/pages/candidate-view-post.jsp" />
+    </definition>
 
 <!--    ADMIN-->
     <definition name="admin" extends="baseLayout">

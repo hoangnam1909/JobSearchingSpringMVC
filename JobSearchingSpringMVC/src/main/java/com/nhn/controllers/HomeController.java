@@ -41,6 +41,7 @@ public class HomeController {
     public void addAttributes(Model model, Authentication authentication) {
         if (authentication != null)
             model.addAttribute("currentUser", this.userService.getByUsername(authentication.getName()));
+        model.addAttribute("employerService", employerService);
     }
 
     @RequestMapping("/")
