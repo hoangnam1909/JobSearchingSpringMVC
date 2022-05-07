@@ -50,7 +50,7 @@ public class StatsRepositoryImpl implements StatsRepository {
 
         q.multiselect(rootJP.get("createdDate"), criteriaBuilder.count(rootJP.get("id")));
 
-        q.groupBy(rootJP.get("createdDate"));
+        q.groupBy(criteriaBuilder.function("MONTH", Integer.class, rootJP.get("createdDate")));
 
         q = q.orderBy(criteriaBuilder.desc(rootJP.get("createdDate")));
 

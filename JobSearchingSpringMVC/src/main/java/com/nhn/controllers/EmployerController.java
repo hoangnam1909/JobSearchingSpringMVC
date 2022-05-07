@@ -128,9 +128,9 @@ public class EmployerController {
             JobPost jobPost = this.jobPostService.getById(id);
             if (jobPost != null && jobPost.getPostedByUser().getId() == userId) {
                 model.addAttribute("jobPost", jobPost);
-                model.addAttribute("userService", userService);
-                model.addAttribute("jobTypeService", jobTypeService);
-                model.addAttribute("employerService", employerService);
+
+                JobType jobType = this.jobTypeService.getById(jobPost.getJobType().getId());
+                model.addAttribute("jobType", jobType);
             } else {
                 return "redirect:/access-denied";
             }

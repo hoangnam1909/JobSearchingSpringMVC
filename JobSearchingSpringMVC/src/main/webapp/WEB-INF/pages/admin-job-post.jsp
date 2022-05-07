@@ -54,6 +54,18 @@
 </div>
 
 <div class="container">
+    <c:if test="${sucMsg != null}">
+        <div class="alert alert-success" role="alert">
+                ${sucMsg}
+        </div>
+    </c:if>
+
+    <c:if test="${errMsg != null}">
+        <div class="alert alert-danger" role="alert">
+                ${errMsg}
+        </div>
+    </c:if>
+
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link" href="<c:url value="/admin/job-post/add-or-update"/>">
@@ -106,18 +118,6 @@
         </c:forEach>
         </tbody>
     </table>
-
-    <c:if test="${sucMsg != null}">
-        <div class="alert alert-success" role="alert">
-                ${sucMsg}
-        </div>
-    </c:if>
-
-    <c:if test="${errMsg != null}">
-        <div class="alert alert-danger" role="alert">
-                ${errMsg}
-        </div>
-    </c:if>
 
     <ul class="pagination d-flex justify-content-center mt-4">
         <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">

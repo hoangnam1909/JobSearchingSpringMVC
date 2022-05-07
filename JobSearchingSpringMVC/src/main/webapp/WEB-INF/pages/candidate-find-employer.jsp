@@ -40,7 +40,7 @@
         <div class="col">
             <div class="row">
                 <div class="media g-mb-30 media-comment w-100">
-                    <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
+                    <img class="border d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
                          src="${userService.getById(emp.user.id).avatar}" alt="Image Description">
                     <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
                         <div class="g-mb-15">
@@ -71,13 +71,10 @@
 
                         <c:if test="${emp.website.length() > 0}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Trang web: <span style="font-weight: 400"> ${emp.website} </span>
-                            </h5>
-                        </c:if>
-
-                        <c:if test="${emp.majoring.length() > 0}">
-                            <h5 class="g-color-gray-dark-v1 mb-3">
-                                Chuyên ngành: <span style="font-weight: 400"> ${emp.majoring} </span>
+                                Trang web:
+                                <span style="font-weight: 400">
+                                    <a target="_blank" href="${emp.website}"> ${emp.website} </a>
+                                </span>
                             </h5>
                         </c:if>
                     </div>

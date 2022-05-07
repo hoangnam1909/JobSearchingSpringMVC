@@ -163,15 +163,15 @@ public class AccountController {
                     sucMsg = String.format("Thêm thông tin nhà tuyển dụng '%s' thành công", user.getUsername());
                 }
             } else {
-                errMsg = String.format("Sửa thông tin user '%s' không thành công", user.getUsername());
-
-                redirectAttrs.addFlashAttribute("errMsg", errMsg);
-                return "add-account";
+                sucMsg = String.format("Sửa thông tin user '%s' thành công", user.getUsername());
             }
 
             redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
             return "redirect:/admin/account";
+        } else {
+            errMsg = "Thêm thông tin tài khoản không thành công";
         }
+        model.addAttribute("errMsg", errMsg);
         return "add-account";
     }
 

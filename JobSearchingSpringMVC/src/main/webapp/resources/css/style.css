@@ -1,6 +1,7 @@
 body {
     background-color: #f0f0f0 !important;
     font-family: none, serif;
+    scroll-behavior: smooth;
 }
 
 div.container {
@@ -21,4 +22,15 @@ h1 {
     font-size: 45px !important;
     font-weight: 600 !important;
     margin: 0 0 6px !important;
+}
+
+a:hover{
+    text-decoration: none !important;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: none;
 }

@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.NoResultException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class CandidateController {
@@ -93,7 +90,7 @@ public class CandidateController {
     }
 
     @RequestMapping("/candidate/find-employer")
-    public String findCandidate(Model model,
+    public String findEmployers(Model model,
                                 @RequestParam(required = false) Map<String, String> params) {
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
         String name = params.getOrDefault("name", null);
@@ -139,12 +136,6 @@ public class CandidateController {
         return "candidate-view-employer";
     }
 
-    @RequestMapping("/candidate/suggest-employer")
-    public String suggestCandidate(Model model,
-                                   @RequestParam(name = "userId", defaultValue = "0") int userId) {
-        return "candidate-suggest-employer";
-    }
-
     @RequestMapping("/candidate/find-job")
     public String findJob(Model model,
                           @RequestParam(required = false) Map<String, String> params) {
@@ -177,7 +168,7 @@ public class CandidateController {
             model.addAttribute("sort", sort);
         }
 
-        int maxItems = 3;
+        int maxItems = 20;
         model.addAttribute("maxItems", maxItems);
 
         List<JobPost> jobPosts = jobPostService.getPosts(pre, page, maxItems);
@@ -192,6 +183,38 @@ public class CandidateController {
         return "candidate-find-job";
     }
 
+    @RequestMapping("/candidate/suggest-employer")
+    public String suggestJob(Model model,
+                             Authentication authentication,
+                             @RequestParam(required = false) Map<String, String> params) {
+        int maxItems = 3;
+        model.addAttribute("maxItems", maxItems);
+
+        int userId = this.userService.getByUsername(authentication.getName()).getId();
+        Candidate candidate = candidateService.getByUserId(userId);
+
+        Set<Employer> employers = new HashSet<>();
+        List<Employer> subEmployers;
+
+        if (candidate.getMajoringDetail() != null) {
+            String[] majoringDetailEach = candidate.getMajoringDetail().split(" ");
+            Map<String, String> pre = new HashMap<>();
+
+            for (String str : majoringDetailEach) {
+                pre.put("majoring", str);
+                subEmployers = employerService.getUsersMultiCondition(pre, 0);
+                employers.addAll(subEmployers);
+            }
+        }
+
+        model.addAttribute("employers", employers);
+
+        model.addAttribute("jobPostService", jobPostService);
+        model.addAttribute("userService", userService);
+        model.addAttribute("employerService", employerService);
+        return "candidate-suggest-employer";
+    }
+
     @RequestMapping("/candidate/view-post")
     public String viewPost(Model model,
                            @RequestParam(name = "id", defaultValue = "0") int id) {
@@ -204,7 +227,7 @@ public class CandidateController {
 
             JobType jobType = this.jobTypeService.getById(jobPost.getJobType().getId());
             model.addAttribute("jobType", jobType);
-        } catch (NoResultException nre){
+        } catch (NoResultException nre) {
             return "redirect:/candidate/find-job";
         }
         return "candidate-view-post";

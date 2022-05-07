@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+<nav class="navbar sticky-top navbar-expand-md bg-dark navbar-dark">
     <!-- Brand -->
     <c:choose>
         <c:when test = "${currentUser.userType == 'ROLE_ADMIN'}">
@@ -46,7 +46,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="<c:url value="/admin/stats/user"/>">Thống kê loại tài khoản</a>
-                        <a class="dropdown-item" href="<c:url value="/admin/stats/jobPostDate"/>">Thống kê bài viết theo ngày đăng</a>
+                        <a class="dropdown-item" href="<c:url value="/admin/stats/jobPostDate"/>">Thống kê bài viết theo tháng</a>
                         <a class="dropdown-item" href="<c:url value="/admin/stats/jobPostByJobType"/>">Thống kê bài viết theo loại việc làm</a>
                     </div>
                 </li>
@@ -73,6 +73,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/candidate/find-employer"/>">Tìm kiếm nhà tuyển dụng</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/candidate/suggest-employer"/>">Gợi ý nhà tuyển dụng</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/candidate/find-job"/>">Tìm việc làm</a>

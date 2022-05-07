@@ -1,50 +1,82 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="container">
     <h1 class="text-center dark-color">GỢI Ý NHÀ TUYỂN DỤNG</h1>
 
-    <div class="col">
-        <div class="row">
-            <div class="media g-mb-30 media-comment w-100">
-                <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
-                     src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description">
-                <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
-                    <div class="g-mb-15">
-                        <h3 class="g-color-gray-dark-v1 mb-0">
-                            ${employerService.getByUserId(jobPost.postedByUser.id).name}
-                            - ${userService.getById(jobPost.postedByUser.id).username}
-                        </h3>
-                        <span class="g-color-gray-dark-v4 g-font-size-12">
-                                                <fmt:formatDate pattern="dd/MM/yyyy" value="${jobPost.createdDate}"/>
-                        </span>
-                    </div>
-                    <h4 class="g-color-gray-dark-v1 mt-1 mb-2">
-                        ${jobPost.title}
-                    </h4>
-                    <h5 class="g-color-gray-dark-v1">
-                        Mô tả:
-                    </h5>
-                    <p>
-                        ${jobPost.description}
-                    </p>
+    <c:if test="${employers.size() == 0}">
+        <div class="text-center alert alert-info mt-5 d-flex justify-content-center align-items-center"
+             style="height: 80px"
+             role="alert">
+            <h5 class="m-0">KHÔNG CÓ GỢI Ý NÀO CHO BẠN
+                <i class="fa-solid fa-face-sad-cry"></i>
+            </h5>
+        </div>
+    </c:if>
+</div>
 
-                    <h5 class="g-color-gray-dark-v1">
-                        Lương tối thiểu: ${jobPost.beginningSalary} VNĐ
-                    </h5>
-                    <h5 class="g-color-gray-dark-v1">
-                        Lương tối đa: ${jobPost.beginningSalary} VNĐ
-                    </h5>
-                    <h5 class="g-color-gray-dark-v1">
-                        Địa điểm: ${jobPost.location}
-                    </h5>
-                    <h5 class="g-color-gray-dark-v1">
-                        Ngày hết hạn nộp: <fmt:formatDate pattern="dd/MM/yyyy" value="${jobPost.expiredDate}"/>
-                    </h5>
+<c:if test="${employers.size() != 0}">
+    <c:forEach items="${employers}" var="emp">
+        <div class="container pt-2">
+            <div class="col">
+                <div class="row">
+                    <div class="media g-mb-30 media-comment w-100">
+                        <img class="border d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
+                             src="${userService.getById(emp.user.id).avatar}" alt="Image Description">
+                        <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                            <div class="g-mb-15">
+                                <a class="text-decoration-none"
+                                   href="<c:url value="/candidate/view-employer"/>?employerId=${emp.id}">
+                                    <h3 class="g-color-gray-dark-v1 mb-3">
+                                            ${emp.name}
+                                    </h3>
+                                </a>
+                            </div>
+                            <c:if test="${emp.description.length() > 0}">
+                                <h5 class="g-color-gray-dark-v1 mb-3">
+                                    Mô tả: <span style="font-weight: 400"> ${emp.description} </span>
+                                </h5>
+                            </c:if>
+
+                            <c:if test="${emp.location.length() > 0}">
+                                <h5 class="g-color-gray-dark-v1 mb-3">
+                                    Địa điểm: <span style="font-weight: 400"> ${emp.location} </span>
+                                </h5>
+                            </c:if>
+
+                            <c:if test="${emp.contact.length() > 0}">
+                                <h5 class="g-color-gray-dark-v1 mb-3">
+                                    Liên hệ: <span style="font-weight: 400"> ${emp.contact} </span>
+                                </h5>
+                            </c:if>
+
+                            <c:if test="${emp.website.length() > 0}">
+                                <h5 class="g-color-gray-dark-v1 mb-3">
+                                    Trang web:
+                                    <span style="font-weight: 400">
+                                        <a target="_blank" href="${emp.website}"> ${emp.website} </a>
+                                    </span>
+                                </h5>
+                            </c:if>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </c:forEach>
+</c:if>
+
+<script>
+    $(document).ready(function () {
+        $("form").submit(function () {
+            $("input, select").each(function (index, obj) {
+                if ($(obj).val() === "" || $(obj).val() === "-1") {
+                    $(obj).remove();
+                }
+            });
+        });
+    });
+</script>
 
 <style>
     @media (min-width: 0) {

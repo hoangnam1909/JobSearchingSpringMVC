@@ -50,6 +50,10 @@ public class Candidate {
     @JsonIgnore
     private MultipartFile file;
 
+    @Lob
+    @Column(name = "majoring_detail")
+    private String majoringDetail;
+
     public MultipartFile getFile() {
         return file;
     }
@@ -60,6 +64,14 @@ public class Candidate {
 
     @Column(name = "cv", length = 300)
     private String cv;
+
+    public String getMajoringDetail() {
+        return majoringDetail;
+    }
+
+    public void setMajoringDetail(String majoringDetail) {
+        this.majoringDetail = majoringDetail;
+    }
 
     public String getCv() {
         return cv;

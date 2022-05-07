@@ -31,7 +31,7 @@ public class EmployerRepositoryImpl implements EmployerRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
-    private final int maxItemsInPage = 3;
+    private final int maxItemsInPage = 5;
 
     public int getMaxItemsInPage() {
         return maxItemsInPage;
@@ -84,6 +84,12 @@ public class EmployerRepositoryImpl implements EmployerRepository {
                 Predicate p3 = builder.like(root.get("majoring").as(String.class),
                         String.format("%%%s%%", params.get("majoring")));
                 predicates.add(p3);
+            }
+
+            if (params.containsKey("majoring")) {
+                Predicate p4 = builder.like(root.get("majoring").as(String.class),
+                        String.format("%%%s%%", params.get("majoring")));
+                predicates.add(p4);
             }
 
             q = q.where(predicates.toArray(new Predicate[]{}));

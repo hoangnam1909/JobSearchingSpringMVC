@@ -54,6 +54,10 @@
             <form:input path="majoring" class="form-control"/>
         </div>
         <div class="form-group">
+            <label>Keyword về chuyên ngành</label>
+            <form:textarea path="majoringDetail" class="form-control"/>
+        </div>
+        <div class="form-group">
             <label>Chứng chỉ ngoại ngữ</label>
             <form:textarea path="languageCertificate" class="form-control"/>
         </div>

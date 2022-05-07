@@ -71,14 +71,14 @@ public class AdminCandidate {
         int checkMsg = candidate.getId();
         if (this.candidateService.addOrUpdate(candidate)) {
             if (checkMsg == 0)
-                sucMsg = String.format("Thêm thông tin user và ứng viên '%s' thành công", candidateUser.getUsername());
+                sucMsg = String.format("Thêm thông tin ứng viên '%s' thành công", candidateUser.getUsername());
             else
-                sucMsg = "Sửa thông tin user và ứng viên thành công";
+                sucMsg = "Sửa thông tin ứng viên thành công";
         } else {
             if (checkMsg == 0)
-                errMsg = String.format("Thêm thông tin user và ứng viên '%s' không thành công", candidateUser.getUsername());
+                errMsg = String.format("Thêm thông tin ứng viên '%s' không thành công", candidateUser.getUsername());
             else
-                errMsg = "Sửa thông tin user và ứng viên không thành công";
+                errMsg = "Sửa thông tin ứng viên không thành công";
 
             redirectAttrs.addFlashAttribute("errMsg", errMsg);
             return "add-candidate";

@@ -6,7 +6,7 @@
 
 <div class="container">
 
-    <h1 class="text-left dark-color" style="padding: 0 30px">THÔNG TIN NHÀ TUYỂN DỤNG</h1>
+    <h1 class="text-center dark-color" style="padding: 0 30px">THÔNG TIN NHÀ TUYỂN DỤNG</h1>
 
     <section class="section about-section gray-bg" id="about">
         <div class="container m-0">
@@ -49,7 +49,9 @@
                                 <h5>Trang web</h5>
                             </div>
                             <div class="col-md-8">
-                                <p>${employer.website}</p>
+                                <p>
+                                    <a target="_blank" href="${employer.website}">${employer.website}</a>
+                                </p>
                             </div>
                         </div>
                         <div class="row mb-1">

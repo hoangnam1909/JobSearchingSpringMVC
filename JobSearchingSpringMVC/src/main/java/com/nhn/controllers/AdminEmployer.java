@@ -72,14 +72,14 @@ public class AdminEmployer {
         int checkMsg = employer.getId();
         if (this.employerService.addOrUpdate(employer)) {
             if (checkMsg == 0)
-                sucMsg = String.format("Thêm thông tin user và nhà tuyển dụng '%s' thành công", employerUser.getUsername());
+                sucMsg = String.format("Thêm thông tin nhà tuyển dụng '%s' thành công", employerUser.getUsername());
             else
-                sucMsg = "Sửa thông tin user và nhà tuyển dụng thành công";
+                sucMsg = "Sửa thông tin nhà tuyển dụng thành công";
         } else {
             if (checkMsg == 0)
-                errMsg = String.format("Thêm thông tin user và nhà tuyển dụng '%s' không thành công", employerUser.getUsername());
+                errMsg = String.format("Thêm thông tin nhà tuyển dụng '%s' không thành công", employerUser.getUsername());
             else
-                errMsg = "Sửa thông tin user và nhà tuyển dụng không thành công";
+                errMsg = "Sửa thông tin nhà tuyển dụng không thành công";
 
             redirectAttrs.addFlashAttribute("errMsg", errMsg);
             return "add-employer";

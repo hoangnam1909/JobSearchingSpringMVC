@@ -12,7 +12,7 @@
             <table class="table table-striped text-center mt-5">
                 <thead>
                 <tr>
-                    <th scope="col">Ngày đăng</th>
+                    <th scope="col">Tháng</th>
                     <th scope="col">Số lượng bài đã đăng</th>
                 </tr>
                 </thead>
@@ -20,7 +20,7 @@
                 <c:forEach items="${jobPostStatsByCreatedDate}" var="stat">
                     <tr>
                         <th scope="row">
-                            <fmt:formatDate pattern="dd/MM/yyyy" value="${stat[0]}"/>
+                            <fmt:formatDate pattern="MM/yyyy" value="${stat[0]}"/>
                         </th>
                         <td>${stat[1]}</td>
                     </tr>
