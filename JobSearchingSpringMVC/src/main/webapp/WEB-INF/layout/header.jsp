@@ -54,7 +54,7 @@
             <c:if test="${currentUser.userType == 'ROLE_NTD'}">
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/employer/employer-info/add-or-update"/>">
-                        Cập nhật thông tin nhà tuyển dụng
+                        Cập nhật thông tin
                     </a>
                 </li>
                 <li class="nav-item">
@@ -69,7 +69,7 @@
             </c:if>
             <c:if test="${currentUser.userType == 'ROLE_UV'}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/candidate/candidate-info/add-or-update"/>">Cập nhật thông tin ứng viên</a>
+                    <a class="nav-link" href="<c:url value="/candidate/candidate-info/add-or-update"/>">Cập nhật thông tin</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -81,7 +81,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/candidate"/>">Tìm việc làm</a>
+                    <a class="nav-link" href="<c:url value="/candidate/find-job"/>">Tìm việc làm</a>
                 </li>
             </c:if>
         </ul>

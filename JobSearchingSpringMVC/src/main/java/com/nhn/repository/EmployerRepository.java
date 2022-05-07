@@ -13,7 +13,7 @@ public interface EmployerRepository {
 
     Employer getByUserId(int userId);
 
-    List<Employer> getUsersMultiCondition(Map<String, String> params);
+    List<Employer> getUsersMultiCondition(Map<String, String> params, int page);
 
     boolean addOrUpdate(Employer employer);
 

@@ -129,7 +129,7 @@ public class UserRepositoryImpl implements UserRepository {
         CriteriaQuery<User> q = builder.createQuery(User.class);
         Root root = q.from(User.class);
         q.select(root);
-        q = q.orderBy(builder.asc(root.get("id")));
+        q = q.orderBy(builder.desc(root.get("id")));
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();

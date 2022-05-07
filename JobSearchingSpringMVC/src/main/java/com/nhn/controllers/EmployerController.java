@@ -4,10 +4,7 @@ import com.nhn.pojo.Employer;
 import com.nhn.pojo.JobPost;
 import com.nhn.pojo.JobType;
 import com.nhn.pojo.User;
-import com.nhn.service.EmployerService;
-import com.nhn.service.JobPostService;
-import com.nhn.service.JobTypeService;
-import com.nhn.service.UserService;
+import com.nhn.service.*;
 import com.nhn.utils.utils;
 import com.nhn.validator.JobPostValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +37,9 @@ public class EmployerController {
     private EmployerService employerService;
 
     @Autowired
+    private CandidateService candidateService;
+
+    @Autowired
     private JobPostValidator jobPostValidator;
 
     private void loadAllList(Model model) {
@@ -53,20 +53,7 @@ public class EmployerController {
     }
 
     @RequestMapping("/employer")
-    public String index(Model model,
-                        Authentication authentication,
-                        @RequestParam(required = false) Map<String, String> params) {
-        int page = Integer.parseInt(params.getOrDefault("page", "1"));
-
-        Map<String, String> pre = new HashMap<>();
-        pre.put("postedByUserId", String.valueOf(this.userService.getByUsername(authentication.getName()).getId()));
-        List<JobPost> jobPosts = jobPostService.getPosts(pre, page, 20);
-
-        loadAllList(model);
-        model.addAttribute("jobPosts", jobPosts);
-        model.addAttribute("errMsg", model.asMap().get("errMsg"));
-        model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
-
+    public String index() {
         return "employer";
     }
 
@@ -75,11 +62,40 @@ public class EmployerController {
                              Authentication authentication,
                              @RequestParam(required = false) Map<String, String> params) {
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        String title = params.getOrDefault("title", null);
+        String beginningSalary = params.getOrDefault("beginningSalary", null);
+        String endingSalary = params.getOrDefault("endingSalary", null);
+        String location = params.getOrDefault("location", null);
+        String sort = params.getOrDefault("sort", null);
 
         Map<String, String> pre = new HashMap<>();
+        if (title != null) {
+            pre.put("title", title);
+            model.addAttribute("title", title);
+        }
+        if (beginningSalary != null) {
+            pre.put("beginningSalary", beginningSalary);
+            model.addAttribute("beginningSalary", beginningSalary);
+        }
+        if (endingSalary != null) {
+            pre.put("endingSalary", endingSalary);
+            model.addAttribute("endingSalary", endingSalary);
+        }
+        if (location != null) {
+            pre.put("location", location);
+            model.addAttribute("location", location);
+        }
+        if (sort != null) {
+            pre.put("sort", sort);
+            model.addAttribute("sort", sort);
+        }
+
+        int maxItems = 20;
+        model.addAttribute("maxItems", maxItems);
+
         pre.put("postedByUserId", String.valueOf(this.userService.getByUsername(authentication.getName()).getId()));
-        List<JobPost> jobPosts = jobPostService.getPosts(pre, page, 20);
-        List<JobPost> jobPostsSize = jobPostService.getPosts(pre, 0, 20);
+        List<JobPost> jobPosts = jobPostService.getPosts(pre, page, maxItems);
+        List<JobPost> jobPostsSize = jobPostService.getPosts(pre, 0, 0);
 
         model.addAttribute("currentPage", page);
         model.addAttribute("counter", jobPostsSize.size());
@@ -237,10 +253,11 @@ public class EmployerController {
     @RequestMapping("/employer/find/view")
     public String viewFoundUser(Model model,
                                 @RequestParam(name = "id", defaultValue = "0") int id) {
-        if (id > 0) {
+        try {
             model.addAttribute("user", this.userService.getById(id));
-        } else {
-            return "employer-find";
+            model.addAttribute("candidate", this.candidateService.getByUserId(id));
+        } catch (NoResultException nre){
+            return "redirect:/employer/find";
         }
 
         model.addAttribute("errMsg", model.asMap().get("errMsg"));

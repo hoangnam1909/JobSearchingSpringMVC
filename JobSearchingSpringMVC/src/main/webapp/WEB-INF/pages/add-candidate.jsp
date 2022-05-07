@@ -69,7 +69,6 @@
                 </c:if>
             </label>
             <form:input type="file" path="file" accept="image/*" class="form-control"/>
-
         </div>
         <c:if test="${candidate.id == 0}">
             <div class="form-group">

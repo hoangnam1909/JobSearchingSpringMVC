@@ -31,7 +31,7 @@ public class EmployerRepositoryImpl implements EmployerRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
-    private final int maxItemsInPage = 10;
+    private final int maxItemsInPage = 3;
 
     public int getMaxItemsInPage() {
         return maxItemsInPage;
@@ -58,7 +58,7 @@ public class EmployerRepositoryImpl implements EmployerRepository {
     }
 
     @Override
-    public List<Employer> getUsersMultiCondition(Map<String, String> params) {
+    public List<Employer> getUsersMultiCondition(Map<String, String> params, int page) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Employer> q = builder.createQuery(Employer.class);
@@ -90,6 +90,12 @@ public class EmployerRepositoryImpl implements EmployerRepository {
         }
 
         Query query = session.createQuery(q);
+
+        if (page != 0) {
+            int max = maxItemsInPage;
+            query.setMaxResults(max);
+            query.setFirstResult((page - 1) * max);
+        }
 
         return query.getResultList();
     }

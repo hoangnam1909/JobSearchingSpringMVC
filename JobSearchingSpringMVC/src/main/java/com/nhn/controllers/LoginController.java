@@ -76,19 +76,25 @@ public class LoginController {
         if (result.hasErrors())
             return "register";
 
+        int rawId = user.getId();
+
         if (user.getUserType().equals("ROLE_NTD"))
             user.setActive(0);
         else
             user.setActive(1);
 
-        if (this.userService.addOrUpdate(user)) {
-            User registerUser = userService.getByUsername(user.getUsername());
-            if (user.getUserType().equals("ROLE_UV")) {
-                redirectAttrs.addFlashAttribute("userId", registerUser.getId());
+        boolean addOrUpdateCheck = this.userService.addOrUpdate(user);
+        if (addOrUpdateCheck) {
+            if (user.getUserType().equals(User.USER)) {
+                redirectAttrs.addFlashAttribute("userId",
+                        userService.getByUsername(user.getUsername()).getId());
                 return "redirect:/register/candidate-info/add";
-            } else if (user.getUserType().equals("ROLE_NTD")) {
-                redirectAttrs.addFlashAttribute("userId", registerUser.getId());
-                return "redirect:/register/employer-info/add";
+            } else if (user.getUserType().equals(User.NTD)) {
+                Employer employer = new Employer();
+                employer.setId(0);
+                employer.setName("n/a");
+                employer.setUser(userService.getById(user.getId()));
+                employerService.addOrUpdate(employer);
             }
 
             sucMsg = String.format("Đăng ký thành công tài khoản '%s' với vai trò %s",

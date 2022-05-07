@@ -184,7 +184,14 @@
                                     <h5>CV</h5>
                                 </div>
                                 <div class="col-md-7">
-                                    <p><a target="_blank" href="${candidate.cv}">Bản xem trước CV</a></p>
+                                    <p>
+                                        <c:if test="${candidate.cv.startsWith('https')}">
+                                            <a target="_blank" href="${candidate.cv}">Bản xem trước CV</a>
+                                        </c:if>
+                                        <c:if test="${!candidate.cv.startsWith('https')}">
+                                            Chưa upload CV
+                                        </c:if>
+                                    </p>
                                 </div>
                             </div>
                         </c:if>

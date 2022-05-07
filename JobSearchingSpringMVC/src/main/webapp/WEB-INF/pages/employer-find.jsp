@@ -52,7 +52,8 @@
                     <h6>Nơi sinh sống</h6>
                     <input class="form-control" name="address">
                 </div>
-                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                <button type="submit" class="btn btn-info">Tra cứu</button>
+                <input type="button" class="btn btn-dark" onclick="removeFilter()" value="Loại bỏ bộ lọc"/>
             </form>
         </div>
         <div class="col">
@@ -102,7 +103,7 @@
     <ul class="pagination d-flex justify-content-center mt-2 mx-auto">
         <c:forEach begin="1" end="${numbersOfPage}" var="page">
             <li class="page-item">
-                <a class="page-link" href="<c:url value="/employer/find" />?page=${page}">${page}</a>
+                <a class="page-link" onclick="updateQueryStringParameter('page', ${page})">${page}</a>
             </li>
         </c:forEach>
     </ul>

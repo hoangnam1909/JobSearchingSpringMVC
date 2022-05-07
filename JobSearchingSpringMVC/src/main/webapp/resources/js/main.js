@@ -77,7 +77,7 @@ function addComment(employerId, userId) {
                          alt="Image Description">
                     <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
                         <div class="g-mb-15 mb-2">
-                            <h4 class="g-color-gray-dark-v1 mb-0">
+                            <h4 class="text-info g-color-gray-dark-v1 mb-0">
                                     ${data.user.fullName}
                             </h4>
                             <span class="g-color-gray-dark-v4 g-font-size-12"> ${moment(data.createdDate).fromNow()} </span>

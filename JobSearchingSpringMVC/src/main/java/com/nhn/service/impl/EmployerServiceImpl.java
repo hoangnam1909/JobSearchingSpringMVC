@@ -28,8 +28,8 @@ public class EmployerServiceImpl implements EmployerService {
     }
 
     @Override
-    public List<Employer> getUsersMultiCondition(Map<String, String> params) {
-        return this.employerRepository.getUsersMultiCondition(params);
+    public List<Employer> getUsersMultiCondition(Map<String, String> params, int page) {
+        return this.employerRepository.getUsersMultiCondition(params, page);
     }
 
     @Override

@@ -2,9 +2,11 @@ package com.nhn.controllers;
 
 import com.nhn.pojo.Candidate;
 import com.nhn.pojo.Employer;
+import com.nhn.pojo.JobPost;
 import com.nhn.pojo.User;
 import com.nhn.service.CandidateService;
 import com.nhn.service.EmployerService;
+import com.nhn.service.JobPostService;
 import com.nhn.service.UserService;
 import com.nhn.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +33,9 @@ public class CandidateController {
 
     @Autowired
     private EmployerService employerService;
+
+    @Autowired
+    private JobPostService jobPostService;
 
     @Autowired
     UserValidator userValidator;
@@ -111,19 +117,20 @@ public class CandidateController {
             model.addAttribute("majoring", majoring);
         }
 
-        List<Employer> employers = employerService.getUsersMultiCondition(pre);
-        List<Employer> employersSize = employerService.getUsersMultiCondition(pre);
+        List<Employer> employers = employerService.getUsersMultiCondition(pre, page);
+        List<Employer> employersSize = employerService.getUsersMultiCondition(pre, 0);
         model.addAttribute("employers", employers);
 
         model.addAttribute("currentPage", page);
         model.addAttribute("counter", employersSize.size());
+        model.addAttribute("maxItems", employerService.getMaxItemsInPage());
         model.addAttribute("userService", userService);
         return "candidate-find-employer";
     }
 
     @RequestMapping("/candidate/view-employer")
     public String viewEmployer(Model model,
-                                @RequestParam(name = "employerId", defaultValue = "0") int employerId) {
+                               @RequestParam(name = "employerId", defaultValue = "0") int employerId) {
         if (employerId > 0) {
             model.addAttribute("employer", this.employerService.getById(employerId));
         } else {
@@ -139,6 +146,53 @@ public class CandidateController {
     public String suggestCandidate(Model model,
                                    @RequestParam(name = "userId", defaultValue = "0") int userId) {
         return "candidate-suggest-employer";
+    }
+
+    @RequestMapping("/candidate/find-job")
+    public String findJob(Model model,
+                          @RequestParam(required = false) Map<String, String> params) {
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        String title = params.getOrDefault("title", null);
+        String beginningSalary = params.getOrDefault("beginningSalary", null);
+        String endingSalary = params.getOrDefault("endingSalary", null);
+        String location = params.getOrDefault("location", null);
+        String sort = params.getOrDefault("sort", null);
+
+        Map<String, String> pre = new HashMap<>();
+        if (title != null) {
+            pre.put("title", title);
+            model.addAttribute("title", title);
+        }
+        if (beginningSalary != null) {
+            pre.put("beginningSalary", beginningSalary);
+            model.addAttribute("beginningSalary", beginningSalary);
+        }
+        if (endingSalary != null) {
+            pre.put("endingSalary", endingSalary);
+            model.addAttribute("endingSalary", endingSalary);
+        }
+        if (location != null) {
+            pre.put("location", location);
+            model.addAttribute("location", location);
+        }
+        if (sort != null) {
+            pre.put("sort", sort);
+            model.addAttribute("sort", sort);
+        }
+
+        int maxItems = 3;
+        model.addAttribute("maxItems", maxItems);
+
+        List<JobPost> jobPosts = jobPostService.getPosts(pre, page, maxItems);
+        List<JobPost> jobPostsSize = jobPostService.getPosts(pre, 0, 0);
+        model.addAttribute("jobPosts", jobPosts);
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("counter", jobPostsSize.size());
+        model.addAttribute("jobPostService", jobPostService);
+        model.addAttribute("userService", userService);
+        model.addAttribute("employerService", employerService);
+        return "candidate-find-job";
     }
 
 }

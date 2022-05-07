@@ -111,7 +111,12 @@
                         </c:if>
                     </td>
                     <td class="text-center">${(currentPage - 1) * userService.maxItemsInPage + loop.index + 1}</td>
-                    <td>${u.username}</td>
+                    <c:if test="${u.userType.equals('ROLE_NTD') && u.active == 0}">
+                        <td style="color: red">[NOT ACTIVED] ${u.username}</td>
+                    </c:if>
+                    <c:if test="${!(u.userType.equals('ROLE_NTD') && u.active == 0)}">
+                        <td>${u.username}</td>
+                    </c:if>
                     <td>${u.phone}</td>
                     <td>${u.email}</td>
                     <td>${u.userType}</td>

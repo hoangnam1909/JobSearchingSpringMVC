@@ -22,7 +22,7 @@
 
     <form:form action="${action}" method="post" enctype="multipart/form-data" modelAttribute="user">
         <form:errors path="*" element="div" cssClass="alert alert-danger mt-3"/>
-        <form:hidden path="id"/>
+        <form:input path="id"/>
         <form:hidden path="avatar"/>
         <div class="form-group">
             <label>Tên đăng nhập <span style="color: red">*</span></label>

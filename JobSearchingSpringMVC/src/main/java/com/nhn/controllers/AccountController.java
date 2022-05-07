@@ -145,36 +145,34 @@ public class AccountController {
                 return "add-account";
         }
 
+        int rawId = user.getId();
+
         boolean addOrUpdateCheck = this.userService.addOrUpdate(user);
         if (addOrUpdateCheck) {
-            if (user.getId() == 0) {
-                if (user.getUserType().equals("ROLE_UV")) {
+            if (rawId == 0) {
+                if (user.getUserType().equals(User.USER)) {
                     redirectAttrs.addFlashAttribute("userId",
                             userService.getByUsername(user.getUsername()).getId());
                     return "redirect:/admin/account/candidate-info/add";
-                } else if (user.getUserType().equals("ROLE_NTD")) {
-                    redirectAttrs.addFlashAttribute("userId",
-                            userService.getByUsername(user.getUsername()).getId());
-                    return "redirect:/admin/account/employer-info/add";
+                } else if (user.getUserType().equals(User.NTD)) {
+                    Employer employer = new Employer();
+                    employer.setId(0);
+                    employer.setName("n/a");
+                    employer.setUser(userService.getById(user.getId()));
+                    employerService.addOrUpdate(employer);
+                    sucMsg = String.format("Thêm thông tin nhà tuyển dụng '%s' thành công", user.getUsername());
                 }
-            }
-
-            if (user.getId() == 0)
-                sucMsg = String.format("Thêm thông tin user '%s' thành công", user.getUsername());
-            else
-                sucMsg = String.format("Sửa thông tin user '%s' thành công", user.getUsername());
-        } else {
-            if (user.getId() == 0)
-                errMsg = String.format("Thêm thông tin user '%s' không thành công", user.getUsername());
-            else
+            } else {
                 errMsg = String.format("Sửa thông tin user '%s' không thành công", user.getUsername());
 
-            redirectAttrs.addFlashAttribute("errMsg", errMsg);
-            return "add-account";
-        }
+                redirectAttrs.addFlashAttribute("errMsg", errMsg);
+                return "add-account";
+            }
 
-        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
-        return "redirect:/admin/account";
+            redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
+            return "redirect:/admin/account";
+        }
+        return "add-account";
     }
 
     @RequestMapping(path = "/admin/account/delete")

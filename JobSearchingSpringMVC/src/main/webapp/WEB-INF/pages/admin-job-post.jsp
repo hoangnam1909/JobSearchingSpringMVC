@@ -32,17 +32,17 @@
                 <select class="form-control" name="sort" id="sort">
                     <option value="" selected>Không chọn</option>
                     <c:if test="${sort.equals('asc')}">
-                        <option value="asc" selected>Tăng dần ngày đăng</option>
+                        <option value="asc" selected>Ngày đăng cũ nhất</option>
                     </c:if>
                     <c:if test="${!sort.equals('asc')}">
-                        <option value="asc">Tăng dần ngày đăng</option>
+                        <option value="asc">Ngày đăng cũ nhất</option>
                     </c:if>
 
                     <c:if test="${sort.equals('desc')}">
-                        <option value="desc" selected>Giảm dần ngày đăng</option>
+                        <option value="desc" selected>Ngày đăng mới nhất</option>
                     </c:if>
                     <c:if test="${!sort.equals('desc')}">
-                        <option value="desc">Giảm dần ngày đăng</option>
+                        <option value="desc">Ngày đăng mới nhất</option>
                     </c:if>
                 </select>
             </div>

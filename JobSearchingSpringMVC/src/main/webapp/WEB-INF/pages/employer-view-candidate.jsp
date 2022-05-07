@@ -153,68 +153,131 @@
                     <h3 class="dark-color mb-4">
                         ${user.fullName}
                     </h3>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Ngày sinh</h5>
                         </div>
-                        <div class="col-md-8">
-                            <h5>
+                        <div class="col-md-7">
+                            <p>
                                 <fmt:formatDate pattern="dd/MM/yyyy" value="${user.dob}"/>
-                            </h5>
+                            </p>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Tuổi</h5>
                         </div>
-                        <div class="col-md-8">
-                            <h5>
+                        <div class="col-md-7">
+                            <p>
                                 <fmt:formatDate pattern="yyyy" value="${now}" var="yearNow"/>
                                 <fmt:formatDate pattern="yyyy" value="${user.dob}" var="yearBorn"/>
                                 ${yearNow - yearBorn}
-                            </h5>
+                            </p>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Email</h5>
                         </div>
-                        <div class="col-md-8">
-                            <h5>${user.email}</h5>
+                        <div class="col-md-7">
+                            <p>${user.email}</p>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Số điện thoại</h5>
                         </div>
-                        <div class="col-md-8">
-                            <h5>${user.phone}</h5>
+                        <div class="col-md-7">
+                            <p>${user.phone}</p>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Địa chỉ</h5>
                         </div>
-                        <div class="col-md-8">
-                            <h5>${user.address}</h5>
+                        <div class="col-md-7">
+                            <p>${user.address}</p>
                         </div>
                     </div>
-                    <div class="row mb-1">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-md-5">
                             <h5>Giới tính</h5>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <c:choose>
                                 <c:when test = "${user.gender == 1}">
-                                    <h5>Nữ</h5>
+                                    <p>Nữ</p>
                                 </c:when>
                                 <c:when test = "${user.gender == 0}">
-                                    <h5>Nam</h5>
+                                    <p>Nam</p>
                                 </c:when>
                                 <c:otherwise>
-                                    <h5>Khác</h5>
+                                    <p>Khác</p>
                                 </c:otherwise>
                             </c:choose>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-5">
+                            <h5>Số năm kinh nghiệm</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p>${candidate.yearsExperience}</p>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-5">
+                            <h5>Điểm mạnh</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p>${candidate.strengths}</p>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-5">
+                            <h5>Điểm yếu</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p>${candidate.weaknesses}</p>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-5">
+                            <h5>Chuyên ngành</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p>${candidate.majoring}</p>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-5">
+                            <h5>Chứng chỉ ngoại ngữ</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p>${candidate.languageCertificate}</p>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-5">
+                            <h5>Chứng chỉ tin học</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p>${candidate.informaticsCertificate}</p>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-5">
+                            <h5>CV</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p>
+                                <c:if test="${candidate.cv.startsWith('https')}">
+                                    <a target="_blank" href="${candidate.cv}">Bản xem trước CV</a>
+                                </c:if>
+                                <c:if test="${!candidate.cv.startsWith('https')}">
+                                    Chưa upload CV
+                                </c:if>
+                            </p>
                         </div>
                     </div>
                 </div>

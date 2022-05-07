@@ -1,22 +1,50 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="container">
-    <h1 class="text-center dark-color">TÌM KIẾM NHÀ TUYỂN DỤNG</h1>
+    <h1 class="text-center dark-color">TÌM KIẾM VIỆC LÀM</h1>
 
     <section class="d-flex justify-content-center">
         <form class="mt-3 w-50">
             <div class="form-group">
-                <label for="name">Tên nhà tuyển dụng</label>
-                <input class="form-control" name="name" id="name" value="${name}">
+                <label for="title">Tiêu đề</label>
+                <input class="form-control" name="title" id="title" value="${title}">
             </div>
+
             <div class="form-group">
-                <label for="location">Địa điểm</label>
+                <label for="beginningSalary">Lương khởi điểm từ</label>
+                <input class="form-control" name="beginningSalary" id="beginningSalary" value="${beginningSalary}">
+            </div>
+
+            <div class="form-group">
+                <label for="endingSalary">Lương tối đa đến</label>
+                <input class="form-control" name="endingSalary" id="endingSalary" value="${endingSalary}">
+            </div>
+
+            <div class="form-group">
+                <label for="location">Địa điểm làm việc</label>
                 <input class="form-control" name="location" id="location" value="${location}">
             </div>
+
             <div class="form-group">
-                <label for="majoring">Chuyên ngành</label>
-                <input class="form-control" name="majoring" id="majoring" value="${majoring}">
+                <label for="sort">Sắp xếp</label>
+                <select class="form-control" name="sort" id="sort">
+                    <option value="" selected>Không chọn</option>
+                    <c:if test="${sort.equals('asc')}">
+                        <option value="asc" selected>Ngày đăng cũ nhất</option>
+                    </c:if>
+                    <c:if test="${!sort.equals('asc')}">
+                        <option value="asc">Ngày đăng cũ nhất</option>
+                    </c:if>
+
+                    <c:if test="${sort.equals('desc')}">
+                        <option value="desc" selected>Ngày đăng mới nhất</option>
+                    </c:if>
+                    <c:if test="${!sort.equals('desc')}">
+                        <option value="desc">Ngày đăng mới nhất</option>
+                    </c:if>
+                </select>
             </div>
 
             <button type="submit" class="btn btn-info">Tra cứu</button>
@@ -35,49 +63,58 @@
     </ul>
 </div>
 
-<c:forEach items="${employers}" var="emp">
+<c:forEach items="${jobPosts}" var="jp">
     <div class="container pt-2">
         <div class="col">
             <div class="row">
                 <div class="media g-mb-30 media-comment w-100">
                     <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
-                         src="${userService.getById(emp.user.id).avatar}" alt="Image Description">
+                         src="${userService.getById(jp.postedByUser.id).avatar}" alt="Image Description">
                     <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
                         <div class="g-mb-15">
                             <a class="text-decoration-none"
-                               href="<c:url value="/candidate/view-employer"/>?employerId=${emp.id}">
+                               href="<c:url value="/candidate/view-post"/>?jobPostId=${jp.id}">
                                 <h3 class="g-color-gray-dark-v1 mb-3">
-                                        ${emp.name}
+                                        ${jp.title}
                                 </h3>
                             </a>
                         </div>
-                        <c:if test="${emp.description.length() > 0}">
+                        <c:if test="${jp.createdDate != null}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Mô tả: <span style="font-weight: 400"> ${emp.description} </span>
+                                Ngày đăng: <span style="font-weight: 400">
+                                    <fmt:formatDate pattern="HH:mm:ss - dd/MM/yyyy" value="${jp.createdDate}"/>
+                                </span>
                             </h5>
                         </c:if>
 
-                        <c:if test="${emp.location.length() > 0}">
+                        <c:if test="${jp.description.length() > 0}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Địa điểm: <span style="font-weight: 400"> ${emp.location} </span>
+                                Mô tả: <span style="font-weight: 400"> ${jp.description} </span>
                             </h5>
                         </c:if>
 
-                        <c:if test="${emp.contact.length() > 0}">
+                        <c:if test="${jp.location.length() > 0}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Liên hệ: <span style="font-weight: 400"> ${emp.contact} </span>
+                                Địa điểm: <span style="font-weight: 400"> ${jp.location} </span>
                             </h5>
                         </c:if>
 
-                        <c:if test="${emp.website.length() > 0}">
+                        <c:if test="${jp.beginningSalary != null}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Trang web: <span style="font-weight: 400"> ${emp.website} </span>
+                                Lương khởi điểm: <span style="font-weight: 400">
+                                    <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                      value="${jp.beginningSalary}"/> VNĐ
+                            </span>
+
                             </h5>
                         </c:if>
 
-                        <c:if test="${emp.majoring.length() > 0}">
+                        <c:if test="${jp.endingSalary != null}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
-                                Chuyên ngành: <span style="font-weight: 400"> ${emp.majoring} </span>
+                                Lương tối đa: <span style="font-weight: 400">
+                                <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                  value="${jp.endingSalary}"/> VNĐ
+                            </span>
                             </h5>
                         </c:if>
                     </div>
